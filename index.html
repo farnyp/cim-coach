@@ -385,7 +385,10 @@ window.storage = {
   <div id="s-status" class="hint" style="display:none"></div>
   <div class="sheet-foot" style="position:static;margin:0 0 14px">
     <button class="btn dark" id="s-copy">Copy state</button>
+    <button class="btn" id="s-export">Save backup</button>
   </div>
+  <div class="fld"><label>Restore from backup file</label>
+    <input type="file" id="s-import" accept="application/json,.json"></div>
   <div class="fld"><label>Paste update</label>
     <textarea id="s-paste" rows="7" placeholder='{"type":"cim-coach-update","v":2, ...}'></textarea></div>
   <div class="sheet-foot">
@@ -408,7 +411,11 @@ window.addEventListener('error',function(e){
       String(e.message||e)+'<br><br>Your saved data is untouched. Send this message to Claude.</div>';
   }
 });
-const KEY='cim-coach-state-v6';
+/* Frozen. Never change this again — schema changes migrate in place below. */
+const KEY='cim-coach-state';
+const BACKUP='cim-coach-backup';
+const LEGACY=['cim-coach-state-v6','cim-coach-state-v5','cim-coach-state-v4',
+              'cim-coach-state-v3','cim-coach-state-v2','cim-coach-state-v1'];
 const $=function(id){return document.getElementById(id);};
 function on(id,evt,fn){var el=$(id);
   if(!el){console.warn('[marathon-block] missing element:',id);return;}
@@ -612,7 +619,17 @@ function save(){
     catch(e){ toast('Could not save — publish the app to enable storage'); }
   },250);
 }
-function snapshot(){ undoSnap=JSON.stringify(S); }
+function snapshot(){
+  undoSnap=JSON.stringify(S);
+  try{ window.storage.set(BACKUP,undoSnap); }catch(e){}   // survives reload, unlike undo
+}
+function countData(st){
+  if(!st)return 0;
+  return (st.workouts||[]).filter(function(w){
+    return w.status!=='planned'||w.actualKm!=null||w.notes||w.stravaId;}).length
+    + (st.analyses||[]).length + (st.decisions||[]).length
+    + Object.keys(st.weekNotes||{}).length;
+}
 function toast(msg,withUndo){
   var t=$('toast'); $('toast-msg').textContent=msg;
   $('toast-undo').style.display=withUndo?'block':'none';
@@ -1103,6 +1120,27 @@ function openSyncSheet(){
   openSheet('sheet-s');
 }
 $('btn-sync').onclick=openSyncSheet;
+$('s-export').onclick=function(){
+  var blob=new Blob([JSON.stringify(S,null,1)],{type:'application/json'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='marathon-backup-'+todayISO()+'.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  toast('Backup saved');
+};
+$('s-import').onchange=function(){
+  var f=this.files&&this.files[0]; if(!f)return;
+  var fr=new FileReader();
+  fr.onload=function(){
+    try{
+      var st=JSON.parse(fr.result);
+      if(!st.workouts||!st.workouts.length)throw new Error('no sessions in that file');
+      if(!confirm('Replace current data with this backup? '+countData(st)+' logged items.'))return;
+      snapshot(); S=migrate(st); save(); closeSheets(); render(); toast('Backup restored',true);
+    }catch(e){ toast('Could not read that file'); }
+  };
+  fr.readAsText(f);
+};
 $('s-url').oninput=function(){S.sync=S.sync||{};S.sync.gistUrl=this.value.trim();save();};
 
 $('s-copy').onclick=function(){
@@ -1127,7 +1165,17 @@ function applyPayload(p,srcLabel){
   snapshot();
   var n=0,dup=0;
 
-  if(p.zones)  {S.zones=p.zones;n++;}
+  if(p.zones){
+    Object.keys(p.zones).forEach(function(k){
+      if(k==='bands'&&Array.isArray(p.zones.bands)){
+        p.zones.bands.forEach(function(nb){
+          var cur=band(nb.z);
+          if(cur){Object.keys(nb).forEach(function(f){cur[f]=nb[f];});}
+        });
+      } else S.zones[k]=p.zones[k];
+    });
+    n++;
+  }
   if(p.mp&&p.mp.pace){
     var kind=p.mp.kind==='current'?'current':'goal';
     var cur=kind==='current'?S.zones.currentMp:S.zones.goalMp;
@@ -1310,15 +1358,39 @@ function migrate(st){
   return st;
 }
 (async function(){
-  try{var res=await window.storage.get(KEY);
-    S=migrate(res&&res.value?JSON.parse(res.value):null);}
-  catch(e){S=freshState();}
+  var loaded=null, source='new';
+  async function read(k){
+    try{var r=await window.storage.get(k); return r&&r.value?JSON.parse(r.value):null;}
+    catch(e){return null;}
+  }
+  loaded=await read(KEY);
+  if(loaded)source='saved';
+
+  // migrate from any key an older build used
+  if(!loaded){
+    for(var i=0;i<LEGACY.length;i++){
+      var old=await read(LEGACY[i]);
+      if(old&&countData(old)>=0&&old.workouts&&old.workouts.length){
+        loaded=old; source='migrated from '+LEGACY[i]; break;
+      }
+    }
+  }
+  // last resort: the pre-change backup
+  if(!loaded){
+    var bk=await read(BACKUP);
+    if(bk&&bk.workouts&&bk.workouts.length){loaded=bk;source='recovered from backup';}
+  }
+
+  S=migrate(loaded);
   wk=currentWeek(); render();
-  try{await window.storage.set(KEY,JSON.stringify(S));}catch(e){}
+  try{await window.storage.set(KEY,JSON.stringify(S));}catch(e){
+    toast('Storage is blocked in this browser — changes will not persist');
+  }
+  if(source.indexOf('migrat')===0||source.indexOf('recover')===0)
+    toast(source.charAt(0).toUpperCase()+source.slice(1));
   if(S.sync&&S.sync.gistUrl) refreshFromGist(false);
 })();
 })();
-</script>
 
 </body>
 </html>
