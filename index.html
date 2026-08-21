@@ -379,6 +379,14 @@ window.storage = {
   <div class="hint">Paste the gist ID once. Refresh pulls updates from it.</div>
   <div class="fld"><label>Gist ID</label>
     <input id="s-url" placeholder="paste gist ID" autocomplete="off" spellcheck="false"></div>
+  <div class="fld"><label>Cloud backup token (gist scope only)</label>
+    <input id="s-tok" type="password" placeholder="optional — enables auto-backup"
+      autocomplete="off" spellcheck="false"></div>
+  <div id="s-cloud" class="hint" style="display:none"></div>
+  <div class="sheet-foot" style="position:static;margin:0 0 12px">
+    <button class="btn" id="s-push">Back up now</button>
+    <button class="btn" id="s-pull">Restore from cloud</button>
+  </div>
   <div class="sheet-foot" style="position:static;margin:0 0 12px">
     <button class="btn" id="s-test">Test connection</button>
   </div>
@@ -414,6 +422,8 @@ window.addEventListener('error',function(e){
 /* Frozen. Never change this again — schema changes migrate in place below. */
 const KEY='cim-coach-state';
 const BACKUP='cim-coach-backup';
+const TOKKEY='cim-coach-token';      /* stays in this browser, never in the page source */
+const LOGFILE='athlete-log.json';
 const LEGACY=['cim-coach-state-v6','cim-coach-state-v5','cim-coach-state-v4',
               'cim-coach-state-v3','cim-coach-state-v2','cim-coach-state-v1'];
 const $=function(id){return document.getElementById(id);};
@@ -613,6 +623,7 @@ function freshState(){
 }
 
 function save(){
+  schedulePush();
   clearTimeout(saveTimer);
   saveTimer=setTimeout(function(){
     try{ window.storage.set(KEY,JSON.stringify(S)); }
@@ -1111,6 +1122,10 @@ $('t-mp').onclick=function(){logTab='mp';renderLog();};
 function openSyncSheet(){
   $('s-paste').value='';
   $('s-url').value=(S.sync&&S.sync.gistUrl)||'';
+  $('s-tok').value=TOKEN||'';
+  cloudStatus(TOKEN?('Auto-backup on'+(S.sync&&S.sync.lastPush?
+    ' · last '+new Date(S.sync.lastPush).toLocaleString():'')):
+    'No token — this device only. Add one to back up to the cloud.');
   var st=$('s-status');
   if(S.sync&&S.sync.lastFetch){
     st.style.display='block';
@@ -1120,6 +1135,78 @@ function openSyncSheet(){
   openSheet('sheet-s');
 }
 $('btn-sync').onclick=openSyncSheet;
+/* ---------- cloud backup (token lives in this browser only) ---------- */
+var TOKEN='', pushTimer=null, pushing=false;
+
+async function loadToken(){
+  try{var r=await window.storage.get(TOKKEY); TOKEN=(r&&r.value)||'';}catch(e){TOKEN='';}
+}
+async function saveToken(t){
+  TOKEN=t;
+  try{ if(t)await window.storage.set(TOKKEY,t); else await window.storage.delete(TOKKEY); }catch(e){}
+}
+function cloudStatus(msg,bad){
+  var el=$('s-cloud'); if(!el)return;
+  el.style.display='block';
+  el.innerHTML=(bad?'<b>'+esc(msg)+'</b>':esc(msg));
+}
+async function pushBackup(loud){
+  var id=gistId(S.sync&&S.sync.gistUrl);
+  if(!TOKEN||!id){ if(loud)cloudStatus('Add a gist ID and token first',true); return false; }
+  if(pushing)return false;
+  pushing=true;
+  try{
+    var payload=JSON.stringify({savedAt:new Date().toISOString(),
+      device:(navigator.platform||'device'),state:S},null,1);
+    var body=JSON.stringify({files:{}});
+    body=JSON.parse(body); body.files[LOGFILE]={content:payload};
+    var res=await fetch('https://api.github.com/gists/'+id,{
+      method:'PATCH',
+      headers:{'Authorization':'Bearer '+TOKEN,'Accept':'application/vnd.github+json',
+               'Content-Type':'application/json'},
+      body:JSON.stringify(body)});
+    if(!res.ok){
+      var m=res.status===401?'Token rejected — check it has Gists write':
+            res.status===404?'Gist not found for this token':'HTTP '+res.status;
+      cloudStatus(m,true); pushing=false; return false;
+    }
+    S.sync.lastPush=new Date().toISOString(); save();
+    if(loud)cloudStatus('Backed up '+new Date().toLocaleTimeString());
+    pushing=false; return true;
+  }catch(e){ cloudStatus('Backup failed: '+(e.message||e),true); pushing=false; return false; }
+}
+function schedulePush(){
+  if(!TOKEN)return;
+  clearTimeout(pushTimer);
+  pushTimer=setTimeout(function(){pushBackup(false);},8000);
+}
+async function pullBackup(){
+  var id=gistId(S.sync&&S.sync.gistUrl);
+  if(!id){cloudStatus('Add a gist ID first',true);return;}
+  cloudStatus('Fetching…');
+  try{
+    var url='https://gist.githubusercontent.com/raw/'+id+'/'+LOGFILE+'?cb='+Date.now();
+    var res=await fetch(url,{cache:'no-store'});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    var wrap=JSON.parse(await res.text());
+    var st=wrap.state||wrap;
+    if(!st.workouts||!st.workouts.length)throw new Error('no sessions in the backup');
+    if(!confirm('Replace this device\u2019s data with the cloud backup from '+
+      (wrap.savedAt?new Date(wrap.savedAt).toLocaleString():'unknown time')+'? '+
+      countData(st)+' logged items.'))return;
+    snapshot(); S=migrate(st); save(); closeSheets(); render();
+    toast('Restored from cloud',true);
+  }catch(e){ cloudStatus('Restore failed: '+(e.message||e),true); }
+}
+$('s-push').onclick=function(){pushBackup(true);};
+$('s-pull').onclick=pullBackup;
+$('s-tok').oninput=function(){
+  var v=this.value.trim();
+  saveToken(v);
+  cloudStatus(v?'Auto-backup on. Changes sync a few seconds after you make them.':
+    'Auto-backup off. Use Save backup for a local file.');
+};
+
 $('s-export').onclick=function(){
   var blob=new Blob([JSON.stringify(S,null,1)],{type:'application/json'});
   var a=document.createElement('a');
@@ -1363,6 +1450,7 @@ function migrate(st){
     try{var r=await window.storage.get(k); return r&&r.value?JSON.parse(r.value):null;}
     catch(e){return null;}
   }
+  await loadToken();
   loaded=await read(KEY);
   if(loaded)source='saved';
 
@@ -1389,6 +1477,8 @@ function migrate(st){
   if(source.indexOf('migrat')===0||source.indexOf('recover')===0)
     toast(source.charAt(0).toUpperCase()+source.slice(1));
   if(S.sync&&S.sync.gistUrl) refreshFromGist(false);
+  if(countData(S)===0&&S.sync&&S.sync.gistUrl&&TOKEN)
+    toast('No local data — try Sync → Restore from cloud');
 })();
 })();
 </script>
