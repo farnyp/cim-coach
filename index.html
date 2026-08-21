@@ -228,7 +228,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM · build 2026-08-21 23:17</div></div>
+    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM · build 2026-08-21 23:19</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-zones">Zones</button>
       <button class="btn" id="btn-log">Log</button>
@@ -605,17 +605,19 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
+const PLANVER=3;   /* bump whenever prescriptions change */
 function buildDefaultWorkouts(){
   var out=[];
-  PLAN.forEach(function(w){ w.items.forEach(function(it){
-    out.push({id:uid(),date:addDays(w.start,it.d),kind:it.kind,title:it.title,
+  PLAN.forEach(function(w){ w.items.forEach(function(it,ix){
+    out.push({id:uid(),pid:w.week+'-'+it.d+'-'+ix,
+      date:addDays(w.start,it.d),kind:it.kind,title:it.title,
       plannedKm:it.km,mpKm:it.mp||0,zones:it.z||[],reps:it.reps||'',gate:it.gate||0,
       details:it.details,status:'planned'});
   });});
   return out;
 }
 function freshState(){
-  return {v:2,workouts:buildDefaultWorkouts(),weekNotes:{},
+  return {v:2,planVer:PLANVER,workouts:buildDefaultWorkouts(),weekNotes:{},
     zones:JSON.parse(JSON.stringify(DEFAULT_ZONES)),analyses:[],decisions:[],
     sync:{gistUrl:'',lastUpdateId:'',lastFetch:''},
     mpHistory:[
@@ -873,6 +875,7 @@ $('f-save').onclick=function(){
   w.date=$('f-date').value; w.kind=$('f-kind').value;
   w.plannedKm=num($('f-km').value)||0; w.status=$('f-status').value;
   w.mpKm=num($('f-mp').value)||0; w.reps=$('f-reps').value.trim();
+  if($('f-details').value!==w.details||$('f-title').value.trim()!==w.title)w.custom=true;
   w.zones=editZones.slice(); w.details=$('f-details').value;
   w.actualKm=num($('f-akm').value); w.rpe=num($('f-rpe').value); w.niggle=num($('f-nig').value);
   w.movingTime=parseTime($('f-time').value); w.avgHr=num($('f-ahr').value);
@@ -1455,6 +1458,37 @@ $('s-reset').onclick=function(){
 };
 
 /* boot */
+/* Prescriptions live in PLAN; results live in saved state. This pushes updated
+   prescription text onto existing sessions and leaves everything the athlete
+   entered alone. Sessions they have edited themselves are skipped. */
+function syncPrescriptions(st){
+  var byPid={}, byKey={}, used={};
+  (st.workouts||[]).forEach(function(w){
+    if(w.pid)byPid[w.pid]=w;
+    var k=w.date+'|'+w.title+'|'+w.kind;      // date included: titles repeat across weeks
+    if(!byKey[k])byKey[k]=w;
+  });
+  var updated=0;
+  PLAN.forEach(function(wk){
+    wk.items.forEach(function(it,ix){
+      var pid=wk.week+'-'+it.d+'-'+ix;
+      var origDate=addDays(wk.start,it.d);
+      var t=byPid[pid]||byKey[origDate+'|'+it.title+'|'+it.kind];
+      if(t&&used[t.id])return;                 // never map two plan items onto one session
+      if(t)used[t.id]=1;
+      if(!t||t.custom)return;                 // never overwrite a hand-edited session
+      t.pid=pid;
+      if(t.details!==it.details){t.details=it.details;updated++;}
+      t.title=it.title;
+      t.zones=(it.z||[]).slice();
+      t.reps=it.reps||'';
+      if(t.status==='planned'){               // only reshape untouched sessions
+        t.plannedKm=it.km; t.mpKm=it.mp||0;
+      }
+    });
+  });
+  return updated;
+}
 function migrate(st){
   if(!st||!st.workouts||!st.workouts.length)return freshState();
   if(!st.zones||!st.zones.bands||!st.zones.goalMp||st.zones.bands.length!==5)
@@ -1465,6 +1499,11 @@ function migrate(st){
   if(!st.sync)st.sync={gistUrl:'',lastUpdateId:'',lastFetch:''};
   if(!st.mpHistory)st.mpHistory=[{date:todayISO(),kind:'goal',pace:st.zones.goalMp||'5:00',
     reason:'Block starting value'}];
+  if(st.planVer!==PLANVER){
+    var n=syncPrescriptions(st);
+    st.planVer=PLANVER;
+    if(n)setTimeout(function(){toast('Updated '+n+' session description'+(n===1?'':'s'));},900);
+  }
   return st;
 }
 (async function(){
