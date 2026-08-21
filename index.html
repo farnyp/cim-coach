@@ -227,7 +227,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks · 99 sessions</div></div>
+    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-zones">Zones</button>
       <button class="btn" id="btn-log">Log</button>
@@ -263,8 +263,8 @@ window.storage = {
   </div>
   <div class="fld"><label>Zones</label><div class="zpick" id="f-zones"></div></div>
   <div class="row2">
-    <div class="fld"><label>MP km in session</label><input id="f-mp" type="number" step="0.1" inputmode="decimal"></div>
-    <div class="fld"><label>Reps (e.g. 3x1600)</label><input id="f-reps" placeholder="blank if none"></div>
+    <div class="fld"><label>MP km</label><input id="f-mp" type="number" step="0.1" inputmode="decimal"></div>
+    <div class="fld"><label>Reps</label><input id="f-reps" placeholder="blank if none"></div>
   </div>
   <div class="fld"><label>Structure</label><textarea id="f-details" rows="4"></textarea></div>
   <div class="row3">
@@ -273,7 +273,7 @@ window.storage = {
     <div class="fld"><label>Niggle 0–10</label><input id="f-nig" type="number" min="0" max="10" inputmode="numeric"></div>
   </div>
   <div class="row3">
-    <div class="fld"><label>Time (mm:ss/hh:mm:ss)</label><input id="f-time" placeholder="—"></div>
+    <div class="fld"><label>Time</label><input id="f-time" placeholder="—"></div>
     <div class="fld"><label>Avg HR</label><input id="f-ahr" type="number" inputmode="numeric"></div>
     <div class="fld"><label>Max HR</label><input id="f-mhr" type="number" inputmode="numeric"></div>
   </div>
@@ -286,45 +286,42 @@ window.storage = {
 
 <div class="sheet" id="sheet-z" role="dialog" aria-modal="true" aria-label="Zones">
   <div class="sheet-h"><h3>Zones</h3><button class="btn ghost" data-close>Close</button></div>
-  <div class="hint">The five bands are physiology, set from your own races — 5K at 191 avg,
-    half at 185, BMO at 176, max seen 200. <b>Marathon pace is not a zone.</b> It is a goal you're
-    testing, so it lives on its own below and the gap to your current fitness is the thing to watch.</div>
+  <div class="hint">Marathon pace is a target, not a zone. It sits below with the gap to current fitness.</div>
   <div class="row2">
-    <div class="fld"><label>MP target (min/km)</label><input id="z-mp" placeholder="5:00"></div>
-    <div class="fld"><label>± tolerance (sec)</label><input id="z-mprange" type="number" min="0" max="20"></div>
+    <div class="fld"><label>MP target</label><input id="z-mp" placeholder="5:00"></div>
+    <div class="fld"><label>± sec</label><input id="z-mprange" type="number" min="0" max="20"></div>
   </div>
-  <div class="fld"><label>Current MP from evidence</label><input id="z-curmp" placeholder="5:54"></div>
-  <div class="fld"><label>What that current figure is based on</label>
-    <input id="z-cursrc" placeholder="e.g. BMO 3 May 2026, 4:09:21"></div>
-  <div class="fld"><label>Reason for this change (logged)</label>
-    <input id="z-mpwhy" placeholder="e.g. W7 gate held 8 km at RPE 6"></div>
+  <div class="fld"><label>Current MP</label><input id="z-curmp" placeholder="5:54"></div>
+  <div class="fld"><label>Source</label>
+    <input id="z-cursrc" placeholder="optional"></div>
+  <div class="fld"><label>Reason</label>
+    <input id="z-mpwhy" placeholder="optional"></div>
   <div class="row2">
-    <div class="fld"><label>Max HR seen</label><input id="z-hrmax" placeholder="200"></div>
-    <div class="fld"><label>Threshold HR</label><input id="z-lthr" placeholder="185"></div>
+    <div class="fld"><label>Max HR</label><input id="z-hrmax" placeholder="200"></div>
+    <div class="fld"><label>LTHR</label><input id="z-lthr" placeholder="185"></div>
   </div>
   <div class="row2">
-    <div class="fld"><label>VT1 HR</label><input id="z-vt1h" placeholder="test 30 Aug"></div>
+    <div class="fld"><label>VT1 HR</label><input id="z-vt1h" placeholder="—"></div>
     <div class="fld"><label>VT1 pace</label><input id="z-vt1p" placeholder="—"></div>
   </div>
   <div class="row2">
-    <div class="fld"><label>VT2 HR</label><input id="z-vt2h" placeholder="test 30 Aug"></div>
+    <div class="fld"><label>VT2 HR</label><input id="z-vt2h" placeholder="—"></div>
     <div class="fld"><label>VT2 pace</label><input id="z-vt2p" placeholder="—"></div>
   </div>
   <div id="z-rows"></div>
   <div class="sheet-foot">
-    <button class="btn" id="z-reset">Reset bands</button>
-    <button class="btn" id="z-recal">Recalibrate…</button>
+    <button class="btn" id="z-reset">Reset</button>
+    <button class="btn" id="z-recal">Recalibrate</button>
     <button class="btn accent" id="z-save">Save zones</button>
   </div>
 </div>
 
 <div class="sheet" id="sheet-r" role="dialog" aria-modal="true" aria-label="Recalibrate zones">
   <div class="sheet-h"><h3>Recalibrate</h3><button class="btn ghost" data-close>Close</button></div>
-  <div class="hint">Feed in a race, time trial or lab test and the five bands regenerate.
-    Nothing is written until you press Apply, and the change is logged with its source.</div>
+  <div class="hint">A race or lab test regenerates the bands. Nothing saves until Apply.</div>
   <div class="tabs">
-    <button class="btn" id="r-tab-race" aria-selected="true">Race / time trial</button>
-    <button class="btn" id="r-tab-vt" aria-selected="false">Lab test (VT1/VT2)</button>
+    <button class="btn" id="r-tab-race" aria-selected="true">Race</button>
+    <button class="btn" id="r-tab-vt" aria-selected="false">Lab test</button>
   </div>
 
   <div id="r-race">
@@ -335,18 +332,17 @@ window.storage = {
         <option value="10000">10 km</option><option value="15000">15 km</option>
         <option value="21097">Half marathon</option><option value="42195">Marathon</option>
       </select></div>
-      <div class="fld"><label>Time (mm:ss or h:mm:ss)</label><input id="r-time" placeholder="21:46"></div>
+      <div class="fld"><label>Time</label><input id="r-time" placeholder="21:46"></div>
     </div>
-    <div class="fld"><label>What was it</label><input id="r-label" placeholder="e.g. Great Trek 10K"></div>
+    <div class="fld"><label>Label</label><input id="r-label" placeholder="optional"></div>
     <div class="hint" id="r-eq" style="display:none"></div>
     <div class="fld"><label style="text-transform:none;letter-spacing:0;font-size:.72rem;font-weight:600;color:var(--ink)">
       <input type="checkbox" id="r-setmp" style="width:auto;margin-right:7px;vertical-align:middle">
-      Also set current MP to this race's marathon equivalent</label></div>
+      Set current MP from this race's marathon equivalent</label></div>
   </div>
 
   <div id="r-vt" style="display:none">
-    <div class="hint">Treadmill speed is not road pace — leave the pace fields blank if you only
-      trust the HR values. Bands you leave empty keep their current pace.</div>
+    <div class="hint">Treadmill speed isn't road pace. Leave pace blank to keep current values.</div>
     <div class="row2">
       <div class="fld"><label>VT1 HR</label><input id="r-vt1h" inputmode="numeric"></div>
       <div class="fld"><label>VT1 pace</label><input id="r-vt1p" placeholder="optional"></div>
@@ -364,7 +360,7 @@ window.storage = {
   <div class="fld"><label>Preview</label><div id="r-preview"></div></div>
   <div class="sheet-foot">
     <button class="btn" id="r-calc">Preview</button>
-    <button class="btn accent" id="r-apply">Apply to all 14 weeks</button>
+    <button class="btn accent" id="r-apply">Apply</button>
   </div>
 </div>
 
@@ -380,20 +376,17 @@ window.storage = {
 
 <div class="sheet" id="sheet-s" role="dialog" aria-modal="true" aria-label="Sync">
   <div class="sheet-h"><h3>Sync</h3><button class="btn ghost" data-close>Close</button></div>
-  <div class="hint">Claude writes updates to a secret gist; <b>Refresh</b> pulls them in.
-    Paste the gist <b>ID or any gist link</b> — the app works out the rest.
-    No token goes here; reading needs none. <b>Test connection</b> checks which route works
-    from your device before you rely on it.</div>
-  <div class="fld"><label>Gist ID or link</label>
-    <input id="s-url" placeholder="cdbf7fe71827cc2ceb481d342eb23e3c"></div>
+  <div class="hint">Paste the gist ID once. Refresh pulls updates from it.</div>
+  <div class="fld"><label>Gist ID</label>
+    <input id="s-url" placeholder="paste gist ID" autocomplete="off" spellcheck="false"></div>
   <div class="sheet-foot" style="position:static;margin:0 0 12px">
     <button class="btn" id="s-test">Test connection</button>
   </div>
   <div id="s-status" class="hint" style="display:none"></div>
   <div class="sheet-foot" style="position:static;margin:0 0 14px">
-    <button class="btn dark" id="s-copy">Copy state for Claude</button>
+    <button class="btn dark" id="s-copy">Copy state</button>
   </div>
-  <div class="fld"><label>Paste update from Claude</label>
+  <div class="fld"><label>Paste update</label>
     <textarea id="s-paste" rows="7" placeholder='{"type":"cim-coach-update","v":2, ...}'></textarea></div>
   <div class="sheet-foot">
     <button class="btn danger" id="s-reset">Reset plan</button>
@@ -675,7 +668,7 @@ function render(){
      '<div class="metric mp"><div class="k">MP logged</div><div class="v">'+r1(mt.mp)+' <small>km</small></div></div></div>';
 
   h+='<div class="note"><div class="k">Week note</div><textarea id="wnote" rows="2" '+
-     'placeholder="What actually happened this week">'+esc(S.weekNotes[wk]||'')+'</textarea></div>';
+     'placeholder="Notes">'+esc(S.weekNotes[wk]||'')+'</textarea></div>';
 
   h+='<div class="cal">';
   for(var i=0;i<7;i++){
@@ -700,21 +693,32 @@ function render(){
 }
 
 function card(w){
-  var cls='w'+(w.kind==='gym'?' gym':'')+(w.kind==='race'?' race':'')+
+  var isRun=(w.kind==='run'||w.kind==='race');
+  var cls='w'+(isRun?'':' gym')+(w.kind==='race'?' race':'')+
     (w.status==='done'?' is-done':'')+(w.status==='skipped'?' is-skipped':'');
   var dot=w.status==='done'?'done':w.status==='modified'?'mod':'';
   var h='<div class="'+cls+'" data-id="'+w.id+'" draggable="true" tabindex="0" role="button">'+
     '<div class="w-top"><span class="w-title">'+esc(w.title)+'</span>'+
-    (w.kind==='gym'?'<span class="dot '+dot+'"></span>':
-      '<span class="km">'+r1(+w.plannedKm||0)+' km</span>')+'</div>';
+    (isRun?'<span class="km">'+r1(+w.plannedKm||0)+' km</span>':
+      '<span class="dot '+dot+'"></span>')+'</div>';
+
+  if(!isRun){
+    var meta=[];
+    if(w.movingTime)meta.push(s2hms(w.movingTime));
+    if(w.avgHr)meta.push(w.avgHr+' bpm');
+    if(w.actualKm)meta.unshift(r1(+w.actualKm)+' km');
+    h+=meta.length?'<div class="zsub">'+esc(meta.join(' · '))+'</div>':'';
+    return h+'</div>';
+  }
+
   h+='<div class="w-det">'+esc(w.details)+'</div>';
   if(w.zones&&w.zones.length){
     h+='<div class="zline">'+w.zones.map(function(z){
-      return '<span class="zchip" style="background:'+ZC[z]+'">'+ZN[z]+' '+bandPace(z)+'/km</span>';
+      return '<span class="zchip" style="background:'+ZC[z]+'">'+ZN[z]+' '+bandPace(z)+'</span>';
     }).join('')+'</div>';
-    var hr=bandHr(w.zones[0]), rp=bandRpe(w.zones[0]);
     var rt=repTarget(w.reps,w.zones[0]);
-    var bits=[]; if(rt)bits.push(rt); if(hr)bits.push(hr+' bpm'); if(rp)bits.push('RPE '+rp);
+    var bits=[]; if(rt)bits.push(rt);
+    var hr=bandHr(w.zones[0]); if(hr)bits.push(hr+' bpm');
     if(bits.length)h+='<div class="zsub">'+esc(bits.join(' · '))+'</div>';
   }
   if(w.status==='done'||w.status==='modified'||w.rpe!=null||w.niggle!=null){
@@ -725,7 +729,6 @@ function card(w){
     if(w.avgHr)r.push(w.avgHr+' bpm');
     if(w.rpe!=null)r.push('RPE <b>'+w.rpe+'</b>');
     if(w.niggle!=null)r.push('Niggle <b>'+w.niggle+'</b>');
-    if(w.stravaId)r.push('<span class="src">Strava</span>');
     if(r.length)h+='<div class="w-res">'+r.join('')+'</div>';
   }
   if(w.timeInZone&&w.timeInZone.length===5){
@@ -960,7 +963,7 @@ function renderRecalTabs(){
   $('r-vt').style.display=recalMode==='vt'?'block':'none';
 }
 function openRecal(){
-  recalProposal=null; $('r-preview').innerHTML='<div class="empty">Enter a result, then press Preview.</div>';
+  recalProposal=null; $('r-preview').innerHTML='<div class="empty">Enter a result, then Preview.</div>';
   $('r-eq').style.display='none';
   $('r-vt1h').value=S.zones.vt1Hr||''; $('r-vt1p').value=S.zones.vt1Pace||'';
   $('r-vt2h').value=S.zones.vt2Hr||''; $('r-vt2p').value=S.zones.vt2Pace||'';
@@ -981,7 +984,7 @@ function computeRecal(){
     $('r-eq').style.display='block';
     $('r-eq').innerHTML='<b>VDOT '+vd.toFixed(1)+'</b> · equivalent 10K '+s2hms(equivTime(vd,10000))+
       ' · half '+s2hms(equivTime(vd,21097))+' · marathon '+s2hms(mEq)+
-      '<br>Marathon equivalents assume the long-run base to support them. With low weekly volume they run optimistic.';
+      '<br>Equivalents assume the long-run base to match.';
     return {kind:'race',vdot:vd,bands:bandsFromVdot(vd),
       mpEquiv:s2p(mEq/42.195),
       label:($('r-label').value.trim()||('race '+d+' m in '+$('r-time').value.trim()))};
@@ -1055,7 +1058,7 @@ function renderLog(){
   $('t-mp').setAttribute('aria-selected',logTab==='mp');
   if(logTab==='an'){
     var l=S.analyses.slice().reverse();
-    if(!l.length){b.innerHTML='<div class="empty">No analyses yet.<br>Ask Claude to read a run from Strava, then paste the update into Sync.</div>';return;}
+    if(!l.length){b.innerHTML='<div class="empty">No analyses yet.</div>';return;}
     h=l.map(function(a){return '<div class="entry"><div class="meta">'+esc(a.date||'')+
       (a.source?' · '+esc(a.source):'')+'</div><h4>'+esc(a.title||'Session')+'</h4>'+
       '<p>'+esc(a.summary||'')+'</p>'+
@@ -1063,7 +1066,7 @@ function renderLog(){
       (a.flags?'<div class="ev"><b>Flags:</b> '+esc(a.flags)+'</div>':'')+'</div>';}).join('');
   }else if(logTab==='de'){
     var d=S.decisions.slice().reverse();
-    if(!d.length){b.innerHTML='<div class="empty">No decisions recorded.<br>Changes to pace, volume or structure get logged here with their reasoning.</div>';return;}
+    if(!d.length){b.innerHTML='<div class="empty">No decisions yet.</div>';return;}
     h=d.map(function(x){return '<div class="entry dec"><div class="meta">'+esc(x.date||'')+
       (x.rule?' · '+esc(x.rule):'')+'</div><h4>'+esc(x.change||'')+'</h4>'+
       (x.evidence?'<p>'+esc(x.evidence)+'</p>':'')+'</div>';}).join('');
@@ -1203,16 +1206,14 @@ function gistId(v){
    access-control-allow-origin:* , so it leads. */
 function transports(id){
   return [
+    {name:'Raw gist',url:'https://gist.githubusercontent.com/raw/'+id+'/cim-state.json',
+     pick:function(txt){return txt;}},
     {name:'GitHub API',url:'https://api.github.com/gists/'+id,
      pick:function(txt){
        var g=JSON.parse(txt), f=g.files&&(g.files['cim-state.json']||g.files[Object.keys(g.files)[0]]);
        if(!f)throw new Error('no file in gist');
-       if(f.truncated)throw new Error('file too large, was truncated');
-       return f.content;}},
-    {name:'jsDelivr CDN',url:'https://cdn.jsdelivr.net/gist/'+id+'/cim-state.json',
-     pick:function(txt){return txt;}},
-    {name:'Raw gist',url:'https://gist.githubusercontent.com/raw/'+id+'/cim-state.json',
-     pick:function(txt){return txt;}}
+       if(f.truncated)throw new Error('truncated');
+       return f.content;}}
   ];
 }
 async function tryTransport(t){
@@ -1282,7 +1283,7 @@ $('s-apply').onclick=function(){
 };
 
 $('s-reset').onclick=function(){
-  if(!confirm('Reset every session, note, analysis and decision to the default plan? Zones and MP history are kept.'))return;
+  if(!confirm('Reset all sessions and notes to the default plan? Zones are kept.'))return;
   snapshot();
   var z=S.zones,mh=S.mpHistory;
   S=freshState(); S.zones=z; S.mpHistory=mh;
