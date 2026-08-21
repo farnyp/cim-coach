@@ -1156,6 +1156,11 @@ async function pushBackup(loud){
   if(pushing)return false;
   pushing=true;
   try{
+    if((S.workouts||[]).length<50){
+      cloudStatus('Backup held: only '+(S.workouts||[]).length+
+        ' sessions locally. Refusing to overwrite a good cloud copy.',true);
+      pushing=false; return false;
+    }
     var payload=JSON.stringify({savedAt:new Date().toISOString(),
       device:(navigator.platform||'device'),state:S},null,1);
     var body=JSON.stringify({files:{}});
@@ -1191,6 +1196,9 @@ async function pullBackup(){
     var wrap=JSON.parse(await res.text());
     var st=wrap.state||wrap;
     if(!st.workouts||!st.workouts.length)throw new Error('no sessions in the backup');
+    if(st.workouts.length<50)
+      throw new Error('that backup holds only '+st.workouts.length+
+        ' sessions \u2014 a full plan has 99+. Refusing to overwrite with a fragment.');
     if(!confirm('Replace this device\u2019s data with the cloud backup from '+
       (wrap.savedAt?new Date(wrap.savedAt).toLocaleString():'unknown time')+'? '+
       countData(st)+' logged items.'))return;
@@ -1222,6 +1230,7 @@ $('s-import').onchange=function(){
     try{
       var st=JSON.parse(fr.result);
       if(!st.workouts||!st.workouts.length)throw new Error('no sessions in that file');
+      if(st.workouts.length<50)throw new Error('fragment: only '+st.workouts.length+' sessions');
       if(!confirm('Replace current data with this backup? '+countData(st)+' logged items.'))return;
       snapshot(); S=migrate(st); save(); closeSheets(); render(); toast('Backup restored',true);
     }catch(e){ toast('Could not read that file'); }
@@ -1288,6 +1297,13 @@ function applyPayload(p,srcLabel){
 
   (p.activities||[]).forEach(function(a){
     if(a.stravaId&&S.workouts.some(function(w){return w.stravaId===a.stravaId;})){dup++;return;}
+    var nm=function(x){return String(x||'').toLowerCase().replace(/[^a-z0-9]/g,'');};
+    if(S.workouts.some(function(w){
+      if(w.date!==a.date||w.status!=='done')return false;
+      if(nm(w.title)===nm(a.title))return true;
+      return !!(a.km&&w.actualKm&&Math.abs(w.actualKm-a.km)<0.15&&
+                nm(w.title).slice(0,6)===nm(a.title).slice(0,6));
+    })){dup++;return;}
     var t=null;
     if(a.matchId)t=S.workouts.filter(function(w){return w.id===a.matchId;})[0];
     if(!t&&a.date&&(a.kind||'run')==='run')
