@@ -1440,11 +1440,17 @@ $('s-apply').onclick=function(){
 };
 
 $('s-reset').onclick=function(){
-  if(!confirm('Reset all sessions and notes to the default plan? Zones are kept.'))return;
+  if(!confirm('Rebuild the plan from defaults?\n\nKEPT: gist ID, cloud token, zones, MP history, '+
+    'analyses and decisions.\nCLEARED: logged sessions, results and week notes.'))return;
   snapshot();
-  var z=S.zones,mh=S.mpHistory;
-  S=freshState(); S.zones=z; S.mpHistory=mh;
-  save();closeSheets();wk=currentWeek();render();toast('Plan reset',true);
+  /* Everything here is either hard to re-obtain or irreplaceable. */
+  var keep={zones:S.zones, mpHistory:S.mpHistory, sync:S.sync,
+            analyses:S.analyses, decisions:S.decisions};
+  S=freshState();
+  Object.keys(keep).forEach(function(k){ if(keep[k]!==undefined) S[k]=keep[k]; });
+  if(S.sync)S.sync.lastUpdateId='';   // let the gist re-apply after a rebuild
+  save();closeSheets();wk=currentWeek();render();
+  toast('Plan rebuilt — gist ID and zones kept',true);
 };
 
 /* boot */
