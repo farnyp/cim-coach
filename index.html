@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#18364c">
+<meta name="robots" content="noindex">
+<title>Marathon Block</title>
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Marathon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;750;800;900&display=swap" rel="stylesheet">
+<script>
+/* window.storage shim: same async API as the Claude artifact host,
+   backed by localStorage so the page works as a normal website. */
+window.storage = {
+  async get(key){ const v=localStorage.getItem(key);
+    if(v===null) throw new Error('not found: '+key);
+    return {key:key,value:v,shared:false}; },
+  async set(key,value){ localStorage.setItem(key,value);
+    return {key:key,value:value,shared:false}; },
+  async delete(key){ localStorage.removeItem(key);
+    return {key:key,deleted:true,shared:false}; },
+  async list(prefix){ const keys=[];
+    for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i);
+      if(!prefix||k.indexOf(prefix)===0) keys.push(k); }
+    return {keys:keys,prefix:prefix,shared:false}; }
+};
+</script>
+</head>
+<body>
+<div id="app-root">
+<style>
+  #app-root{
+    --ink:#122333; --muted:#65727e; --paper:#f6f3ec; --card:#fffefa; --line:#d9d7cf;
+    --navy:#18364c; --orange:#ee6c3a; --orange-soft:#ffe4d5; --green:#267052;
+    --green-soft:#dff3e9; --purple-soft:#eee7f6; --shadow:0 18px 45px rgba(18,35,51,.11);
+    --gym-border:#d8cae8; --gym-label:#76558e; --race-border:#efb89e; --done-border:#a5d0bb;
+    --dot-mod:#d29a27; --dot-neutral:#c4c8c7; --drop:#fff0e5;
+    --z1:#7d8fa1; --z2:#4c8fb5; --z3:#3f9e86; --z4:#ee6c3a; --z5:#c8503f; --z6:#8e3f7e;
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    color:var(--ink); background:var(--paper);
+    background-image:radial-gradient(32rem 32rem at 0% 0%, rgba(238,108,58,.10), transparent 70%);
+    min-height:100vh; -webkit-font-smoothing:antialiased;
+  }
+  #app-root *{box-sizing:border-box;}
+  #app-root .wrap{max-width:1500px;margin:0 auto;padding:0 18px 100px;}
+  @media(min-width:720px){#app-root .wrap{padding:0 28px 100px;}}
+  #app-root button{font-family:inherit;cursor:pointer;}
+  #app-root .btn{border:1px solid var(--line);background:var(--card);color:var(--ink);
+    border-radius:999px;padding:7px 13px;font-size:.7rem;font-weight:750;letter-spacing:.03em;
+    text-transform:uppercase;}
+  #app-root .btn:hover{border-color:var(--orange);}
+  #app-root .btn.dark{background:var(--navy);color:#fff;border-color:var(--navy);}
+  #app-root .btn.accent{background:var(--orange);color:#fff;border-color:var(--orange);}
+  #app-root .btn.ghost{background:transparent;}
+  #app-root .btn.danger{color:#a3341f;border-color:#e8c4b8;}
+  #app-root .btn:focus-visible,#app-root input:focus-visible,#app-root select:focus-visible,
+  #app-root textarea:focus-visible{outline:2px solid var(--orange);outline-offset:2px;}
+
+  #app-root .hdr{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;
+    padding:18px 0 14px;flex-wrap:wrap;}
+  #app-root h1{font-size:1.38rem;letter-spacing:-.028em;font-weight:800;margin:0;line-height:1.1;}
+  @media(min-width:560px){#app-root h1{font-size:1.65rem;}}
+  #app-root .sub{font-size:.72rem;color:var(--muted);margin-top:3px;}
+  #app-root .hdr-actions{display:flex;gap:7px;flex-wrap:wrap;}
+
+  #app-root .weeknav{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  #app-root .weeknav .label{flex:1;text-align:center;font-size:.73rem;font-weight:800;
+    letter-spacing:.09em;text-transform:uppercase;color:var(--muted);}
+  #app-root .nav-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);
+    background:var(--card);font-size:1rem;color:var(--ink);line-height:1;}
+  #app-root .nav-btn:disabled{opacity:.35;cursor:default;}
+
+  #app-root .hero{background:var(--navy);color:#fff;border-radius:24px;padding:18px;
+    box-shadow:var(--shadow);margin-bottom:12px;}
+  #app-root .eyebrow{font-size:.6rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--orange);}
+  #app-root .hero h2{margin:6px 0 0;font-size:1.18rem;letter-spacing:-.02em;font-weight:800;}
+  #app-root .hero p{margin:8px 0 0;font-size:.82rem;line-height:1.5;color:#d7e0e8;}
+  #app-root .mpbar{margin-top:13px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.17);
+    border-radius:14px;padding:9px 12px;}
+  #app-root .mpbar .lbl{font-size:.58rem;font-weight:900;letter-spacing:.14em;
+    text-transform:uppercase;color:#9fb3c4;}
+  #app-root .mpbar .val{font-size:1.15rem;font-weight:850;letter-spacing:-.02em;color:#fff;}
+  #app-root .mpbar .since{font-size:.66rem;color:#9fb3c4;flex:1;}
+  #app-root .mpbar button{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+    color:#fff;border-radius:999px;padding:5px 12px;font-size:.64rem;font-weight:800;
+    text-transform:uppercase;letter-spacing:.06em;}
+
+  #app-root .metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px;}
+  @media(min-width:720px){#app-root .metrics{grid-template-columns:repeat(4,1fr);}}
+  #app-root .metric{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px 13px;}
+  #app-root .k{font-size:.6rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);}
+  #app-root .metric .v{font-size:1.55rem;font-weight:800;letter-spacing:-.03em;margin-top:3px;line-height:1;}
+  #app-root .metric .v small{font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:0;}
+  #app-root .metric.done .v{color:var(--green);}
+  #app-root .metric.mp .v{color:var(--orange);}
+
+  #app-root .note{background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:12px 13px;margin-bottom:14px;}
+  #app-root .note textarea{width:100%;border:none;background:transparent;resize:vertical;
+    min-height:42px;font-family:inherit;font-size:.8rem;line-height:1.5;color:var(--ink);margin-top:6px;}
+
+  #app-root .cal{display:grid;gap:10px;grid-template-columns:1fr;}
+  @media(min-width:1000px){#app-root .cal{grid-template-columns:repeat(7,1fr);align-items:start;}}
+  #app-root .day{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:12px;
+    min-height:74px;transition:background .12s,border-color .12s;}
+  #app-root .day.today{border-color:var(--orange);box-shadow:0 0 0 2px rgba(238,108,58,.16);}
+  #app-root .day.over{background:var(--drop);border-color:var(--orange);border-style:dashed;}
+  #app-root .day-h{display:flex;align-items:baseline;justify-content:space-between;gap:6px;margin-bottom:9px;}
+  #app-root .day-h .dow{font-size:.63rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase;}
+  #app-root .day-h .dt{font-size:.63rem;color:var(--muted);font-weight:600;}
+  #app-root .day-h .sum{font-size:.63rem;color:var(--muted);font-weight:800;}
+  #app-root .rest{font-size:.72rem;color:var(--muted);padding:4px 0 2px;}
+
+  #app-root .w{border:1px solid var(--line);border-radius:15px;padding:13px;margin-bottom:8px;
+    box-shadow:0 5px 15px rgba(18,35,51,.05);background:var(--card);text-align:left;width:100%;
+    display:block;}
+  @media(min-width:1000px){#app-root .w{padding:11px;}}
+  #app-root .w:last-child{margin-bottom:0;}
+  #app-root .w.gym{background:var(--purple-soft);border-color:var(--gym-border);}
+  #app-root .w.race{background:var(--orange-soft);border-color:var(--race-border);}
+  #app-root .w.is-done{background:var(--green-soft);border-color:var(--done-border);}
+  #app-root .w.is-skipped{opacity:.5;}
+  #app-root .w.dragging{opacity:.4;}
+  #app-root .w-top{display:flex;align-items:flex-start;gap:8px;justify-content:space-between;}
+  #app-root .w-title{font-size:.97rem;font-weight:750;letter-spacing:-.015em;line-height:1.25;}
+  @media(min-width:1000px){#app-root .w-title{font-size:.88rem;}}
+  #app-root .w.gym .w-title{font-size:.83rem;color:var(--gym-label);}
+  #app-root .km{font-size:.68rem;font-weight:900;color:var(--muted);white-space:nowrap;padding-top:2px;}
+  #app-root .w-det{font-size:.76rem;line-height:1.45;margin-top:6px;opacity:.9;}
+  #app-root .zline{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px;}
+  #app-root .zchip{font-size:.66rem;font-weight:800;border-radius:999px;padding:3px 8px;
+    color:#fff;white-space:nowrap;letter-spacing:.01em;}
+  #app-root .zsub{font-size:.7rem;color:var(--muted);font-weight:650;margin-top:5px;line-height:1.4;}
+  #app-root .dot{width:8px;height:8px;border-radius:50%;background:var(--dot-neutral);
+    display:inline-block;flex:0 0 auto;margin-top:5px;}
+  #app-root .dot.done{background:var(--green);}
+  #app-root .dot.mod{background:var(--dot-mod);}
+  #app-root .w-res{margin-top:8px;padding-top:7px;border-top:1px dashed var(--line);
+    font-size:.7rem;color:var(--muted);font-weight:650;display:flex;gap:9px;flex-wrap:wrap;}
+  #app-root .w-res b{color:var(--ink);}
+  #app-root .src{font-size:.58rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--orange);}
+  #app-root .tiz{display:flex;height:5px;border-radius:3px;overflow:hidden;margin-top:7px;}
+  #app-root .tiz i{display:block;height:100%;}
+
+  #app-root .fab{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom));
+    width:54px;height:54px;border-radius:50%;background:var(--orange);color:#fff;border:none;
+    font-size:1.6rem;line-height:1;box-shadow:0 10px 26px rgba(238,108,58,.42);z-index:30;}
+
+  #app-root .scrim{position:fixed;inset:0;background:rgba(18,35,51,.42);z-index:40;display:none;}
+  #app-root .scrim.open{display:block;}
+  #app-root .sheet{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--paper);
+    border-radius:25px 25px 0 0;box-shadow:0 -18px 45px rgba(18,35,51,.2);
+    max-height:88vh;overflow-y:auto;display:none;
+    padding:16px 18px calc(26px + env(safe-area-inset-bottom));}
+  #app-root .sheet.open{display:block;}
+  @media(min-width:820px){#app-root .sheet{left:50%;transform:translateX(-50%);width:680px;
+    border-radius:25px;bottom:24px;max-height:84vh;}}
+  #app-root .sheet-h{display:flex;align-items:center;justify-content:space-between;gap:10px;
+    margin-bottom:14px;position:sticky;top:-16px;background:var(--paper);padding:6px 0 8px;z-index:2;}
+  #app-root .sheet-h h3{margin:0;font-size:1.02rem;font-weight:800;letter-spacing:-.02em;}
+  #app-root .fld{margin-bottom:11px;}
+  #app-root .fld label{display:block;font-size:.6rem;font-weight:900;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+  #app-root input,#app-root select,#app-root textarea{width:100%;border:1px solid var(--line);
+    background:var(--card);border-radius:10px;padding:9px 11px;font-family:inherit;
+    font-size:.85rem;color:var(--ink);}
+  #app-root textarea{resize:vertical;line-height:1.5;}
+  #app-root .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  #app-root .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  #app-root .row4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+  #app-root .shift{display:flex;gap:8px;margin-top:6px;}
+  #app-root .shift .btn{flex:1;text-align:center;}
+  #app-root .sheet-foot{display:flex;gap:9px;margin-top:16px;position:sticky;bottom:0;
+    background:var(--paper);padding:10px 0 2px;}
+  #app-root .sheet-foot .btn{flex:1;text-align:center;padding:11px;font-size:.72rem;}
+  #app-root .hint{font-size:.72rem;line-height:1.5;color:var(--muted);
+    background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:14px;}
+  #app-root .hint b{color:var(--ink);}
+  #app-root .zpick{display:flex;gap:6px;flex-wrap:wrap;}
+  #app-root .zpick button{border:1px solid var(--line);background:var(--card);border-radius:999px;
+    padding:6px 11px;font-size:.72rem;font-weight:800;color:var(--muted);}
+  #app-root .zpick button[aria-pressed="true"]{color:#fff;border-color:transparent;}
+
+  #app-root .zrow{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:11px;margin-bottom:9px;}
+  #app-root .zrow .zhead{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  #app-root .zrow .zbadge{font-size:.66rem;font-weight:900;color:#fff;border-radius:999px;padding:3px 9px;}
+  #app-root .zrow .zname{font-size:.72rem;font-weight:800;color:var(--muted);}
+  #app-root .zrow input{font-size:.78rem;padding:7px 8px;text-align:center;}
+  #app-root .zrow .cap{font-size:.55rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);text-align:center;margin-bottom:3px;}
+  #app-root .zrow.locked{background:#fff7f2;border-color:var(--race-border);}
+  #app-root .lockmsg{font-size:.68rem;color:var(--orange);font-weight:700;margin-top:7px;}
+
+  #app-root .entry{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:12px;margin-bottom:9px;}
+  #app-root .entry.dec{border-left:3px solid var(--orange);}
+  #app-root .entry .meta{font-size:.6rem;font-weight:900;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:5px;}
+  #app-root .entry h4{margin:0 0 5px;font-size:.86rem;font-weight:800;letter-spacing:-.01em;}
+  #app-root .entry p{margin:0;font-size:.77rem;line-height:1.5;white-space:pre-wrap;}
+  #app-root .entry .ev{margin-top:7px;padding-top:7px;border-top:1px dashed var(--line);
+    font-size:.72rem;color:var(--muted);line-height:1.45;}
+  #app-root .empty{text-align:center;color:var(--muted);font-size:.8rem;padding:26px 12px;line-height:1.55;}
+  #app-root .tabs{display:flex;gap:7px;margin-bottom:12px;}
+  #app-root .tabs .btn{flex:1;text-align:center;}
+  #app-root .tabs .btn[aria-selected="true"]{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+  #app-root .toast{position:fixed;left:50%;transform:translateX(-50%);
+    bottom:calc(84px + env(safe-area-inset-bottom));background:var(--navy);color:#fff;
+    padding:11px 18px;border-radius:999px;font-size:.76rem;font-weight:700;z-index:70;
+    box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .18s;
+    display:flex;align-items:center;gap:12px;}
+  #app-root .toast.show{opacity:1;pointer-events:auto;}
+  #app-root .toast button{background:none;border:none;color:var(--orange);font-weight:900;
+    font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;padding:0;}
+  @media(prefers-reduced-motion:reduce){#app-root *{transition:none!important;}}
+  #app-root .loading{padding:60px 20px;text-align:center;color:var(--muted);font-size:.82rem;}
+</style>
+
+<div class="wrap">
+  <div class="hdr">
+    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks · 99 sessions</div></div>
+    <div class="hdr-actions">
+      <button class="btn" id="btn-zones">Zones</button>
+      <button class="btn" id="btn-log">Log</button>
+      <button class="btn" id="btn-sync">Sync</button>
+      <button class="btn accent" id="btn-refresh">Refresh</button>
+    </div>
+  </div>
+  <div id="main"><div class="loading">Loading your plan…</div></div>
+</div>
+
+<button class="fab" id="fab" aria-label="Add session">+</button>
+<div class="scrim" id="scrim"></div>
+
+<div class="sheet" id="sheet-w" role="dialog" aria-modal="true" aria-label="Edit session">
+  <div class="sheet-h"><h3 id="w-heading">Edit session</h3><button class="btn ghost" data-close>Close</button></div>
+  <div class="fld"><label>Title</label><input id="f-title"></div>
+  <div class="row2">
+    <div class="fld"><label>Date</label><input id="f-date" type="date"></div>
+    <div class="fld"><label>Type</label><select id="f-kind">
+      <option value="run">Run</option><option value="race">Race</option>
+      <option value="gym">Gym</option><option value="bike">Bike</option>
+      <option value="swim">Swim</option><option value="other">Other</option></select></div>
+  </div>
+  <div class="shift">
+    <button class="btn" id="f-prev">← Day earlier</button>
+    <button class="btn" id="f-next">Day later →</button>
+  </div>
+  <div class="row2" style="margin-top:11px">
+    <div class="fld"><label>Planned km</label><input id="f-km" type="number" step="0.1" inputmode="decimal"></div>
+    <div class="fld"><label>Status</label><select id="f-status">
+      <option value="planned">Planned</option><option value="done">Done</option>
+      <option value="modified">Modified</option><option value="skipped">Skipped</option></select></div>
+  </div>
+  <div class="fld"><label>Zones</label><div class="zpick" id="f-zones"></div></div>
+  <div class="row2">
+    <div class="fld"><label>MP km in session</label><input id="f-mp" type="number" step="0.1" inputmode="decimal"></div>
+    <div class="fld"><label>Reps (e.g. 3x1600)</label><input id="f-reps" placeholder="blank if none"></div>
+  </div>
+  <div class="fld"><label>Structure</label><textarea id="f-details" rows="4"></textarea></div>
+  <div class="row3">
+    <div class="fld"><label>Actual km</label><input id="f-akm" type="number" step="0.1" inputmode="decimal"></div>
+    <div class="fld"><label>RPE 1–10</label><input id="f-rpe" type="number" min="1" max="10" inputmode="numeric"></div>
+    <div class="fld"><label>Niggle 0–10</label><input id="f-nig" type="number" min="0" max="10" inputmode="numeric"></div>
+  </div>
+  <div class="row3">
+    <div class="fld"><label>Time (mm:ss/hh:mm:ss)</label><input id="f-time" placeholder="—"></div>
+    <div class="fld"><label>Avg HR</label><input id="f-ahr" type="number" inputmode="numeric"></div>
+    <div class="fld"><label>Max HR</label><input id="f-mhr" type="number" inputmode="numeric"></div>
+  </div>
+  <div class="fld"><label>Notes</label><textarea id="f-notes" rows="3"></textarea></div>
+  <div class="sheet-foot">
+    <button class="btn danger" id="f-del">Delete</button>
+    <button class="btn accent" id="f-save">Save session</button>
+  </div>
+</div>
+
+<div class="sheet" id="sheet-z" role="dialog" aria-modal="true" aria-label="Zones">
+  <div class="sheet-h"><h3>Zones</h3><button class="btn ghost" data-close>Close</button></div>
+  <div class="hint">The five bands are physiology, set from your own races — 5K at 191 avg,
+    half at 185, BMO at 176, max seen 200. <b>Marathon pace is not a zone.</b> It is a goal you're
+    testing, so it lives on its own below and the gap to your current fitness is the thing to watch.</div>
+  <div class="row2">
+    <div class="fld"><label>MP target (min/km)</label><input id="z-mp" placeholder="5:00"></div>
+    <div class="fld"><label>± tolerance (sec)</label><input id="z-mprange" type="number" min="0" max="20"></div>
+  </div>
+  <div class="fld"><label>Current MP from evidence</label><input id="z-curmp" placeholder="5:54"></div>
+  <div class="fld"><label>What that current figure is based on</label>
+    <input id="z-cursrc" placeholder="e.g. BMO 3 May 2026, 4:09:21"></div>
+  <div class="fld"><label>Reason for this change (logged)</label>
+    <input id="z-mpwhy" placeholder="e.g. W7 gate held 8 km at RPE 6"></div>
+  <div class="row2">
+    <div class="fld"><label>Max HR seen</label><input id="z-hrmax" placeholder="200"></div>
+    <div class="fld"><label>Threshold HR</label><input id="z-lthr" placeholder="185"></div>
+  </div>
+  <div class="row2">
+    <div class="fld"><label>VT1 HR</label><input id="z-vt1h" placeholder="test 30 Aug"></div>
+    <div class="fld"><label>VT1 pace</label><input id="z-vt1p" placeholder="—"></div>
+  </div>
+  <div class="row2">
+    <div class="fld"><label>VT2 HR</label><input id="z-vt2h" placeholder="test 30 Aug"></div>
+    <div class="fld"><label>VT2 pace</label><input id="z-vt2p" placeholder="—"></div>
+  </div>
+  <div id="z-rows"></div>
+  <div class="sheet-foot">
+    <button class="btn" id="z-reset">Reset bands</button>
+    <button class="btn" id="z-recal">Recalibrate…</button>
+    <button class="btn accent" id="z-save">Save zones</button>
+  </div>
+</div>
+
+<div class="sheet" id="sheet-r" role="dialog" aria-modal="true" aria-label="Recalibrate zones">
+  <div class="sheet-h"><h3>Recalibrate</h3><button class="btn ghost" data-close>Close</button></div>
+  <div class="hint">Feed in a race, time trial or lab test and the five bands regenerate.
+    Nothing is written until you press Apply, and the change is logged with its source.</div>
+  <div class="tabs">
+    <button class="btn" id="r-tab-race" aria-selected="true">Race / time trial</button>
+    <button class="btn" id="r-tab-vt" aria-selected="false">Lab test (VT1/VT2)</button>
+  </div>
+
+  <div id="r-race">
+    <div class="row2">
+      <div class="fld"><label>Distance</label><select id="r-dist">
+        <option value="1500">1500 m</option><option value="3000">3000 m</option>
+        <option value="5000" selected>5 km</option><option value="8000">8 km</option>
+        <option value="10000">10 km</option><option value="15000">15 km</option>
+        <option value="21097">Half marathon</option><option value="42195">Marathon</option>
+      </select></div>
+      <div class="fld"><label>Time (mm:ss or h:mm:ss)</label><input id="r-time" placeholder="21:46"></div>
+    </div>
+    <div class="fld"><label>What was it</label><input id="r-label" placeholder="e.g. Great Trek 10K"></div>
+    <div class="hint" id="r-eq" style="display:none"></div>
+    <div class="fld"><label style="text-transform:none;letter-spacing:0;font-size:.72rem;font-weight:600;color:var(--ink)">
+      <input type="checkbox" id="r-setmp" style="width:auto;margin-right:7px;vertical-align:middle">
+      Also set current MP to this race's marathon equivalent</label></div>
+  </div>
+
+  <div id="r-vt" style="display:none">
+    <div class="hint">Treadmill speed is not road pace — leave the pace fields blank if you only
+      trust the HR values. Bands you leave empty keep their current pace.</div>
+    <div class="row2">
+      <div class="fld"><label>VT1 HR</label><input id="r-vt1h" inputmode="numeric"></div>
+      <div class="fld"><label>VT1 pace</label><input id="r-vt1p" placeholder="optional"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>VT2 HR</label><input id="r-vt2h" inputmode="numeric"></div>
+      <div class="fld"><label>VT2 pace</label><input id="r-vt2p" placeholder="optional"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Max HR</label><input id="r-hrmax" inputmode="numeric"></div>
+      <div class="fld"><label>Test date</label><input id="r-date" type="date"></div>
+    </div>
+  </div>
+
+  <div class="fld"><label>Preview</label><div id="r-preview"></div></div>
+  <div class="sheet-foot">
+    <button class="btn" id="r-calc">Preview</button>
+    <button class="btn accent" id="r-apply">Apply to all 14 weeks</button>
+  </div>
+</div>
+
+<div class="sheet" id="sheet-l" role="dialog" aria-modal="true" aria-label="Log">
+  <div class="sheet-h"><h3>Log</h3><button class="btn ghost" data-close>Close</button></div>
+  <div class="tabs">
+    <button class="btn" id="t-an" aria-selected="true">Analyses</button>
+    <button class="btn" id="t-de" aria-selected="false">Decisions</button>
+    <button class="btn" id="t-mp" aria-selected="false">MP history</button>
+  </div>
+  <div id="log-body"></div>
+</div>
+
+<div class="sheet" id="sheet-s" role="dialog" aria-modal="true" aria-label="Sync">
+  <div class="sheet-h"><h3>Sync</h3><button class="btn ghost" data-close>Close</button></div>
+  <div class="hint">Claude writes updates to a secret gist; <b>Refresh</b> pulls them in.
+    Paste the gist <b>ID or any gist link</b> — the app works out the rest.
+    No token goes here; reading needs none. <b>Test connection</b> checks which route works
+    from your device before you rely on it.</div>
+  <div class="fld"><label>Gist ID or link</label>
+    <input id="s-url" placeholder="cdbf7fe71827cc2ceb481d342eb23e3c"></div>
+  <div class="sheet-foot" style="position:static;margin:0 0 12px">
+    <button class="btn" id="s-test">Test connection</button>
+  </div>
+  <div id="s-status" class="hint" style="display:none"></div>
+  <div class="sheet-foot" style="position:static;margin:0 0 14px">
+    <button class="btn dark" id="s-copy">Copy state for Claude</button>
+  </div>
+  <div class="fld"><label>Paste update from Claude</label>
+    <textarea id="s-paste" rows="7" placeholder='{"type":"cim-coach-update","v":2, ...}'></textarea></div>
+  <div class="sheet-foot">
+    <button class="btn danger" id="s-reset">Reset plan</button>
+    <button class="btn accent" id="s-apply">Apply update</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span id="toast-msg"></span><button id="toast-undo" style="display:none">Undo</button></div>
+</div>
+
+<script>
+(function(){
+window.addEventListener('error',function(e){
+  var main=document.getElementById('main');
+  if(main&&!main.getAttribute('data-errored')){
+    main.setAttribute('data-errored','1');
+    main.innerHTML='<div style="background:#fff3ef;border:1px solid #efb89e;border-radius:16px;'+
+      'padding:16px;font-size:.8rem;line-height:1.5"><b>The app hit an error and stopped.</b><br>'+
+      String(e.message||e)+'<br><br>Your saved data is untouched. Send this message to Claude.</div>';
+  }
+});
+const KEY='cim-coach-state-v5';
+const $=function(id){return document.getElementById(id);};
+function on(id,evt,fn){var el=$(id);
+  if(!el){console.warn('[marathon-block] missing element:',id);return;}
+  el[evt]=fn;}
+const DOW=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const ZC={1:'var(--z1)',2:'var(--z2)',3:'var(--z3)',4:'var(--z5)',5:'var(--z6)',MP:'var(--z4)'};
+const ZN={1:'Z1',2:'Z2',3:'Z3',4:'Z4',5:'Z5',MP:'MP'};
+const ZORDER=[1,2,3,4,5,'MP'];
+
+const GYM_A='Press 3 × 6–8. Pull-up or pulldown 3 × 6–10. Chest-supported row 3 × 8–12. Delts 2 × 12–15. SkiErg. Farmer carry. Core. 40–55 min.';
+const GYM_B='Squat or trap-bar, 2–3 work sets. One hinge or single-leg accessory. Calf and tibialis. Short HYROX skill. No sets to failure. ~6 h after track.';
+const GYM_C='OHP or incline DB press. Pull-ups. Row and rear delts. Arms. Easy RowErg. Burpee broad-jump technique. Core. No lower-body damage.';
+const gA=function(x){return{d:0,kind:'gym',title:'Gym A — Upper + SkiErg',km:0,details:GYM_A+(x||'')};};
+const gB=function(x){return{d:1,kind:'gym',title:'Gym B — Lower strength',km:0,details:GYM_B+(x||'')};};
+const gC=function(x){return{d:4,kind:'gym',title:'Gym C — Upper + HYROX',km:0,details:GYM_C+(x||'')};};
+const LIGHT=' Deload: two light sets per movement.';
+const TWO=' Peak block: two work sets.';
+
+const PLAN=[
+{week:1,start:'2026-08-31',targetKm:40,phase:'Re-entry / threshold',focus:'Rebuild road-running rhythm. Saturday stays controlled.',items:[
+ {d:0,kind:'run',title:'Easy run',km:5,z:[2],details:'5 km continuous.'},gA(),
+ {d:1,kind:'run',title:'3 × 6 min threshold',km:8,z:[4],details:'2 km warm-up, drills and 4 × 20 sec strides; 3 × 6 min with 2 min jog; cool down to 8 km.'},gB(),
+ {d:3,kind:'run',title:'Medium aerobic run',km:9,z:[2],details:'Continuous aerobic.'},gC(),
+ {d:5,kind:'run',title:'18 km long run',km:18,z:[2,3],details:'17 km at Z2; final 15 min at Z3 only if fresh.'}]},
+{week:2,start:'2026-09-07',targetKm:44,phase:'Threshold + first MP',focus:'First exposure to marathon pace.',items:[
+ {d:0,kind:'run',title:'Easy + strides',km:5,z:[2],details:'5 km plus 6 × 20 sec strides.'},gA(),
+ {d:1,kind:'run',title:'3 × 1600 m cruise',km:9,z:[4],reps:'3x1600',details:'2 km warm-up and drills; 3 × 1600 m with 75–90 sec jog; cool down to 9 km.'},gB(),
+ {d:3,kind:'run',title:'Medium aerobic run',km:10,z:[2],details:'Continuous aerobic.'},gC(),
+ {d:5,kind:'run',title:'20 km · 4 km MP',km:20,mp:4,z:[2,'MP'],details:'15 km Z2 + 4 km Z4 + 1 km Z2.'}]},
+{week:3,start:'2026-09-14',targetKm:48,phase:'MP introduction',focus:'Establish the rhythm of marathon pace.',items:[
+ {d:0,kind:'run',title:'Easy + strides',km:6,z:[2],details:'6 km plus 6 × 20 sec strides.'},gA(),
+ {d:1,kind:'run',title:'2 × 3200 m MP',km:10,mp:6.4,z:['MP',3],reps:'2x3200',details:'2 km warm-up; 3200 m Z4; 800 m float at Z3; 3200 m Z4; cool down to 10 km.'},gB(),
+ {d:3,kind:'run',title:'Medium aerobic run',km:10,z:[2],details:'Continuous aerobic.'},gC(),
+ {d:5,kind:'run',title:'22 km long run',km:22,z:[2,3],details:'18 km Z2 + 4 km Z3. No Z4.'}]},
+{week:4,start:'2026-09-21',targetKm:39,phase:'Deload / speed touch',focus:'Absorb three weeks. Finish every run fresh.',items:[
+ {d:0,kind:'run',title:'Recovery run',km:5,z:[1],details:'5 km continuous.'},gA(LIGHT),
+ {d:1,kind:'run',title:'6 × 400 m smooth',km:8,z:[5],reps:'6x400',details:'2 km warm-up; 6 × 400 m with 200 m jog; cool down to 8 km. Submaximal.'},gB(LIGHT),
+ {d:3,kind:'run',title:'Easy aerobic run',km:10,z:[2],details:'Flat effort; no progression.'},gC(LIGHT),
+ {d:5,kind:'run',title:'16 km deload long run',km:16,z:[2],details:'16 km at Z2. No fast finish.'}]},
+{week:5,start:'2026-09-28',targetKm:50,phase:'Cruise + late MP',focus:'Marathon pace late in the long run.',items:[
+ {d:0,kind:'run',title:'Easy + strides',km:5,z:[2],details:'5 km plus 6 × 20 sec strides.'},gA(),
+ {d:1,kind:'run',title:'3 × 2000 m cruise',km:10,z:[4],reps:'3x2000',details:'2 km warm-up; 3 × 2000 m with 90 sec jog; cool down to 10 km.'},gB(),
+ {d:3,kind:'run',title:'Medium aerobic + steady',km:11,z:[2,3],details:'9 km Z2 + 2 km Z3.'},gC(),
+ {d:5,kind:'run',title:'24 km · 6 km MP',km:24,mp:6,z:[2,'MP'],details:'17 km Z2 + 6 km Z4 + 1 km Z2. Cap RPE at 7.'}]},
+{week:6,start:'2026-10-05',targetKm:53,phase:'MP blocks',focus:'Build economy through longer marathon-pace blocks.',items:[
+ {d:0,kind:'run',title:'Easy run',km:5,z:[2],details:'5 km continuous.'},gA(),
+ {d:1,kind:'run',title:'2 × 4 km MP',km:11,mp:8,z:['MP',3],details:'2 km warm-up; 4 km Z4; 1 km float at Z3; 4 km Z4; cool down to 11 km.'},gB(),
+ {d:3,kind:'run',title:'Medium aerobic + strides',km:11,z:[2],details:'Continuous aerobic plus 6 × 20 sec strides.'},gC(),
+ {d:5,kind:'run',title:'26 km long run',km:26,z:[2,3],details:'21 km Z2 + 5 km Z3. No Z4.'}]},
+{week:7,start:'2026-10-12',targetKm:56,phase:'Durability gate 1',focus:'Assess marathon pace after 19 km of accumulated distance.',items:[
+ {d:0,kind:'run',title:'Easy + strides',km:5,z:[2],details:'5 km plus 6 × 20 sec strides.'},gA(),
+ {d:1,kind:'run',title:'5 × 1 km · 10K prep',km:10,z:[5],reps:'5x1000',details:'2 km warm-up, drills and strides; 5 × 1 km with 90 sec jog; cool down to 10 km.'},gB(),
+ {d:3,kind:'run',title:'Medium aerobic + steady',km:13,z:[2,3],details:'10 km Z2 + 3 km Z3.'},gC(),
+ {d:5,kind:'run',title:'28 km · 8 km MP',km:28,mp:8,z:[2,'MP'],gate:1,details:'19 km Z2 + 8 km Z4 + 1 km Z2. Durability gate 1.'}]},
+{week:8,start:'2026-10-19',targetKm:39,phase:'Great Trek 10K · B race',focus:'Freshen up, race the 10K, recover fast.',items:[
+ {d:0,kind:'run',title:'Easy + strides',km:8,z:[2],details:'8 km plus 6 × 20 sec strides.'},gA(),
+ {d:1,kind:'run',title:'4 × 800 m · 10K tune-up',km:9,z:[5],reps:'4x800',details:'2 km warm-up and drills; 4 × 800 m with 400 m jog; cool down to 9 km.'},
+ {d:1,kind:'gym',title:'Gym B — Light activation',km:0,details:'1–2 easy sets of squat or trap-bar pattern, calves and tibialis. No sled, lunges or wall balls. 25–35 min at RPE 5.'},
+ {d:3,kind:'run',title:'Easy + strides',km:8,z:[2],details:'8 km plus 4 × 20 sec strides.'},
+ {d:5,kind:'race',title:'Great Trek 10K · B race',km:14,z:[5],details:'2 km warm-up, drills and 4 strides; 10K race; 2 km cool-down. Target sub-45 (4:30/km). First 2 km controlled.'}]},
+{week:9,start:'2026-10-26',targetKm:56,phase:'Controlled 30 km',focus:'Absorb the 10K, then a 30 km with controlled MP blocks.',items:[
+ {d:0,kind:'run',title:'Easy + strides',km:5,z:[2],details:'5 km plus 6 × 20 sec strides.'},gA(TWO),
+ {d:1,kind:'run',title:'3 × 1600 m cruise',km:9,z:[4],reps:'3x1600',details:'2 km warm-up; 3 × 1600 m with 90 sec jog; cool down to 9 km.'},gB(TWO),
+ {d:3,kind:'run',title:'Aerobic run',km:7,z:[2],details:'Continuous aerobic.'},
+ {d:4,kind:'run',title:'Recovery run',km:5,z:[1],details:'5 km continuous.'},gC(TWO),
+ {d:5,kind:'run',title:'30 km · 2 × 4 km MP',km:30,mp:8,z:[2,'MP'],details:'7 km Z2 + 4 km Z4 + 2 km Z2 + 4 km Z4 + 13 km Z2.'}]},
+{week:10,start:'2026-11-02',targetKm:61,phase:'Peak specific workout',focus:'The block\u2019s strongest evidence on marathon pace.',items:[
+ {d:0,kind:'run',title:'Recovery run',km:5,z:[1],details:'5 km continuous.'},gA(TWO),
+ {d:1,kind:'run',title:'3 × 8 min threshold',km:9,z:[4],details:'2 km warm-up; 3 × 8 min with 2 min jog; cool down to 9 km. No faster than Z5.'},gB(TWO),
+ {d:3,kind:'run',title:'Aerobic + steady',km:10,z:[2,3],details:'7 km Z2 + 3 km Z3.'},
+ {d:4,kind:'run',title:'Recovery run',km:5,z:[1],details:'5 km continuous.'},gC(TWO),
+ {d:5,kind:'run',title:'32 km · 14 km MP',km:32,mp:14,z:[2,'MP'],gate:2,details:'8 km Z2 + 5 km Z4 + 2 km Z2 + 5 km Z4 + 2 km Z2 + 4 km Z4 + 6 km Z2. Durability gate 2. Final block only if pace is stable.'}]},
+{week:11,start:'2026-11-09',targetKm:63,phase:'Durability / absorb',focus:'Final 30 km is mostly Z2.',items:[
+ {d:0,kind:'run',title:'Easy run',km:6,z:[2],details:'6 km continuous.'},gA(TWO),
+ {d:1,kind:'run',title:'2 × 3200 m MP',km:10,mp:6.4,z:['MP',3],reps:'2x3200',details:'2 km warm-up; 3200 m Z4; 800 m float at Z3; 3200 m Z4; cool down to 10 km.'},gB(TWO),
+ {d:3,kind:'run',title:'Aerobic run',km:12,z:[2],details:'Flat Z2; no progression.'},
+ {d:4,kind:'run',title:'Recovery run',km:5,z:[1],details:'5 km continuous.'},gC(TWO),
+ {d:5,kind:'run',title:'30 km durability run',km:30,z:[2,3],details:'25 km Z2 + 5 km Z3. No Z4.'}]},
+{week:12,start:'2026-11-16',targetKm:52,phase:'Taper 1 / rehearsal',focus:'Confirm the target in race shoes with full fueling.',items:[
+ {d:0,kind:'run',title:'Easy + strides',km:6,z:[2],details:'6 km plus 6 × 20 sec strides.'},gA(TWO),
+ {d:1,kind:'run',title:'3 × 1600 m cruise',km:9,z:[4],reps:'3x1600',details:'2 km warm-up; 3 × 1600 m with 90 sec jog; cool down to 9 km.'},gB(TWO),
+ {d:3,kind:'run',title:'Medium aerobic run',km:13,z:[2],details:'Continuous aerobic.'},gC(TWO),
+ {d:5,kind:'run',title:'24 km · 8 km MP rehearsal',km:24,mp:8,z:[2,'MP'],gate:3,details:'11 km Z2 + 8 km Z4 + 5 km Z2. Race shoes and full fueling. Durability gate 3.'}]},
+{week:13,start:'2026-11-23',targetKm:39,phase:'Taper 2',focus:'Keep rhythm while fatigue drops.',items:[
+ {d:0,kind:'run',title:'Easy run',km:5,z:[2],details:'5 km continuous.'},gA(TWO),
+ {d:1,kind:'run',title:'2 × 3 km MP',km:9,mp:6,z:['MP',3],details:'1.5 km warm-up; 3 km Z4; 750 m float at Z3; 3 km Z4; 750 m cool-down.'},gB(TWO),
+ {d:3,kind:'run',title:'Easy + strides',km:9,z:[2],details:'9 km plus 4 × 20 sec strides.'},gC(TWO),
+ {d:5,kind:'run',title:'16 km taper long run',km:16,z:[2],details:'16 km Z2 plus 4 × 15 sec strides near the end.'}]},
+{week:14,start:'2026-11-30',targetKm:58.2,phase:'Race week',focus:'Sixteen kilometres before the marathon.',items:[
+ {d:0,kind:'run',title:'Easy + strides',km:4,z:[2],details:'4 km plus 4 × 20 sec strides.'},
+ {d:0,kind:'gym',title:'Gym — Optional activation',km:0,details:'Optional: 15–20 min light upper body, core and calf isometrics. RPE 3–4.'},
+ {d:1,kind:'run',title:'3 × 1 km MP',km:6,mp:3,z:['MP'],reps:'3x1000',details:'1.5 km warm-up; 3 × 1 km Z4 with 2 min jog; cool down to 6 km.'},
+ {d:3,kind:'run',title:'Easy + strides',km:4,z:[2],details:'4 km plus 4 × 15 sec strides.'},
+ {d:5,kind:'run',title:'Shakeout',km:2,z:[1],details:'2 km plus 4 × 10 sec pickups.'},
+ {d:6,kind:'race',title:'California International Marathon',km:42.2,z:['MP'],details:'First 5 km 3–5 sec/km slower than Z4, then settle into Z4.'}]}
+];
+
+const DEFAULT_ZONES={
+  goalMp:'5:00', goalMpRange:2, goalLabel:'3:30 marathon',
+  currentMp:'5:54', currentMpSource:'BMO Vancouver Marathon, 3 May 2026 — 4:09:21',
+  hrMax:'200', lthr:'185',
+  vt1Hr:'',vt1Pace:'',vt2Hr:'',vt2Pace:'',
+  bands:[
+    {z:1,name:'Recovery',paceLo:'6:30',paceHi:'7:00',hrLo:'',hrHi:'149',rpe:'1–2'},
+    {z:2,name:'Easy aerobic',paceLo:'5:50',paceHi:'6:30',hrLo:'150',hrHi:'165',rpe:'2–3'},
+    {z:3,name:'Steady',paceLo:'5:20',paceHi:'5:40',hrLo:'166',hrHi:'178',rpe:'4–5'},
+    {z:4,name:'Threshold',paceLo:'4:35',paceHi:'4:45',hrLo:'179',hrHi:'188',rpe:'7–8'},
+    {z:5,name:'VO2',paceLo:'4:10',paceHi:'4:25',hrLo:'189',hrHi:'',rpe:'8–9'}]};
+
+/* ---------- helpers ---------- */
+function addDays(iso,n){var p=iso.split('-');var d=new Date(Date.UTC(+p[0],+p[1]-1,+p[2]));
+  d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10);}
+function fmtDate(iso){var p=iso.split('-');var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return M[+p[1]-1]+' '+(+p[2]);}
+function todayISO(){var d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);}
+function uid(){return 'w'+Math.random().toString(36).slice(2,9);}
+function num(v){var n=parseFloat(v);return isNaN(n)?undefined:n;}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function p2s(p){if(!p)return null;var m=String(p).split(':');if(m.length<2)return null;
+  var s=(+m[0])*60+(+m[1]);return isNaN(s)?null:s;}
+function s2p(s){if(s==null||isNaN(s))return '—';s=Math.round(s);
+  var m=Math.floor(s/60),r=s%60;return m+':'+(r<10?'0':'')+r;}
+function s2hms(s){if(s==null||isNaN(s))return '—';s=Math.round(s);
+  var h=Math.floor(s/3600),m=Math.floor((s%3600)/60),r=s%60;
+  return (h?h+':'+(m<10?'0':'')+m:m)+':'+(r<10?'0':'')+r;}
+function parseTime(t){if(!t)return undefined;var p=String(t).split(':').map(Number);
+  if(p.some(isNaN))return undefined;
+  return p.length===3?p[0]*3600+p[1]*60+p[2]:p.length===2?p[0]*60+p[1]:p[0];}
+function r1(x){return Math.round(x*10)/10;}
+
+/* ---------- state ---------- */
+var S=null, wk=1, editingId=null, logTab='an', saveTimer=null, undoSnap=null, editZones=[];
+
+function band(z){ for(var i=0;i<S.zones.bands.length;i++) if(S.zones.bands[i].z===z) return S.zones.bands[i];
+  return null; }
+function mpBand(which){
+  var base=p2s(which==='current'?S.zones.currentMp:S.zones.goalMp);
+  var r=(which==='current')?0:(+S.zones.goalMpRange||0);
+  return {lo:base!=null?s2p(base-r):'—', hi:base!=null?s2p(base+r):'—'};
+}
+function mpGapSec(){
+  var g=p2s(S.zones.goalMp), c=p2s(S.zones.currentMp);
+  return (g!=null&&c!=null)?c-g:null;
+}
+function bandPace(z){
+  if(z==='MP'){var m=mpBand();return m.lo+'–'+m.hi;}
+  var b=band(z); if(!b)return '—';
+  return b.paceHi?b.paceLo+'–'+b.paceHi:b.paceLo+'+';
+}
+function bandHr(z){
+  if(z==='MP'){var b3=band(3);return b3?(b3.hrLo+'–'+b3.hrHi):'';}
+  var b=band(z); if(!b)return '';
+  if(b.hrLo&&b.hrHi)return b.hrLo+'–'+b.hrHi;
+  if(b.hrHi)return '≤'+b.hrHi; if(b.hrLo)return b.hrLo+'+'; return '';}
+function bandRpe(z){
+  if(z==='MP')return '5–7';
+  var b=band(z); return b?b.rpe:'';}
+function bandSecs(z){
+  if(z==='MP'){var mp=p2s(S.zones.goalMp),r=+S.zones.goalMpRange||0;
+    return mp!=null?[mp-r,mp+r]:null;}
+  var b=band(z); if(!b)return null;
+  var lo=p2s(b.paceLo), hi=p2s(b.paceHi);
+  return lo!=null?[lo,hi!=null?hi:lo]:null;}
+function repTarget(reps,z){
+  if(!reps)return '';
+  var m=String(reps).toLowerCase().split('x');
+  if(m.length!==2)return '';
+  var n=+m[0], dist=+m[1]; if(!n||!dist)return '';
+  var sec=bandSecs(z); if(!sec)return '';
+  var lo=sec[0]*dist/1000, hi=sec[1]*dist/1000;
+  return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
+}
+
+function buildDefaultWorkouts(){
+  var out=[];
+  PLAN.forEach(function(w){ w.items.forEach(function(it){
+    out.push({id:uid(),date:addDays(w.start,it.d),kind:it.kind,title:it.title,
+      plannedKm:it.km,mpKm:it.mp||0,zones:it.z||[],reps:it.reps||'',gate:it.gate||0,
+      details:it.details,status:'planned'});
+  });});
+  return out;
+}
+function freshState(){
+  return {v:2,workouts:buildDefaultWorkouts(),weekNotes:{},
+    zones:JSON.parse(JSON.stringify(DEFAULT_ZONES)),analyses:[],decisions:[],
+    sync:{gistUrl:'',lastUpdateId:'',lastFetch:''},
+    mpHistory:[
+      {date:'2026-05-03',kind:'current',pace:'5:54',reason:'BMO Vancouver Marathon — 4:09:21, avg HR 176, faded over final 11 km'},
+      {date:todayISO(),kind:'goal',pace:'5:00',reason:'3:30 target. 5K of 21:46 (avg HR 191) projects ~3:28 equivalent; durability is the gap.'}]};
+}
+
+function save(){
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(function(){
+    try{ window.storage.set(KEY,JSON.stringify(S)); }
+    catch(e){ toast('Could not save — publish the app to enable storage'); }
+  },250);
+}
+function snapshot(){ undoSnap=JSON.stringify(S); }
+function toast(msg,withUndo){
+  var t=$('toast'); $('toast-msg').textContent=msg;
+  $('toast-undo').style.display=withUndo?'block':'none';
+  t.classList.add('show');
+  clearTimeout(t._t); t._t=setTimeout(function(){t.classList.remove('show');},withUndo?5200:1900);
+}
+$('toast-undo').onclick=function(){
+  if(!undoSnap)return; S=JSON.parse(undoSnap); undoSnap=null;
+  save(); render(); $('toast').classList.remove('show'); toast('Reverted');
+};
+
+/* ---------- render ---------- */
+function weekMeta(n){return PLAN[n-1];}
+function weekWorkouts(n){
+  var m=weekMeta(n), end=addDays(m.start,6);
+  return S.workouts.filter(function(w){return w.date>=m.start&&w.date<=end;})
+    .sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:
+      (a.kind==='gym'?1:0)-(b.kind==='gym'?1:0);});
+}
+function metrics(n){
+  var ws=weekWorkouts(n), planned=0, done=0, mp=0;
+  ws.forEach(function(w){
+    if(w.kind==='gym'||w.status==='skipped')return;
+    planned+=(+w.plannedKm||0);
+    if(w.status==='done'||w.status==='modified'){
+      done+=(w.actualKm!=null?+w.actualKm:+w.plannedKm||0);
+      mp+=(+w.mpKm||0);
+    }});
+  return {planned:planned,done:done,mp:mp};
+}
+function currentWeek(){var t=todayISO();
+  if(t<PLAN[0].start)return 1;
+  for(var i=13;i>=0;i--){if(t>=PLAN[i].start)return i+1;}return 1;}
+
+function render(){
+  var m=weekMeta(wk), mt=metrics(wk), today=todayISO(), mb=mpBand();
+  var gap=mpGapSec();
+  var gapTxt=gap==null?'':(gap>0?('current '+S.zones.currentMp+' · gap '+gap+' s/km'):
+    (gap<0?('current '+S.zones.currentMp+' · '+(-gap)+' s/km ahead'):'current matches target'));
+  var h='';
+  h+='<div class="weeknav">'+
+     '<button class="nav-btn" id="prev" '+(wk<=1?'disabled':'')+' aria-label="Previous week">‹</button>'+
+     '<div class="label">Week '+wk+' of 14 · '+fmtDate(m.start)+' – '+fmtDate(addDays(m.start,6))+'</div>'+
+     '<button class="nav-btn" id="next" '+(wk>=14?'disabled':'')+' aria-label="Next week">›</button></div>';
+
+  h+='<div class="hero"><div class="eyebrow">'+esc(m.phase)+'</div><h2>Week '+wk+'</h2>'+
+     '<p>'+esc(m.focus)+'</p>'+
+     '<div class="mpbar"><span class="lbl">MP target</span>'+
+     '<span class="val">'+mb.lo+'–'+mb.hi+'/km</span>'+
+     '<span class="since">'+esc(gapTxt)+'</span>'+
+     '<button id="mp-edit">Adjust</button></div></div>';
+
+  h+='<div class="metrics">'+
+     '<div class="metric"><div class="k">Target</div><div class="v">'+r1(m.targetKm)+' <small>km</small></div></div>'+
+     '<div class="metric"><div class="k">Planned</div><div class="v">'+r1(mt.planned)+' <small>km</small></div></div>'+
+     '<div class="metric done"><div class="k">Completed</div><div class="v">'+r1(mt.done)+' <small>km</small></div></div>'+
+     '<div class="metric mp"><div class="k">MP logged</div><div class="v">'+r1(mt.mp)+' <small>km</small></div></div></div>';
+
+  h+='<div class="note"><div class="k">Week note</div><textarea id="wnote" rows="2" '+
+     'placeholder="What actually happened this week">'+esc(S.weekNotes[wk]||'')+'</textarea></div>';
+
+  h+='<div class="cal">';
+  for(var i=0;i<7;i++){
+    var date=addDays(m.start,i);
+    var items=weekWorkouts(wk).filter(function(w){return w.date===date;});
+    var dk=items.reduce(function(a,b){return a+(b.kind==='gym'?0:(+b.plannedKm||0));},0);
+    h+='<div class="day'+(date===today?' today':'')+'" data-date="'+date+'"><div class="day-h">'+
+       '<span class="dow">'+DOW[i]+'</span><span class="dt">'+fmtDate(date)+'</span>'+
+       (dk?'<span class="sum">'+r1(dk)+' km</span>':'')+'</div>';
+    if(!items.length) h+='<div class="rest">Rest</div>';
+    items.forEach(function(w){h+=card(w);});
+    h+='</div>';
+  }
+  h+='</div>';
+  $('main').innerHTML=h;
+
+  $('prev').onclick=function(){if(wk>1){wk--;render();}};
+  $('next').onclick=function(){if(wk<14){wk++;render();}};
+  $('mp-edit').onclick=function(){openZones();};
+  $('wnote').oninput=function(){S.weekNotes[wk]=this.value;save();};
+  wireCards();
+}
+
+function card(w){
+  var cls='w'+(w.kind==='gym'?' gym':'')+(w.kind==='race'?' race':'')+
+    (w.status==='done'?' is-done':'')+(w.status==='skipped'?' is-skipped':'');
+  var dot=w.status==='done'?'done':w.status==='modified'?'mod':'';
+  var h='<div class="'+cls+'" data-id="'+w.id+'" draggable="true" tabindex="0" role="button">'+
+    '<div class="w-top"><span class="w-title">'+esc(w.title)+'</span>'+
+    (w.kind==='gym'?'<span class="dot '+dot+'"></span>':
+      '<span class="km">'+r1(+w.plannedKm||0)+' km</span>')+'</div>';
+  h+='<div class="w-det">'+esc(w.details)+'</div>';
+  if(w.zones&&w.zones.length){
+    h+='<div class="zline">'+w.zones.map(function(z){
+      return '<span class="zchip" style="background:'+ZC[z]+'">'+ZN[z]+' '+bandPace(z)+'/km</span>';
+    }).join('')+'</div>';
+    var hr=bandHr(w.zones[0]), rp=bandRpe(w.zones[0]);
+    var rt=repTarget(w.reps,w.zones[0]);
+    var bits=[]; if(rt)bits.push(rt); if(hr)bits.push(hr+' bpm'); if(rp)bits.push('RPE '+rp);
+    if(bits.length)h+='<div class="zsub">'+esc(bits.join(' · '))+'</div>';
+  }
+  if(w.status==='done'||w.status==='modified'||w.rpe!=null||w.niggle!=null){
+    var r=[];
+    if(w.actualKm!=null)r.push('<b>'+r1(+w.actualKm)+' km</b>');
+    if(w.movingTime)r.push(s2hms(w.movingTime));
+    if(w.actualKm&&w.movingTime)r.push('<b>'+s2p(w.movingTime/w.actualKm)+'</b>/km');
+    if(w.avgHr)r.push(w.avgHr+' bpm');
+    if(w.rpe!=null)r.push('RPE <b>'+w.rpe+'</b>');
+    if(w.niggle!=null)r.push('Niggle <b>'+w.niggle+'</b>');
+    if(w.stravaId)r.push('<span class="src">Strava</span>');
+    if(r.length)h+='<div class="w-res">'+r.join('')+'</div>';
+  }
+  if(w.timeInZone&&w.timeInZone.length===5){
+    var tot=w.timeInZone.reduce(function(a,b){return a+b;},0)||1;
+    h+='<div class="tiz">'+w.timeInZone.map(function(v,i){
+      return '<i style="width:'+(v/tot*100)+'%;background:'+ZC[i+1]+'"></i>';}).join('')+'</div>';
+  }
+  return h+'</div>';
+}
+
+/* ---------- drag and drop ---------- */
+var dragId=null;
+function wireCards(){
+  Array.prototype.forEach.call(document.querySelectorAll('#app-root .w'),function(el){
+    el.onclick=function(){openWorkout(el.getAttribute('data-id'));};
+    el.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();
+      openWorkout(el.getAttribute('data-id'));}};
+    el.addEventListener('dragstart',function(e){
+      dragId=el.getAttribute('data-id'); el.classList.add('dragging');
+      try{e.dataTransfer.setData('text/plain',dragId);e.dataTransfer.effectAllowed='move';}catch(x){}
+    });
+    el.addEventListener('dragend',function(){el.classList.remove('dragging');dragId=null;
+      Array.prototype.forEach.call(document.querySelectorAll('#app-root .day'),
+        function(d){d.classList.remove('over');});});
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('#app-root .day'),function(d){
+    d.addEventListener('dragover',function(e){if(!dragId)return;e.preventDefault();
+      try{e.dataTransfer.dropEffect='move';}catch(x){} d.classList.add('over');});
+    d.addEventListener('dragleave',function(){d.classList.remove('over');});
+    d.addEventListener('drop',function(e){
+      e.preventDefault(); d.classList.remove('over');
+      var id=dragId||(e.dataTransfer&&e.dataTransfer.getData('text/plain'));
+      if(!id)return;
+      var w=S.workouts.filter(function(x){return x.id===id;})[0];
+      var to=d.getAttribute('data-date');
+      if(!w||w.date===to)return;
+      snapshot();
+      var from=w.date; w.date=to;
+      if(w.status==='planned')w.status='modified';
+      save(); render(); toast('Moved to '+fmtDate(to),true);
+    });
+  });
+}
+
+/* ---------- sheets ---------- */
+function openSheet(id){$('scrim').classList.add('open');$(id).classList.add('open');}
+function closeSheets(){$('scrim').classList.remove('open');
+  ['sheet-w','sheet-z','sheet-l','sheet-s','sheet-r'].forEach(function(s){$(s).classList.remove('open');});
+  editingId=null;}
+$('scrim').onclick=closeSheets;
+Array.prototype.forEach.call(document.querySelectorAll('#app-root [data-close]'),
+  function(b){b.onclick=closeSheets;});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSheets();});
+
+function renderZonePicker(){
+  $('f-zones').innerHTML=ZORDER.map(function(z){
+    var on=editZones.indexOf(z)>=0;
+    return '<button type="button" data-z="'+z+'" aria-pressed="'+on+'"'+
+      (on?' style="background:'+ZC[z]+'"':'')+'>'+ZN[z]+'</button>';
+  }).join('');
+  Array.prototype.forEach.call($('f-zones').querySelectorAll('button'),function(b){
+    b.onclick=function(){
+      var raw=b.getAttribute('data-z'), z=(raw==='MP')?'MP':+raw;
+      var i=editZones.indexOf(z);
+      if(i>=0)editZones.splice(i,1); else editZones.push(z);
+      editZones.sort(function(x,y){return ZORDER.indexOf(x)-ZORDER.indexOf(y);});
+      renderZonePicker();
+    };
+  });
+}
+function openWorkout(id){
+  var w=S.workouts.filter(function(x){return x.id===id;})[0];
+  if(!w)return; editingId=id;
+  $('w-heading').textContent='Edit session';
+  $('f-title').value=w.title||''; $('f-date').value=w.date; $('f-kind').value=w.kind;
+  $('f-km').value=w.plannedKm!=null?w.plannedKm:''; $('f-status').value=w.status||'planned';
+  $('f-mp').value=w.mpKm||''; $('f-reps').value=w.reps||'';
+  $('f-details').value=w.details||'';
+  $('f-akm').value=w.actualKm!=null?w.actualKm:'';
+  $('f-rpe').value=w.rpe!=null?w.rpe:''; $('f-nig').value=w.niggle!=null?w.niggle:'';
+  $('f-time').value=w.movingTime?s2hms(w.movingTime):'';
+  $('f-ahr').value=w.avgHr||''; $('f-mhr').value=w.maxHr||'';
+  $('f-notes').value=w.notes||'';
+  editZones=(w.zones||[]).slice(); renderZonePicker();
+  openSheet('sheet-w');
+}
+$('fab').onclick=function(){
+  var w={id:uid(),date:todayISO(),kind:'run',title:'New session',plannedKm:0,mpKm:0,
+    zones:[],reps:'',details:'',status:'planned'};
+  var m=weekMeta(wk);
+  if(w.date<m.start||w.date>addDays(m.start,6))w.date=m.start;
+  snapshot(); S.workouts.push(w); save(); openWorkout(w.id);
+  $('w-heading').textContent='New session';
+};
+$('f-prev').onclick=function(){$('f-date').value=addDays($('f-date').value,-1);};
+$('f-next').onclick=function(){$('f-date').value=addDays($('f-date').value,1);};
+$('f-del').onclick=function(){
+  snapshot();
+  S.workouts=S.workouts.filter(function(x){return x.id!==editingId;});
+  save();closeSheets();render();toast('Session deleted',true);
+};
+$('f-save').onclick=function(){
+  var w=S.workouts.filter(function(x){return x.id===editingId;})[0];
+  if(!w)return; snapshot();
+  var moved=w.date!==$('f-date').value;
+  w.title=$('f-title').value.trim()||'Untitled';
+  w.date=$('f-date').value; w.kind=$('f-kind').value;
+  w.plannedKm=num($('f-km').value)||0; w.status=$('f-status').value;
+  w.mpKm=num($('f-mp').value)||0; w.reps=$('f-reps').value.trim();
+  w.zones=editZones.slice(); w.details=$('f-details').value;
+  w.actualKm=num($('f-akm').value); w.rpe=num($('f-rpe').value); w.niggle=num($('f-nig').value);
+  w.movingTime=parseTime($('f-time').value); w.avgHr=num($('f-ahr').value);
+  w.maxHr=num($('f-mhr').value); w.notes=$('f-notes').value;
+  if(moved&&w.status==='planned')w.status='modified';
+  save(); closeSheets();
+  var m=weekMeta(wk);
+  if(w.date<m.start||w.date>addDays(m.start,6))
+    for(var i=0;i<14;i++) if(w.date>=PLAN[i].start&&w.date<=addDays(PLAN[i].start,6)){wk=i+1;break;}
+  render(); toast('Saved');
+};
+
+/* zones sheet */
+function openZones(){renderZoneRows();openSheet('sheet-z');}
+function renderZoneRows(){
+  var z=S.zones;
+  $('z-mp').value=z.goalMp; $('z-mprange').value=z.goalMpRange;
+  $('z-curmp').value=z.currentMp||''; $('z-cursrc').value=z.currentMpSource||'';
+  $('z-mpwhy').value='';
+  $('z-hrmax').value=z.hrMax||''; $('z-lthr').value=z.lthr||'';
+  $('z-vt1h').value=z.vt1Hr;$('z-vt1p').value=z.vt1Pace;
+  $('z-vt2h').value=z.vt2Hr;$('z-vt2p').value=z.vt2Pace;
+  $('z-rows').innerHTML=z.bands.map(function(b,i){
+    return '<div class="zrow">'+
+      '<div class="zhead"><span class="zbadge" style="background:'+ZC[b.z]+'">'+ZN[b.z]+'</span>'+
+      '<span class="zname">'+esc(b.name)+'</span></div>'+
+      '<div class="row4">'+
+      '<div><div class="cap">Pace lo</div><input data-i="'+i+'" data-f="paceLo" value="'+esc(b.paceLo)+'"></div>'+
+      '<div><div class="cap">Pace hi</div><input data-i="'+i+'" data-f="paceHi" value="'+esc(b.paceHi)+'"></div>'+
+      '<div><div class="cap">HR lo</div><input data-i="'+i+'" data-f="hrLo" value="'+esc(b.hrLo)+'"></div>'+
+      '<div><div class="cap">HR hi</div><input data-i="'+i+'" data-f="hrHi" value="'+esc(b.hrHi)+'"></div>'+
+      '</div>'+
+      '<div style="margin-top:8px"><div class="cap" style="text-align:left">RPE</div>'+
+      '<input data-i="'+i+'" data-f="rpe" value="'+esc(b.rpe)+'" style="text-align:left"></div>'+
+      '</div>';
+  }).join('');
+}
+$('btn-zones').onclick=openZones;
+$('z-reset').onclick=function(){
+  var keep={goalMp:S.zones.goalMp,goalMpRange:S.zones.goalMpRange,
+    currentMp:S.zones.currentMp,currentMpSource:S.zones.currentMpSource};
+  S.zones=JSON.parse(JSON.stringify(DEFAULT_ZONES));
+  for(var k in keep) S.zones[k]=keep[k];
+  renderZoneRows(); toast('Bands reset — not saved yet');
+};
+$('z-save').onclick=function(){
+  var newGoal=$('z-mp').value.trim()||S.zones.goalMp;
+  var newCur=$('z-curmp').value.trim();
+  if(p2s(newGoal)==null){toast('MP target must look like 5:00');return;}
+  if(newCur&&p2s(newCur)==null){toast('Current MP must look like 5:54');return;}
+  snapshot();
+  var why=$('z-mpwhy').value.trim();
+  var goalChanged=newGoal!==S.zones.goalMp;
+  var curChanged=newCur&&newCur!==S.zones.currentMp;
+
+  S.zones.goalMp=newGoal; S.zones.goalMpRange=num($('z-mprange').value)||0;
+  if(newCur)S.zones.currentMp=newCur;
+  S.zones.currentMpSource=$('z-cursrc').value.trim();
+  S.zones.hrMax=$('z-hrmax').value.trim(); S.zones.lthr=$('z-lthr').value.trim();
+  S.zones.vt1Hr=$('z-vt1h').value;S.zones.vt1Pace=$('z-vt1p').value;
+  S.zones.vt2Hr=$('z-vt2h').value;S.zones.vt2Pace=$('z-vt2p').value;
+  Array.prototype.forEach.call($('z-rows').querySelectorAll('input'),function(inp){
+    S.zones.bands[+inp.getAttribute('data-i')][inp.getAttribute('data-f')]=inp.value.trim();
+  });
+
+  if(goalChanged){
+    S.mpHistory.push({date:todayISO(),kind:'goal',pace:newGoal,reason:why||'No reason given'});
+    S.decisions.push({date:todayISO(),change:'MP target moved to '+newGoal+'/km',
+      evidence:why||'No reason given',rule:'§16 MP adjustment'});
+  }
+  if(curChanged){
+    S.mpHistory.push({date:todayISO(),kind:'current',pace:newCur,
+      reason:S.zones.currentMpSource||why||'No source given'});
+  }
+  save();closeSheets();render();
+  toast(goalChanged?('MP target now '+newGoal+'/km across all 14 weeks'):'Zones saved',true);
+};
+
+/* ---------- recalibration engine (Daniels VDOT) ---------- */
+function vo2At(v){return -4.60+0.182258*v+0.000104*v*v;}
+function pctAt(t){return 0.8+0.1894393*Math.exp(-0.012778*t)+0.2989558*Math.exp(-0.1932605*t);}
+function vdotFrom(distM,timeS){
+  if(!distM||!timeS)return null;
+  var t=timeS/60, v=distM/t;
+  var pv=pctAt(t); if(!pv)return null;
+  return vo2At(v)/pv;
+}
+function velForPct(vd,p){
+  var c=-4.60-vd*p, a=0.000104, b=0.182258;
+  var disc=b*b-4*a*c; if(disc<0)return null;
+  return (-b+Math.sqrt(disc))/(2*a);   // m/min
+}
+function paceFromVel(v){ return v?s2p(1000/v*60):'—'; }
+function equivTime(vd,distM){
+  var lo=1,hi=40000;
+  for(var i=0;i<60;i++){var mid=(lo+hi)/2;
+    if(vdotFrom(distM,mid)>vd)lo=mid; else hi=mid;}
+  return Math.round((lo+hi)/2);
+}
+var ZPCT=[{z:1,lo:0.55,hi:0.62},{z:2,lo:0.62,hi:0.72},{z:3,lo:0.72,hi:0.80},
+          {z:4,lo:0.86,hi:0.90},{z:5,lo:0.95,hi:1.00}];
+function bandsFromVdot(vd){
+  return ZPCT.map(function(b){
+    return {z:b.z,paceLo:paceFromVel(velForPct(vd,b.hi)),paceHi:paceFromVel(velForPct(vd,b.lo))};
+  });
+}
+function bandsFromVT(v1h,v2h,hrmax,v1p,v2p){
+  var out=[];
+  var mid=(v1h&&v2h)?Math.round((v1h+v2h)/2):null;
+  out.push({z:1,hrLo:'',hrHi:v1h?String(v1h-15):''});
+  out.push({z:2,hrLo:v1h?String(v1h-14):'',hrHi:v1h?String(v1h):'',paceHi:v1p||''});
+  out.push({z:3,hrLo:v1h?String(v1h+1):'',hrHi:mid?String(mid):''});
+  out.push({z:4,hrLo:mid?String(mid+1):'',hrHi:v2h?String(v2h):'',paceHi:v2p||''});
+  out.push({z:5,hrLo:v2h?String(v2h+1):'',hrHi:hrmax?String(hrmax):''});
+  return out;
+}
+var recalMode='race', recalProposal=null;
+
+function renderRecalTabs(){
+  $('r-tab-race').setAttribute('aria-selected',recalMode==='race');
+  $('r-tab-vt').setAttribute('aria-selected',recalMode==='vt');
+  $('r-race').style.display=recalMode==='race'?'block':'none';
+  $('r-vt').style.display=recalMode==='vt'?'block':'none';
+}
+function openRecal(){
+  recalProposal=null; $('r-preview').innerHTML='<div class="empty">Enter a result, then press Preview.</div>';
+  $('r-eq').style.display='none';
+  $('r-vt1h').value=S.zones.vt1Hr||''; $('r-vt1p').value=S.zones.vt1Pace||'';
+  $('r-vt2h').value=S.zones.vt2Hr||''; $('r-vt2p').value=S.zones.vt2Pace||'';
+  $('r-hrmax').value=S.zones.hrMax||''; $('r-date').value=todayISO();
+  renderRecalTabs(); openSheet('sheet-r');
+}
+$('z-recal').onclick=function(){closeSheets();openRecal();};
+$('r-tab-race').onclick=function(){recalMode='race';renderRecalTabs();};
+$('r-tab-vt').onclick=function(){recalMode='vt';renderRecalTabs();};
+
+function computeRecal(){
+  if(recalMode==='race'){
+    var d=+$('r-dist').value, t=parseTime($('r-time').value);
+    if(!d||!t){toast('Enter a distance and time');return null;}
+    var vd=vdotFrom(d,t);
+    if(!vd||vd<20||vd>90){toast('That result looks out of range');return null;}
+    var mEq=equivTime(vd,42195);
+    $('r-eq').style.display='block';
+    $('r-eq').innerHTML='<b>VDOT '+vd.toFixed(1)+'</b> · equivalent 10K '+s2hms(equivTime(vd,10000))+
+      ' · half '+s2hms(equivTime(vd,21097))+' · marathon '+s2hms(mEq)+
+      '<br>Marathon equivalents assume the long-run base to support them. With low weekly volume they run optimistic.';
+    return {kind:'race',vdot:vd,bands:bandsFromVdot(vd),
+      mpEquiv:s2p(mEq/42.195),
+      label:($('r-label').value.trim()||('race '+d+' m in '+$('r-time').value.trim()))};
+  }
+  var v1h=num($('r-vt1h').value), v2h=num($('r-vt2h').value), hm=num($('r-hrmax').value);
+  if(!v1h&&!v2h){toast('Enter at least one VT heart rate');return null;}
+  if(v1h&&v2h&&v1h>=v2h){toast('VT1 must be lower than VT2');return null;}
+  return {kind:'vt',bands:bandsFromVT(v1h,v2h,hm,$('r-vt1p').value.trim(),$('r-vt2p').value.trim()),
+    v1h:v1h,v2h:v2h,hrmax:hm,v1p:$('r-vt1p').value.trim(),v2p:$('r-vt2p').value.trim(),
+    label:'Lab test '+($('r-date').value||todayISO())};
+}
+function renderRecalPreview(pr){
+  if(!pr){$('r-preview').innerHTML='';return;}
+  var h='<div style="font-size:.72rem">';
+  pr.bands.forEach(function(nb){
+    var cur=band(nb.z); if(!cur)return;
+    var oldP=cur.paceHi?cur.paceLo+'–'+cur.paceHi:cur.paceLo;
+    var newP=nb.paceLo?(nb.paceHi?nb.paceLo+'–'+nb.paceHi:nb.paceLo):oldP;
+    var oldH=(cur.hrLo||'')+(cur.hrHi?'–'+cur.hrHi:'+');
+    var newH=(nb.hrLo!==undefined||nb.hrHi!==undefined)
+      ? ((nb.hrLo||'')+(nb.hrHi?'–'+nb.hrHi:'+')) : oldH;
+    var changed=(newP!==oldP)||(newH!==oldH);
+    h+='<div style="display:flex;gap:8px;align-items:center;padding:6px 0;'+
+       'border-bottom:1px solid var(--line)">'+
+       '<span class="zbadge" style="background:'+ZC[nb.z]+'">'+ZN[nb.z]+'</span>'+
+       '<span style="flex:1;color:var(--muted)">'+esc(oldP)+' · '+esc(oldH)+'</span>'+
+       '<span style="flex:1;font-weight:800;color:'+(changed?'var(--orange)':'var(--muted)')+'">'+
+       esc(newP)+' · '+esc(newH)+'</span></div>';
+  });
+  $('r-preview').innerHTML=h+'</div>';
+}
+$('r-calc').onclick=function(){recalProposal=computeRecal();renderRecalPreview(recalProposal);};
+$('r-apply').onclick=function(){
+  var pr=recalProposal||computeRecal();
+  if(!pr){return;}
+  snapshot();
+  pr.bands.forEach(function(nb){
+    var cur=band(nb.z); if(!cur)return;
+    if(nb.paceLo)cur.paceLo=nb.paceLo;
+    if(nb.paceHi!==undefined&&nb.paceHi!=='')cur.paceHi=nb.paceHi;
+    if(nb.hrLo!==undefined)cur.hrLo=nb.hrLo;
+    if(nb.hrHi!==undefined)cur.hrHi=nb.hrHi;
+  });
+  var ev='';
+  if(pr.kind==='race'){
+    ev='VDOT '+pr.vdot.toFixed(1)+' from '+pr.label+'. Pace bands regenerated.';
+    if($('r-setmp').checked){
+      S.zones.currentMp=pr.mpEquiv; S.zones.currentMpSource=pr.label+' (equivalent)';
+      S.mpHistory.push({date:todayISO(),kind:'current',pace:pr.mpEquiv,
+        reason:pr.label+' — marathon equivalent from VDOT '+pr.vdot.toFixed(1)});
+      ev+=' Current MP set to '+pr.mpEquiv+'/km from the marathon equivalent.';
+    }
+  }else{
+    if(pr.v1h)S.zones.vt1Hr=String(pr.v1h);
+    if(pr.v2h)S.zones.vt2Hr=String(pr.v2h);
+    if(pr.v1p)S.zones.vt1Pace=pr.v1p;
+    if(pr.v2p)S.zones.vt2Pace=pr.v2p;
+    if(pr.hrmax)S.zones.hrMax=String(pr.hrmax);
+    ev='VT1 '+(pr.v1h||'—')+' / VT2 '+(pr.v2h||'—')+' bpm. HR boundaries set from the thresholds.';
+  }
+  S.decisions.push({date:todayISO(),change:'Zones recalibrated from '+pr.label,
+    evidence:ev,rule:'Zone calibration'});
+  save();closeSheets();render();toast('Zones recalibrated',true);
+};
+
+/* log */
+function renderLog(){
+  var b=$('log-body'),h='';
+  $('t-an').setAttribute('aria-selected',logTab==='an');
+  $('t-de').setAttribute('aria-selected',logTab==='de');
+  $('t-mp').setAttribute('aria-selected',logTab==='mp');
+  if(logTab==='an'){
+    var l=S.analyses.slice().reverse();
+    if(!l.length){b.innerHTML='<div class="empty">No analyses yet.<br>Ask Claude to read a run from Strava, then paste the update into Sync.</div>';return;}
+    h=l.map(function(a){return '<div class="entry"><div class="meta">'+esc(a.date||'')+
+      (a.source?' · '+esc(a.source):'')+'</div><h4>'+esc(a.title||'Session')+'</h4>'+
+      '<p>'+esc(a.summary||'')+'</p>'+
+      (a.timeInZone?'<div class="ev"><b>Time in zone:</b> '+esc(a.timeInZone)+'</div>':'')+
+      (a.flags?'<div class="ev"><b>Flags:</b> '+esc(a.flags)+'</div>':'')+'</div>';}).join('');
+  }else if(logTab==='de'){
+    var d=S.decisions.slice().reverse();
+    if(!d.length){b.innerHTML='<div class="empty">No decisions recorded.<br>Changes to pace, volume or structure get logged here with their reasoning.</div>';return;}
+    h=d.map(function(x){return '<div class="entry dec"><div class="meta">'+esc(x.date||'')+
+      (x.rule?' · '+esc(x.rule):'')+'</div><h4>'+esc(x.change||'')+'</h4>'+
+      (x.evidence?'<p>'+esc(x.evidence)+'</p>':'')+'</div>';}).join('');
+  }else{
+    var mh=(S.mpHistory||[]).slice().reverse();
+    if(!mh.length){b.innerHTML='<div class="empty">No marathon-pace history yet.</div>';return;}
+    h=mh.map(function(x){return '<div class="entry dec"><div class="meta">'+esc(x.date)+
+      ' · '+esc(x.kind==='current'?'Current fitness':'Target')+
+      '</div><h4>'+esc(x.pace)+'/km</h4><p>'+esc(x.reason||'')+'</p></div>';}).join('');
+  }
+  b.innerHTML=h;
+}
+$('btn-log').onclick=function(){renderLog();openSheet('sheet-l');};
+$('t-an').onclick=function(){logTab='an';renderLog();};
+$('t-de').onclick=function(){logTab='de';renderLog();};
+$('t-mp').onclick=function(){logTab='mp';renderLog();};
+
+/* sync */
+function openSyncSheet(){
+  $('s-paste').value='';
+  $('s-url').value=(S.sync&&S.sync.gistUrl)||'';
+  var st=$('s-status');
+  if(S.sync&&S.sync.lastFetch){
+    st.style.display='block';
+    st.textContent='Last refreshed '+new Date(S.sync.lastFetch).toLocaleString()+
+      (S.sync.via?' via '+S.sync.via:'');
+  } else st.style.display='none';
+  openSheet('sheet-s');
+}
+$('btn-sync').onclick=openSyncSheet;
+$('s-url').oninput=function(){S.sync=S.sync||{};S.sync.gistUrl=this.value.trim();save();};
+
+$('s-copy').onclick=function(){
+  var out={type:'cim-coach-state',v:2,exportedAt:todayISO(),currentWeek:currentWeek(),
+    zones:S.zones,mpHistory:S.mpHistory,weekNotes:S.weekNotes,decisions:S.decisions,
+    analyses:S.analyses.slice(-10),
+    knownStravaIds:S.workouts.filter(function(w){return w.stravaId;})
+      .map(function(w){return w.stravaId;}),
+    workouts:S.workouts.filter(function(w){
+      return w.status!=='planned'||w.date>=addDays(todayISO(),-7);})};
+  var txt=JSON.stringify(out);
+  if(navigator.clipboard&&navigator.clipboard.writeText)
+    navigator.clipboard.writeText(txt).then(function(){toast('State copied');},function(){fb(txt);});
+  else fb(txt);
+  function fb(t){$('s-paste').value=t;$('s-paste').select();
+    try{document.execCommand('copy');toast('State copied');}catch(e){toast('Copy from the box');}}
+};
+function applyPayload(p,srcLabel){
+  if(!p||typeof p!=='object')return {ok:false,msg:'Not a valid update'};
+  if(p.updateId&&S.sync&&p.updateId===S.sync.lastUpdateId)
+    return {ok:true,msg:'Already up to date',n:0};
+  snapshot();
+  var n=0,dup=0;
+
+  if(p.zones)  {S.zones=p.zones;n++;}
+  if(p.mp&&p.mp.pace){
+    var kind=p.mp.kind==='current'?'current':'goal';
+    var cur=kind==='current'?S.zones.currentMp:S.zones.goalMp;
+    if(p.mp.pace!==cur){
+      if(kind==='current'){S.zones.currentMp=p.mp.pace;
+        if(p.mp.source)S.zones.currentMpSource=p.mp.source;}
+      else S.zones.goalMp=p.mp.pace;
+      S.mpHistory.push({date:p.mp.date||todayISO(),kind:kind,pace:p.mp.pace,
+        reason:p.mp.reason||p.mp.source||''});
+      n++;
+    }
+  }
+  if(p.weekNotes)Object.keys(p.weekNotes).forEach(function(k){S.weekNotes[k]=p.weekNotes[k];n++;});
+
+  function pushUnique(list,items){
+    (items||[]).forEach(function(it){
+      if(it.id&&list.some(function(x){return x.id===it.id;})){dup++;return;}
+      list.push(it);n++;
+    });
+  }
+  pushUnique(S.analyses,p.analyses);
+  pushUnique(S.decisions,p.decisions);
+
+  (p.activities||[]).forEach(function(a){
+    if(a.stravaId&&S.workouts.some(function(w){return w.stravaId===a.stravaId;})){dup++;return;}
+    var t=null;
+    if(a.matchId)t=S.workouts.filter(function(w){return w.id===a.matchId;})[0];
+    if(!t&&a.date&&(a.kind||'run')==='run')
+      t=S.workouts.filter(function(w){
+        return w.date===a.date&&(w.kind==='run'||w.kind==='race')&&!w.stravaId;})[0];
+    if(t){
+      if(a.km!=null)t.actualKm=a.km;
+      if(a.movingTime)t.movingTime=a.movingTime;
+      if(a.avgHr)t.avgHr=a.avgHr; if(a.maxHr)t.maxHr=a.maxHr;
+      if(a.timeInZone)t.timeInZone=a.timeInZone;
+      if(a.mpKm!=null)t.mpKm=a.mpKm;
+      if(a.rpe!=null)t.rpe=a.rpe; if(a.niggle!=null)t.niggle=a.niggle;
+      if(a.notes)t.notes=(t.notes?t.notes+'\n':'')+a.notes;
+      t.stravaId=a.stravaId; t.status=a.status||'done';
+    }else{
+      S.workouts.push({id:uid(),date:a.date,kind:a.kind||'other',title:a.title||'Activity',
+        plannedKm:0,mpKm:a.mpKm||0,zones:[],reps:'',
+        details:a.details||('Imported from Strava'+(srcLabel?' · '+srcLabel:'')+'.'),
+        status:'done',actualKm:a.km,movingTime:a.movingTime,avgHr:a.avgHr,maxHr:a.maxHr,
+        timeInZone:a.timeInZone,rpe:a.rpe,notes:a.notes,stravaId:a.stravaId});
+    }
+    n++;
+  });
+
+  (p.workouts||[]).forEach(function(u){
+    var t=null;
+    if(u.id)t=S.workouts.filter(function(x){return x.id===u.id;})[0];
+    if(!t&&u.date)t=S.workouts.filter(function(x){
+      return x.date===u.date&&(!u.title||x.title===u.title)&&x.kind!=='gym';})[0];
+    if(t){['title','date','kind','plannedKm','mpKm','zones','reps','details','status',
+      'actualKm','movingTime','avgHr','maxHr','timeInZone','rpe','niggle','notes']
+      .forEach(function(f){if(u[f]!==undefined)t[f]=u[f];});n++;}
+    else if(u.date&&u.title){S.workouts.push({id:uid(),date:u.date,kind:u.kind||'run',
+      title:u.title,plannedKm:u.plannedKm||0,mpKm:u.mpKm||0,zones:u.zones||[],
+      reps:u.reps||'',details:u.details||'',status:u.status||'planned',
+      actualKm:u.actualKm,movingTime:u.movingTime,avgHr:u.avgHr,maxHr:u.maxHr,
+      timeInZone:u.timeInZone,rpe:u.rpe,niggle:u.niggle,notes:u.notes});n++;}
+  });
+
+  if(p.updateId){S.sync=S.sync||{};S.sync.lastUpdateId=p.updateId;}
+  save();
+  return {ok:true,n:n,dup:dup,
+    msg:(n?'Applied '+n+' update'+(n===1?'':'s'):'Nothing new')+(dup?' · '+dup+' skipped':'')};
+}
+
+function parseLoose(raw){
+  return JSON.parse(String(raw).replace(/^```(?:json)?/,'').replace(/```$/,'').trim());
+}
+
+function gistId(v){
+  v=String(v||'').trim();
+  if(!v)return '';
+  var m=v.match(/([0-9a-f]{20,40})/i);
+  return m?m[1]:'';
+}
+/* Transports, best first. api.github.com is the only one confirmed to send
+   access-control-allow-origin:* , so it leads. */
+function transports(id){
+  return [
+    {name:'GitHub API',url:'https://api.github.com/gists/'+id,
+     pick:function(txt){
+       var g=JSON.parse(txt), f=g.files&&(g.files['cim-state.json']||g.files[Object.keys(g.files)[0]]);
+       if(!f)throw new Error('no file in gist');
+       if(f.truncated)throw new Error('file too large, was truncated');
+       return f.content;}},
+    {name:'jsDelivr CDN',url:'https://cdn.jsdelivr.net/gist/'+id+'/cim-state.json',
+     pick:function(txt){return txt;}},
+    {name:'Raw gist',url:'https://gist.githubusercontent.com/raw/'+id+'/cim-state.json',
+     pick:function(txt){return txt;}}
+  ];
+}
+async function tryTransport(t){
+  var u=t.url+(t.url.indexOf('?')>=0?'&':'?')+'cb='+Date.now();
+  var res=await fetch(u,{cache:'no-store'});
+  if(!res.ok)throw new Error('HTTP '+res.status);
+  return t.pick(await res.text());
+}
+async function fetchUpdate(id){
+  var errs=[], ts=transports(id);
+  for(var i=0;i<ts.length;i++){
+    try{ var body=await tryTransport(ts[i]);
+         return {body:body,via:ts[i].name}; }
+    catch(e){ errs.push(ts[i].name+': '+(e.message||e)); }
+  }
+  throw new Error(errs.join(' · '));
+}
+async function refreshFromGist(loud){
+  var id=gistId(S.sync&&S.sync.gistUrl);
+  if(!id){ if(loud){openSyncSheet();toast('Add your gist ID first');} return; }
+  if(loud)toast('Checking for updates…');
+  try{
+    var got=await fetchUpdate(id);
+    var p=parseLoose(got.body);
+    var out=applyPayload(p,'via '+got.via);
+    S.sync.lastFetch=new Date().toISOString(); S.sync.via=got.via; save();
+    render();
+    if(loud||out.n)toast(out.msg,out.n>0);
+  }catch(e){
+    if(loud){
+      openSyncSheet();
+      var st=$('s-status'); st.style.display='block';
+      st.innerHTML='<b>Every route failed.</b><br><span style="font-size:.68rem">'+
+        esc(String(e.message||e))+'</span><br>Use the paste box below in the meantime.';
+      toast('Could not reach the gist');
+    }
+  }
+}
+$('s-test').onclick=async function(){
+  var id=gistId($('s-url').value);
+  var st=$('s-status'); st.style.display='block';
+  if(!id){st.innerHTML='<b>No gist ID found.</b> Paste the ID or a full gist link.';return;}
+  st.innerHTML='Testing routes…';
+  var ts=transports(id), rows=[];
+  for(var i=0;i<ts.length;i++){
+    var label=ts[i].name, ok=false, detail='';
+    try{ var body=await tryTransport(ts[i]);
+         var p=parseLoose(body);
+         ok=true; detail=(p.activities?p.activities.length:0)+' activities, '+
+           (p.analyses?p.analyses.length:0)+' analyses'; }
+    catch(e){ detail=String(e.message||e); }
+    rows.push('<div style="padding:4px 0"><b>'+(ok?'✓':'✗')+' '+esc(label)+'</b> — '+esc(detail)+'</div>');
+  }
+  var any=rows.some(function(r){return r.indexOf('✓')>=0;});
+  st.innerHTML='<b>'+(any?'Working. Refresh will use the first ✓ route.':
+    'No route worked from this device. Use the paste box below.')+'</b>'+rows.join('');
+};
+$('btn-refresh').onclick=function(){refreshFromGist(true);};
+
+$('s-apply').onclick=function(){
+  var raw=$('s-paste').value.trim();
+  if(!raw){toast('Nothing to apply');return;}
+  var p;
+  try{p=parseLoose(raw);}catch(e){toast('That is not valid JSON');return;}
+  var out=applyPayload(p,'pasted');
+  closeSheets();render();toast(out.msg,out.n>0);
+};
+
+$('s-reset').onclick=function(){
+  if(!confirm('Reset every session, note, analysis and decision to the default plan? Zones and MP history are kept.'))return;
+  snapshot();
+  var z=S.zones,mh=S.mpHistory;
+  S=freshState(); S.zones=z; S.mpHistory=mh;
+  save();closeSheets();wk=currentWeek();render();toast('Plan reset',true);
+};
+
+/* boot */
+function migrate(st){
+  if(!st||!st.workouts||!st.workouts.length)return freshState();
+  if(!st.zones||!st.zones.bands||!st.zones.goalMp||st.zones.bands.length!==5)
+    st.zones=JSON.parse(JSON.stringify(DEFAULT_ZONES));
+  if(!st.analyses)st.analyses=[];
+  if(!st.decisions)st.decisions=[];
+  if(!st.weekNotes)st.weekNotes={};
+  if(!st.sync)st.sync={gistUrl:'',lastUpdateId:'',lastFetch:''};
+  if(!st.mpHistory)st.mpHistory=[{date:todayISO(),kind:'goal',pace:st.zones.goalMp||'5:00',
+    reason:'Block starting value'}];
+  return st;
+}
+(async function(){
+  try{var res=await window.storage.get(KEY);
+    S=migrate(res&&res.value?JSON.parse(res.value):null);}
+  catch(e){S=freshState();}
+  wk=currentWeek(); render();
+  try{await window.storage.set(KEY,JSON.stringify(S));}catch(e){}
+  if(S.sync&&S.sync.gistUrl) refreshFromGist(false);
+})();
+})();
+</script>
+
+</body>
+</html>
