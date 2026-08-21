@@ -408,7 +408,7 @@ window.addEventListener('error',function(e){
       String(e.message||e)+'<br><br>Your saved data is untouched. Send this message to Claude.</div>';
   }
 });
-const KEY='cim-coach-state-v5';
+const KEY='cim-coach-state-v6';
 const $=function(id){return document.getElementById(id);};
 function on(id,evt,fn){var el=$(id);
   if(!el){console.warn('[marathon-block] missing element:',id);return;}
@@ -428,6 +428,10 @@ const LIGHT=' Deload: two light sets per movement.';
 const TWO=' Peak block: two work sets.';
 
 const PLAN=[
+{week:-1,start:'2026-08-17',targetKm:0,phase:'Pre-block',
+ focus:'Logging only. No prescribed sessions.',items:[]},
+{week:0,start:'2026-08-24',targetKm:0,phase:'Pre-block',
+ focus:'Logging only. Lab test Sun 30 Aug.',items:[]},
 {week:1,start:'2026-08-31',targetKm:40,phase:'Re-entry / threshold',focus:'Rebuild road-running rhythm. Saturday stays controlled.',items:[
  {d:0,kind:'run',title:'Easy run',km:5,z:[2],details:'5 km continuous.'},gA(),
  {d:1,kind:'run',title:'3 × 6 min threshold',km:8,z:[4],details:'2 km warm-up, drills and 4 × 20 sec strides; 3 × 6 min with 2 min jog; cool down to 8 km.'},gB(),
@@ -641,7 +645,7 @@ function metrics(n){
 }
 function currentWeek(){var t=todayISO();
   if(t<PLAN[0].start)return 1;
-  for(var i=13;i>=0;i--){if(t>=PLAN[i].start)return i+1;}return 1;}
+  for(var i=PLAN.length-1;i>=0;i--){if(t>=PLAN[i].start)return i+1;}return 1;}
 
 function render(){
   var m=weekMeta(wk), mt=metrics(wk), today=todayISO(), mb=mpBand();
@@ -651,10 +655,11 @@ function render(){
   var h='';
   h+='<div class="weeknav">'+
      '<button class="nav-btn" id="prev" '+(wk<=1?'disabled':'')+' aria-label="Previous week">‹</button>'+
-     '<div class="label">Week '+wk+' of 14 · '+fmtDate(m.start)+' – '+fmtDate(addDays(m.start,6))+'</div>'+
-     '<button class="nav-btn" id="next" '+(wk>=14?'disabled':'')+' aria-label="Next week">›</button></div>';
+     '<div class="label">'+(m.week<1?'Pre-block':'Week '+m.week+' of 14')+' · '+
+     fmtDate(m.start)+' – '+fmtDate(addDays(m.start,6))+'</div>'+
+     '<button class="nav-btn" id="next" '+(wk>=PLAN.length?'disabled':'')+' aria-label="Next week">›</button></div>';
 
-  h+='<div class="hero"><div class="eyebrow">'+esc(m.phase)+'</div><h2>Week '+wk+'</h2>'+
+  h+='<div class="hero"><div class="eyebrow">'+esc(m.phase)+'</div><h2>'+(m.week<1?'Pre-block':'Week '+m.week)+'</h2>'+
      '<p>'+esc(m.focus)+'</p>'+
      '<div class="mpbar"><span class="lbl">MP target</span>'+
      '<span class="val">'+mb.lo+'–'+mb.hi+'/km</span>'+
@@ -662,13 +667,14 @@ function render(){
      '<button id="mp-edit">Adjust</button></div></div>';
 
   h+='<div class="metrics">'+
-     '<div class="metric"><div class="k">Target</div><div class="v">'+r1(m.targetKm)+' <small>km</small></div></div>'+
+     '<div class="metric"><div class="k">Target</div><div class="v">'+
+     (m.targetKm?r1(m.targetKm)+' <small>km</small>':'—')+'</div></div>'+
      '<div class="metric"><div class="k">Planned</div><div class="v">'+r1(mt.planned)+' <small>km</small></div></div>'+
      '<div class="metric done"><div class="k">Completed</div><div class="v">'+r1(mt.done)+' <small>km</small></div></div>'+
      '<div class="metric mp"><div class="k">MP logged</div><div class="v">'+r1(mt.mp)+' <small>km</small></div></div></div>';
 
   h+='<div class="note"><div class="k">Week note</div><textarea id="wnote" rows="2" '+
-     'placeholder="Notes">'+esc(S.weekNotes[wk]||'')+'</textarea></div>';
+     'placeholder="Notes">'+esc(S.weekNotes[m.week]||'')+'</textarea></div>';
 
   h+='<div class="cal">';
   for(var i=0;i<7;i++){
@@ -678,7 +684,7 @@ function render(){
     h+='<div class="day'+(date===today?' today':'')+'" data-date="'+date+'"><div class="day-h">'+
        '<span class="dow">'+DOW[i]+'</span><span class="dt">'+fmtDate(date)+'</span>'+
        (dk?'<span class="sum">'+r1(dk)+' km</span>':'')+'</div>';
-    if(!items.length) h+='<div class="rest">Rest</div>';
+    if(!items.length) h+='<div class="rest">'+(m.targetKm?'Rest':'—')+'</div>';
     items.forEach(function(w){h+=card(w);});
     h+='</div>';
   }
@@ -686,9 +692,9 @@ function render(){
   $('main').innerHTML=h;
 
   $('prev').onclick=function(){if(wk>1){wk--;render();}};
-  $('next').onclick=function(){if(wk<14){wk++;render();}};
+  $('next').onclick=function(){if(wk<PLAN.length){wk++;render();}};
   $('mp-edit').onclick=function(){openZones();};
-  $('wnote').oninput=function(){S.weekNotes[wk]=this.value;save();};
+  $('wnote').oninput=function(){S.weekNotes[m.week]=this.value;save();};
   wireCards();
 }
 
@@ -846,7 +852,7 @@ $('f-save').onclick=function(){
   save(); closeSheets();
   var m=weekMeta(wk);
   if(w.date<m.start||w.date>addDays(m.start,6))
-    for(var i=0;i<14;i++) if(w.date>=PLAN[i].start&&w.date<=addDays(PLAN[i].start,6)){wk=i+1;break;}
+    for(var i=0;i<PLAN.length;i++) if(w.date>=PLAN[i].start&&w.date<=addDays(PLAN[i].start,6)){wk=i+1;break;}
   render(); toast('Saved');
 };
 
