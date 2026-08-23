@@ -228,7 +228,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM · build 2026-08-21 23:19</div></div>
+    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM · build 2026-08-22 revised-plan</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-zones">Zones</button>
       <button class="btn" id="btn-log">Log</button>
@@ -436,96 +436,96 @@ const ZC={1:'var(--z1)',2:'var(--z2)',3:'var(--z3)',4:'var(--z5)',5:'var(--z6)',
 const ZN={1:'Z1',2:'Z2',3:'Z3',4:'Z4',5:'Z5',MP:'MP'};
 const ZORDER=[1,2,3,4,5,'MP'];
 
-const GYM_A='press 3 × 6–8\\npull-up or pulldown 3 × 6–10\\nchest-supported row 3 × 8–12\\ndelts 2 × 12–15\\nSkiErg + farmer carry + core\\n40–55 min';
-const GYM_B='squat or trap-bar 2–3 work sets\\none hinge or single-leg accessory\\ncalf + tibialis\\nshort HYROX skill\\nno sets to failure · ~6 h after track';
-const GYM_C='OHP or incline DB press\\npull-ups\\nrow + rear delts\\narms\\neasy RowErg\\nburpee broad-jump technique\\ncore — no lower-body damage';
+const GYM_A='press 3 × 6–8\npull-up or pulldown 3 × 6–10\nchest-supported row 3 × 8–12\ndelts 2 × 12–15\nSkiErg + farmer carry + core\n40–55 min';
+const GYM_B='squat or trap-bar 2–3 work sets\none hinge or single-leg accessory\ncalf + tibialis\nshort HYROX skill\nno sets to failure · ~6 h after track';
+const GYM_C='OHP or incline DB press\npull-ups\nrow + rear delts\narms\neasy RowErg\nburpee broad-jump technique\ncore — no lower-body damage';
 const gA=function(x){return{d:0,kind:'gym',title:'Gym A — Upper + SkiErg',km:0,details:GYM_A+(x||'')};};
 const gB=function(x){return{d:1,kind:'gym',title:'Gym B — Lower strength',km:0,details:GYM_B+(x||'')};};
 const gC=function(x){return{d:4,kind:'gym',title:'Gym C — Upper + HYROX',km:0,details:GYM_C+(x||'')};};
-const LIGHT='\\ndeload: two light sets per movement';
-const TWO='\\npeak block: two work sets';
+const LIGHT='\ndeload: two light sets per movement';
+const TWO='\npeak block: two work sets';
 
 const PLAN=[
 {week:-1,start:'2026-08-17',targetKm:0,phase:'Pre-block',
  focus:'Logging only. No prescribed sessions.',items:[]},
 {week:0,start:'2026-08-24',targetKm:0,phase:'Pre-block',
  focus:'Logging only. Lab test Sun 30 Aug.',items:[]},
-{week:1,start:'2026-08-31',targetKm:40,phase:'Re-entry / threshold',focus:'Rebuild road-running rhythm. Saturday stays controlled.',items:[
- {d:0,kind:'run',title:'Easy run',km:5,z:[2],details:'5 km continuous'},gA(),
- {d:1,kind:'run',title:'3 × 6 min threshold',km:8,z:[4],details:'2 km warm-up + drills\n4 × 20s strides\n3 × 6 min @ Z4, 2 min jog\ncool-down to 8 km'},gB(),
- {d:3,kind:'run',title:'Medium aerobic run',km:9,z:[2],details:'continuous aerobic'},gC(),
- {d:5,kind:'run',title:'18 km long run',km:18,z:[2,3],details:'17 km @ Z2\nfinal 15 min @ Z3 if fresh'}]},
-{week:2,start:'2026-09-07',targetKm:44,phase:'Threshold + first MP',focus:'First exposure to marathon pace.',items:[
- {d:0,kind:'run',title:'Easy + strides',km:5,z:[2],details:'5 km easy\n6 × 20s strides'},gA(),
- {d:1,kind:'run',title:'3 × 1600 m cruise',km:9,z:[4],reps:'3x1600',details:'2 km warm-up + drills\n3 × 1600 m @ Z4, 75–90s jog\ncool-down to 9 km'},gB(),
- {d:3,kind:'run',title:'Medium aerobic run',km:10,z:[2],details:'continuous aerobic'},gC(),
- {d:5,kind:'run',title:'20 km · 4 km MP',km:20,mp:4,z:[2,'MP'],details:'15 km @ Z2\n4 km @ MP\n1 km @ Z2'}]},
-{week:3,start:'2026-09-14',targetKm:48,phase:'MP introduction',focus:'Establish the rhythm of marathon pace.',items:[
- {d:0,kind:'run',title:'Easy + strides',km:6,z:[2],details:'6 km easy\n6 × 20s strides'},gA(),
- {d:1,kind:'run',title:'2 × 3200 m MP',km:10,mp:6.4,z:['MP',3],reps:'2x3200',details:'2 km warm-up\n3200 m @ MP\n800 m float @ Z3\n3200 m @ MP\ncool-down to 10 km'},gB(),
- {d:3,kind:'run',title:'Medium aerobic run',km:10,z:[2],details:'continuous aerobic'},gC(),
- {d:5,kind:'run',title:'22 km long run',km:22,z:[2,3],details:'18 km @ Z2\n4 km @ Z3\nno MP'}]},
-{week:4,start:'2026-09-21',targetKm:39,phase:'Deload / speed touch',focus:'Absorb three weeks. Finish every run fresh.',items:[
- {d:0,kind:'run',title:'Recovery run',km:5,z:[1],details:'5 km continuous'},gA(LIGHT),
- {d:1,kind:'run',title:'6 × 400 m smooth',km:8,z:[5],reps:'6x400',details:'2 km warm-up\n6 × 400 m @ Z5, 200 m jog\ncool-down to 8 km\nsubmaximal'},gB(LIGHT),
- {d:3,kind:'run',title:'Easy aerobic run',km:10,z:[2],details:'flat effort, no progression'},gC(LIGHT),
- {d:5,kind:'run',title:'16 km deload long run',km:16,z:[2],details:'16 km @ Z2\nno fast finish'}]},
-{week:5,start:'2026-09-28',targetKm:50,phase:'Cruise + late MP',focus:'Marathon pace late in the long run.',items:[
- {d:0,kind:'run',title:'Easy + strides',km:5,z:[2],details:'5 km easy\n6 × 20s strides'},gA(),
- {d:1,kind:'run',title:'3 × 2000 m cruise',km:10,z:[4],reps:'3x2000',details:'2 km warm-up\n3 × 2000 m @ Z4, 90s jog\ncool-down to 10 km'},gB(),
- {d:3,kind:'run',title:'Medium aerobic + steady',km:11,z:[2,3],details:'9 km @ Z2\n2 km @ Z3'},gC(),
- {d:5,kind:'run',title:'24 km · 6 km MP',km:24,mp:6,z:[2,'MP'],details:'17 km @ Z2\n6 km @ MP\n1 km @ Z2\ncap RPE at 7'}]},
-{week:6,start:'2026-10-05',targetKm:53,phase:'MP blocks',focus:'Build economy through longer marathon-pace blocks.',items:[
- {d:0,kind:'run',title:'Easy run',km:5,z:[2],details:'5 km continuous'},gA(),
- {d:1,kind:'run',title:'2 × 4 km MP',km:11,mp:8,z:['MP',3],details:'2 km warm-up\n4 km @ MP\n1 km float @ Z3\n4 km @ MP\ncool-down to 11 km'},gB(),
- {d:3,kind:'run',title:'Medium aerobic + strides',km:11,z:[2],details:'continuous aerobic\n6 × 20s strides'},gC(),
- {d:5,kind:'run',title:'26 km long run',km:26,z:[2,3],details:'21 km @ Z2\n5 km @ Z3\nno MP'}]},
-{week:7,start:'2026-10-12',targetKm:56,phase:'Durability gate 1',focus:'Assess marathon pace after 19 km of accumulated distance.',items:[
- {d:0,kind:'run',title:'Easy + strides',km:5,z:[2],details:'5 km easy\n6 × 20s strides'},gA(),
- {d:1,kind:'run',title:'5 × 1 km · 10K prep',km:10,z:[5],reps:'5x1000',details:'2 km warm-up + drills + strides\n5 × 1 km @ Z5, 90s jog\ncool-down to 10 km'},gB(),
- {d:3,kind:'run',title:'Medium aerobic + steady',km:13,z:[2,3],details:'10 km @ Z2\n3 km @ Z3'},gC(),
- {d:5,kind:'run',title:'28 km · 8 km MP',km:28,mp:8,z:[2,'MP'],gate:1,details:'19 km @ Z2\n8 km @ MP\n1 km @ Z2\n— durability gate 1 —'}]},
-{week:8,start:'2026-10-19',targetKm:39,phase:'Great Trek 10K · B race',focus:'Freshen up, race the 10K, recover fast.',items:[
- {d:0,kind:'run',title:'Easy + strides',km:8,z:[2],details:'8 km easy\n6 × 20s strides'},gA(),
- {d:1,kind:'run',title:'4 × 800 m · 10K tune-up',km:9,z:[5],reps:'4x800',details:'2 km warm-up + drills\n4 × 800 m @ Z5, 400 m jog\ncool-down to 9 km'},
+{week:1,start:'2026-08-31',targetKm:40,phase:'Re-entry / threshold',focus:'Rebuild road rhythm. Keep every quality segment controlled.',items:[
+ {d:0,kind:'run',title:'Easy run',km:6,z:[2],details:'6 km relaxed\noptional 4 × 20s strides if legs feel normal'},gA(),
+ {d:1,kind:'run',title:'4 × 1 km threshold',km:8,z:[4],reps:'4x1000',details:'2 km warm-up + drills/strides\n4 × 1 km @ 4:35–4:40, 60–75s easy jog\ncool-down to 8 km\nfinish with another rep available'},gB(),
+ {d:3,kind:'run',title:'Aerobic run',km:8,z:[2],details:'conversational, no progression\neffort-led'},gC(),
+ {d:5,kind:'run',title:'18 km long run — easy',km:18,z:[2,3],details:'easy throughout @ 6:00–6:30\noptional final 15 min @ steady 5:25–5:40 only if fresh'}]},
+{week:2,start:'2026-09-07',targetKm:44,phase:'Threshold + first MP',focus:'First controlled marathon-pace exposure inside the long run.',items:[
+ {d:0,kind:'run',title:'Easy + strides',km:6,z:[2],details:'easy running\n6 × 20s relaxed strides, full recovery'},gA(),
+ {d:1,kind:'run',title:'3 × 1600 m threshold',km:9,z:[4],reps:'3x1600',details:'2 km warm-up\n3 × 1600 m in 7:20–7:28 (~4:35–4:40/km), 75–90s jog\ncool-down to 9 km'},gB(),
+ {d:3,kind:'run',title:'Aerobic run',km:9,z:[2],details:'conversational\nprotect Saturday'},gC(),
+ {d:5,kind:'run',title:'20 km · final 4 km MP',km:20,mp:4,z:[2,'MP'],details:'15 km easy\n4 km @ MP\n1 km easy\ncontrolled, not a test'}]},
+{week:3,start:'2026-09-14',targetKm:48,phase:'Aerobic power + midweek MP',focus:'Tuesday raises the ceiling; Thursday carries the MP so Saturday stays aerobic.',items:[
+ {d:0,kind:'run',title:'Easy + strides',km:6,z:[2],details:'easy running\n6 × 20s relaxed strides'},gA(),
+ {d:1,kind:'run',title:'4 × 1 km — aerobic power',km:10,z:[5],reps:'4x1000',details:'2 km warm-up + drills\n4 × 1 km @ 4:15–4:22, 2–3 min easy jog\ncool-down to 10 km\nhard but repeatable'},gB(),
+ {d:3,kind:'run',title:'Marathon aerobic — 5 km MP',km:10,mp:5,z:[2,'MP'],details:'2 km easy\n5 km @ MP\n3 km easy\nmoderate, not a test'},gC(),
+ {d:5,kind:'run',title:'22 km · steady finish',km:22,z:[2,3],details:'18 km easy\n4 km @ steady 5:20–5:35\nno MP'}]},
+{week:4,start:'2026-09-21',targetKm:39,phase:'Deload / economy',focus:'Absorb three weeks. Keep the Tuesday speed touch smooth, not taxing.',items:[
+ {d:0,kind:'run',title:'Recovery run',km:5,z:[1],details:'very easy @ 6:15–6:45+'},gA(LIGHT),
+ {d:1,kind:'run',title:'6 × 400 m smooth economy',km:8,z:[5],reps:'6x400',details:'2 km warm-up\n6 × 400 m in 1:42–1:46, 200 m easy jog\ncool-down to 8 km\nrelaxed, not R-pace racing'},gB(LIGHT),
+ {d:3,kind:'run',title:'Easy aerobic run',km:10,z:[2],details:'easy, no progression'},gC(LIGHT),
+ {d:5,kind:'run',title:'16 km deload long run',km:16,z:[2],details:'easy throughout\nRPE 2–3\nno fast finish'}]},
+{week:5,start:'2026-09-28',targetKm:50,phase:'Threshold + late MP',focus:'Increase threshold volume Tuesday; teach MP late in the long run Saturday.',items:[
+ {d:0,kind:'run',title:'Easy + strides',km:6,z:[2],details:'easy running\n6 × 20s strides'},gA(),
+ {d:1,kind:'run',title:'3 × 2 km threshold',km:10,z:[4],reps:'3x2000',details:'2 km warm-up\n3 × 2 km @ 4:35–4:40, 90s easy jog\ncool-down to 10 km'},gB(),
+ {d:3,kind:'run',title:'Aerobic run',km:10,z:[2],details:'fully conversational'},gC(),
+ {d:5,kind:'run',title:'24 km · final 6 km MP',km:24,mp:6,z:[2,'MP'],details:'17 km easy\n6 km @ MP\n1 km easy\ncap at RPE ~7'}]},
+{week:6,start:'2026-10-05',targetKm:53,phase:'Aerobic power + midweek MP',focus:'Second-quality Thursday is allowed because Saturday stays mostly aerobic.',items:[
+ {d:0,kind:'run',title:'Easy run',km:6,z:[2],details:'relaxed\nRPE 2–3'},gA(),
+ {d:1,kind:'run',title:'4 × 1200 m — aerobic power',km:11,z:[5],reps:'4x1200',details:'2 km warm-up\n4 × 1200 m in 5:08–5:15 (~4:17–4:23/km), 2–2.5 min easy jog\ncool-down to 11 km'},gB(),
+ {d:3,kind:'run',title:'Marathon aerobic — 5 km MP',km:10,mp:5,z:[2,'MP'],details:'2 km easy\n5 km @ MP\n3 km easy\nmoderate, not a test'},gC(),
+ {d:5,kind:'run',title:'26 km · steady finish',km:26,z:[2,3],details:'21 km easy\n5 km @ steady 5:20–5:35\nno MP'}]},
+{week:7,start:'2026-10-12',targetKm:56,phase:'10K strength + durability gate',focus:'Sharpen for Great Trek while using the 28 km run to test 5:00/km under fatigue.',items:[
+ {d:0,kind:'run',title:'Easy + strides',km:7,z:[2],details:'easy running\n6 × 20s strides'},gA(),
+ {d:1,kind:'run',title:'5 × 1 km — 10K specific',km:10,reps:'',details:'2 km warm-up + drills\n5 × 1 km @ 4:25–4:30, 90s easy jog\ncool-down to 10 km\neven reps — between Z4 and Z5, run by pace not zone'},gB(),
+ {d:3,kind:'run',title:'Aerobic run',km:11,z:[2],details:'easy-aerobic only'},gC(),
+ {d:5,kind:'run',title:'28 km · final 8 km MP',km:28,mp:8,z:[2,'MP'],gate:1,details:'19 km easy\n8 km @ MP\n1 km easy\n— durability gate 1 —'}]},
+{week:8,start:'2026-10-19',targetKm:39,phase:'Great Trek 10K · B race',focus:'Freshen, race sub-45 intelligently, and use the result to recalibrate faster paces.',items:[
+ {d:0,kind:'run',title:'Easy + strides',km:8,z:[2],details:'easy running\n6 × 20s relaxed strides'},gA(),
+ {d:1,kind:'run',title:'4 × 800 m — 10K tune-up',km:9,z:[5],reps:'4x800',details:'2 km warm-up + drills\n4 × 800 m in 3:28–3:32, 400 m easy jog\ncool-down to 9 km\nsharp, not strained'},
  {d:1,kind:'gym',title:'Gym B — Light activation',km:0,details:'squat or trap-bar 1–2 easy sets\ncalves + tibialis\nno sled, lunges or wall balls\n25–35 min @ RPE 5'},
- {d:3,kind:'run',title:'Easy + strides',km:8,z:[2],details:'8 km easy\n4 × 20s strides'},
- {d:5,kind:'race',title:'Great Trek 10K · B race',km:14,z:[5],details:'2 km warm-up + drills + 4 strides\\n10K race — sub-45, 4:30/km\\nfirst 2 km controlled\\nrace middle 6 km, then commit\\n2 km cool-down'}]},
-{week:9,start:'2026-10-26',targetKm:56,phase:'Controlled 30 km',focus:'Absorb the 10K, then a 30 km with controlled MP blocks.',items:[
- {d:0,kind:'run',title:'Easy + strides',km:5,z:[2],details:'5 km easy\n6 × 20s strides'},gA(TWO),
- {d:1,kind:'run',title:'3 × 1600 m cruise',km:9,z:[4],reps:'3x1600',details:'2 km warm-up\n3 × 1600 m @ Z4, 90s jog\ncool-down to 9 km'},gB(TWO),
- {d:3,kind:'run',title:'Aerobic run',km:7,z:[2],details:'continuous aerobic'},
- {d:4,kind:'run',title:'Recovery run',km:5,z:[1],details:'5 km continuous'},gC(TWO),
- {d:5,kind:'run',title:'30 km · 2 × 4 km MP',km:30,mp:8,z:[2,'MP'],details:'7 km @ Z2\n4 km @ MP\n2 km @ Z2\n4 km @ MP\n13 km @ Z2'}]},
-{week:10,start:'2026-11-02',targetKm:61,phase:'Peak specific workout',focus:'The block\u2019s strongest evidence on marathon pace.',items:[
- {d:0,kind:'run',title:'Recovery run',km:5,z:[1],details:'5 km continuous'},gA(TWO),
- {d:1,kind:'run',title:'3 × 8 min threshold',km:9,z:[4],details:'2 km warm-up\n3 × 8 min @ Z4, 2 min jog\ncool-down to 9 km\nno faster than Z4'},gB(TWO),
- {d:3,kind:'run',title:'Aerobic + steady',km:10,z:[2,3],details:'7 km @ Z2\n3 km @ Z3'},
- {d:4,kind:'run',title:'Recovery run',km:5,z:[1],details:'5 km continuous'},gC(TWO),
- {d:5,kind:'run',title:'32 km · 14 km MP',km:32,mp:14,z:[2,'MP'],gate:2,details:'8 km @ Z2\n5 km @ MP\n2 km @ Z2\n5 km @ MP\n2 km @ Z2\n4 km @ MP — only if pace is stable\n6 km @ Z2\n— durability gate 2 —'}]},
-{week:11,start:'2026-11-09',targetKm:63,phase:'Durability / absorb',focus:'Final 30 km is mostly Z2.',items:[
- {d:0,kind:'run',title:'Easy run',km:6,z:[2],details:'6 km continuous'},gA(TWO),
- {d:1,kind:'run',title:'2 × 3200 m MP',km:10,mp:6.4,z:['MP',3],reps:'2x3200',details:'2 km warm-up\n3200 m @ MP\n800 m float @ Z3\n3200 m @ MP\ncool-down to 10 km'},gB(TWO),
- {d:3,kind:'run',title:'Aerobic run',km:12,z:[2],details:'flat Z2, no progression'},
- {d:4,kind:'run',title:'Recovery run',km:5,z:[1],details:'5 km continuous'},gC(TWO),
- {d:5,kind:'run',title:'30 km durability run',km:30,z:[2,3],details:'25 km @ Z2\n5 km @ Z3\nno MP'}]},
-{week:12,start:'2026-11-16',targetKm:52,phase:'Taper 1 / rehearsal',focus:'Confirm the target in race shoes with full fueling.',items:[
- {d:0,kind:'run',title:'Easy + strides',km:6,z:[2],details:'6 km easy\n6 × 20s strides'},gA(TWO),
- {d:1,kind:'run',title:'3 × 1600 m cruise',km:9,z:[4],reps:'3x1600',details:'2 km warm-up\n3 × 1600 m @ Z4, 90s jog\ncool-down to 9 km'},gB(TWO),
- {d:3,kind:'run',title:'Medium aerobic run',km:13,z:[2],details:'continuous aerobic'},gC(TWO),
- {d:5,kind:'run',title:'24 km · 8 km MP rehearsal',km:24,mp:8,z:[2,'MP'],gate:3,details:'11 km @ Z2\n8 km @ MP\n5 km @ Z2\nrace shoes + full fuelling\n— durability gate 3 —'}]},
-{week:13,start:'2026-11-23',targetKm:39,phase:'Taper 2',focus:'Keep rhythm while fatigue drops.',items:[
- {d:0,kind:'run',title:'Easy run',km:5,z:[2],details:'5 km continuous'},gA(TWO),
- {d:1,kind:'run',title:'2 × 3 km MP',km:9,mp:6,z:['MP',3],details:'1.5 km warm-up\n3 km @ MP\n750 m float @ Z3\n3 km @ MP\n750 m cool-down'},gB(TWO),
- {d:3,kind:'run',title:'Easy + strides',km:9,z:[2],details:'9 km easy\n4 × 20s strides'},gC(TWO),
- {d:5,kind:'run',title:'16 km taper long run',km:16,z:[2],details:'16 km @ Z2\n4 × 15s strides near the end'}]},
-{week:14,start:'2026-11-30',targetKm:58.2,phase:'Race week',focus:'Sixteen kilometres before the marathon.',items:[
- {d:0,kind:'run',title:'Easy + strides',km:4,z:[2],details:'4 km easy\n4 × 20s strides'},
+ {d:3,kind:'run',title:'Easy + strides',km:8,z:[2],details:'easy running\n4 × 20s relaxed strides'},
+ {d:5,kind:'race',title:'Great Trek 10K · B race',km:14,details:'2 km warm-up + drills/strides\n10K race — goal sub-45 (~4:30/km avg)\ncontrolled first 2 km\n2 km easy cool-down\nB race and pace checkpoint, not a reason to compromise the block'}]},
+{week:9,start:'2026-10-26',targetKm:56,phase:'Post-10K + first 30 km',focus:'Absorb the B race. Tuesday is deliberately light; Saturday is the main specific load.',items:[
+ {d:0,kind:'run',title:'Easy run',km:5,z:[2],details:'relaxed recovery @ 6:00–6:30'},gA(TWO),
+ {d:1,kind:'run',title:'Light track — 6 × 400 m smooth',km:9,z:[5],reps:'6x400',details:'2 km warm-up\n6 × 400 m controlled in ~1:42–1:46, 200 m jog\ncool-down to 9 km\nno straining\nif race soreness remains, replace with easy + strides'},gB(TWO),
+ {d:3,kind:'run',title:'Aerobic run',km:7,z:[2],details:'conversational'},
+ {d:4,kind:'run',title:'Recovery run',km:5,z:[1],details:'very easy @ 6:10–6:40+\nfirst purposeful fifth run'},gC(TWO),
+ {d:5,kind:'run',title:'30 km · 2 × 4 km MP',km:30,mp:8,z:[2,'MP'],details:'7 km easy\n4 km @ MP\n2 km easy\n4 km @ MP\n13 km easy\nfinish capable of more'}]},
+{week:10,start:'2026-11-02',targetKm:61,phase:'Peak marathon-specific',focus:'The key evidence week for whether 5:00/km remains economical deep into a long run.',items:[
+ {d:0,kind:'run',title:'Recovery run',km:5,z:[1],details:'very easy\neffort only'},gA(TWO),
+ {d:1,kind:'run',title:'3 × 1600 m threshold',km:9,z:[4],reps:'3x1600',details:'2 km warm-up\n3 × 1600 m in 7:20–7:28, 75–90s jog\ncool-down to 9 km\nno faster'},gB(TWO),
+ {d:3,kind:'run',title:'Aerobic run',km:10,z:[2],details:'easy, no progression'},
+ {d:4,kind:'run',title:'Recovery run',km:5,z:[1],details:'very easy @ 6:10–6:40+'},gC(TWO),
+ {d:5,kind:'run',title:'32 km peak · 14 km MP',km:32,mp:14,z:[2,'MP'],gate:2,details:'8 km easy\n5 km @ MP\n2 km easy\n5 km @ MP\n2 km easy\n4 km @ MP\n6 km easy\nfirst blocks 5:00–5:03; final block 4:58–5:02 only if stable\n— durability gate 2 —'}]},
+{week:11,start:'2026-11-09',targetKm:63,phase:'Durability / absorb',focus:'Keep Tuesday controlled, add moderate Thursday MP, make the final 30 km mostly aerobic.',items:[
+ {d:0,kind:'run',title:'Easy run',km:6,z:[2],details:'relaxed\nRPE 2–3'},gA(TWO),
+ {d:1,kind:'run',title:'4 × 1 km threshold',km:10,z:[4],reps:'4x1000',details:'2 km warm-up\n4 × 1 km @ 4:35–4:40, 60–75s easy jog\ncool-down to 10 km\ncontrolled'},gB(TWO),
+ {d:3,kind:'run',title:'Marathon aerobic — 6 km MP',km:12,mp:6,z:[2,'MP'],details:'3 km easy\n6 km @ MP\n3 km easy\nmoderate, not a test'},
+ {d:4,kind:'run',title:'Recovery run',km:5,z:[1],details:'very easy\neffort only'},gC(TWO),
+ {d:5,kind:'run',title:'30 km · steady finish',km:30,z:[2,3],details:'25 km easy\n5 km @ steady 5:20–5:35\nno MP'}]},
+{week:12,start:'2026-11-16',targetKm:52,phase:'Taper 1 / race rehearsal',focus:'Practice race shoes and fuelling, then begin dropping fatigue.',items:[
+ {d:0,kind:'run',title:'Easy + strides',km:6,z:[2],details:'easy running\n6 × 20s strides'},gA(TWO),
+ {d:1,kind:'run',title:'3 × 1600 m threshold lite',km:9,z:[4],reps:'3x1600',details:'2 km warm-up\n3 × 1600 m @ ~4:37–4:42, 90s jog\ncool-down to 9 km\nfinish very controlled'},gB(TWO),
+ {d:3,kind:'run',title:'Medium aerobic run',km:13,z:[2],details:'easy-aerobic, no progression'},gC(TWO),
+ {d:5,kind:'run',title:'24 km rehearsal · 8 km MP',km:24,mp:8,z:[2,'MP'],gate:3,details:'11 km easy\n8 km @ MP\n5 km easy\nrace shoes + full fuelling routine\n— durability gate 3 —'}]},
+{week:13,start:'2026-11-23',targetKm:39,phase:'Taper 2',focus:'Preserve rhythm while fatigue drops. Nothing heroic.',items:[
+ {d:0,kind:'run',title:'Easy run',km:5,z:[2],details:'relaxed\nRPE 2–3'},gA(TWO),
+ {d:1,kind:'run',title:'3 × 1 km threshold touch',km:9,z:[4],reps:'3x1000',details:'2 km warm-up\n3 × 1 km @ 4:35–4:40, 75s jog\neasy running to 9 km\nshould feel crisp'},gB(TWO),
+ {d:3,kind:'run',title:'Easy + strides',km:9,z:[2],details:'easy running\n4 × 20s strides'},gC(TWO),
+ {d:5,kind:'run',title:'16 km taper long run',km:16,z:[2],details:'easy throughout\n4 × 15s relaxed pickups near the end'}]},
+{week:14,start:'2026-11-30',targetKm:58.2,phase:'Race week',focus:'Arrive impatient to run. Only tiny reminders of pace and mechanics.',items:[
+ {d:0,kind:'run',title:'Easy + strides',km:4,z:[2],details:'easy running\n4 × 20s strides\nfresh and relaxed'},
  {d:0,kind:'gym',title:'Gym — Optional activation',km:0,details:'optional\n15–20 min light upper body\ncore + calf isometrics\nRPE 3–4'},
- {d:1,kind:'run',title:'3 × 1 km MP',km:6,mp:3,z:['MP'],reps:'3x1000',details:'1.5 km warm-up\n3 × 1 km @ MP, 2 min jog\ncool-down to 6 km'},
- {d:3,kind:'run',title:'Easy + strides',km:4,z:[2],details:'4 km easy\n4 × 15s strides'},
- {d:5,kind:'run',title:'Shakeout',km:2,z:[1],details:'2 km easy\n4 × 10s pickups'},
- {d:6,kind:'race',title:'California International Marathon',km:42.2,z:['MP'],details:'first 5 km 3–5 s/km slower than MP\nthen settle into MP'}]}
+ {d:1,kind:'run',title:'3 × 1 km @ MP',km:6,mp:3,z:['MP'],reps:'3x1000',details:'1.5 km warm-up\n3 × 1 km @ MP, 2 min easy jog\ncool-down to 6 km\nstop wanting more'},
+ {d:3,kind:'run',title:'Easy + strides',km:4,z:[2],details:'easy running\n4 × 15s strides\nvery relaxed'},
+ {d:5,kind:'run',title:'Shakeout',km:2,z:[1],details:'2 km easy\n4 × 10s relaxed pickups\nno fatigue'},
+ {d:6,kind:'race',title:'California International Marathon',km:42.2,z:['MP'],details:'start under control, settle only after the opening kilometres\ndefault opening ~5:03–5:05/km\nrace target finalised pre-CIM from the durability gates'}]}
 ];
 
 const DEFAULT_ZONES={
@@ -605,7 +605,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const PLANVER=3;   /* bump whenever prescriptions change */
+const PLANVER=4;   /* bump whenever prescriptions change */
 function buildDefaultWorkouts(){
   var out=[];
   PLAN.forEach(function(w){ w.items.forEach(function(it,ix){
