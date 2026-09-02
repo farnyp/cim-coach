@@ -228,7 +228,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM · build 2026-08-25 gym-v4</div></div>
+    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM · build 2026-08-25 rx-channel</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-zones">Zones</button>
       <button class="btn" id="btn-log">Log</button>
@@ -605,7 +605,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-08-25 gym-v4';
+const BUILD='2026-08-25 rx-channel';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -1307,6 +1307,47 @@ function applyPayload(p,srcLabel){
     }
   }
   if(p.weekNotes)Object.keys(p.weekNotes).forEach(function(k){S.weekNotes[k]=p.weekNotes[k];n++;});
+
+  /* prescriptions: rewrite a single session without redeploying the app.
+     Match by id, then pid, then date+kind. Anything touched is marked custom so
+     syncPrescriptions never stomps it on a later PLANVER bump. Results
+     (actualKm, rpe, niggle, notes, stravaId) are never altered unless the field
+     is explicitly present in the payload. */
+  (p.prescriptions||[]).forEach(function(q){
+    var m=q.match||{}, t=null;
+    if(m.id)t=S.workouts.filter(function(w){return w.id===m.id;})[0];
+    if(!t&&m.pid)t=S.workouts.filter(function(w){return w.pid===m.pid;})[0];
+    if(!t&&m.date){
+      var cands=S.workouts.filter(function(w){
+        return w.date===m.date&&(!m.kind||w.kind===m.kind)&&
+               (!m.title||w.title===m.title);});
+      if(m.index!=null)t=cands[m.index]; else t=cands[0];
+    }
+    if(!t){
+      if(!q.create)return;
+      t={id:uid(),date:q.date||m.date,kind:q.kind||m.kind||'run',title:q.title||'Session',
+         plannedKm:0,mpKm:0,zones:[],reps:'',details:'',status:'planned'};
+      S.workouts.push(t);
+    }
+    if(q.remove){
+      if(S.workouts.length<=50)return;              // never strip the plan bare
+      if(t.status!=='planned'&&!q.force)return;     // never silently drop logged work
+      S.workouts=S.workouts.filter(function(w){return w.id!==t.id;});
+      n++;return;
+    }
+    ['title','details','reps','status','date','kind'].forEach(function(f){
+      if(q[f]!=null&&q[f]!==t[f]){t[f]=q[f];n++;}
+    });
+    if(q.plannedKm!=null){t.plannedKm=+q.plannedKm;n++;}
+    if(q.mpKm!=null){t.mpKm=+q.mpKm;n++;}
+    if(Array.isArray(q.zones)){t.zones=q.zones.slice();n++;}
+    if(q.gate!=null)t.gate=q.gate;
+    ['actualKm','rpe','niggle','notes','movingTime','avgHr','maxHr'].forEach(function(f){
+      if(q[f]!=null){t[f]=q[f];n++;}
+    });
+    t.custom=true;
+  });
+
 
   function pushUnique(list,items){
     (items||[]).forEach(function(it){
