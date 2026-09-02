@@ -605,6 +605,24 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
+const BUILD='2026-08-25 gym-v4';
+/* Self-update: the page itself can be cached by iOS standalone webapps with no
+   address bar to force a reload. version.json is fetched no-store on every boot;
+   if the deployed build differs from this file, reload once with a cache-busting
+   query. The ?v guard prevents a reload loop when the fetch succeeds but the
+   cached page keeps coming back. */
+(function(){
+  try{
+    var cur=new URLSearchParams(location.search).get('v')||'';
+    fetch('version.json?t='+Date.now(),{cache:'no-store'})
+      .then(function(r){return r.ok?r.json():null;})
+      .then(function(d){
+        if(!d||!d.build||d.build===BUILD)return;
+        if(cur===d.build)return;
+        location.replace(location.pathname+'?v='+encodeURIComponent(d.build));
+      }).catch(function(){});
+  }catch(e){}
+})();
 const PLANVER=5;   /* bump whenever prescriptions change */
 function buildDefaultWorkouts(){
   var out=[];
