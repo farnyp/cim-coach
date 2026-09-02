@@ -228,7 +228,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM · build 2026-08-22 revised-plan</div></div>
+    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM · build 2026-08-25 gym-v4</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-zones">Zones</button>
       <button class="btn" id="btn-log">Log</button>
@@ -436,14 +436,14 @@ const ZC={1:'var(--z1)',2:'var(--z2)',3:'var(--z3)',4:'var(--z5)',5:'var(--z6)',
 const ZN={1:'Z1',2:'Z2',3:'Z3',4:'Z4',5:'Z5',MP:'MP'};
 const ZORDER=[1,2,3,4,5,'MP'];
 
-const GYM_A='press 3 × 6–8\npull-up or pulldown 3 × 6–10\nchest-supported row 3 × 8–12\ndelts 2 × 12–15\nSkiErg + farmer carry + core\n40–55 min';
-const GYM_B='squat or trap-bar 2–3 work sets\none hinge or single-leg accessory\ncalf + tibialis\nshort HYROX skill\nno sets to failure · ~6 h after track';
-const GYM_C='OHP or incline DB press\npull-ups\nrow + rear delts\narms\neasy RowErg\nburpee broad-jump technique\ncore — no lower-body damage';
-const gA=function(x){return{d:0,kind:'gym',title:'Gym A — Upper + SkiErg',km:0,details:GYM_A+(x||'')};};
-const gB=function(x){return{d:1,kind:'gym',title:'Gym B — Lower strength',km:0,details:GYM_B+(x||'')};};
-const gC=function(x){return{d:4,kind:'gym',title:'Gym C — Upper + HYROX',km:0,details:GYM_C+(x||'')};};
-const LIGHT='\ndeload: two light sets per movement';
-const TWO='\npeak block: two work sets';
+const GYM_A='incline DB press 3 × 8–12\nseated cable row 3 × 10\npull-ups 3 × near-failure\nlateral raise 2 × 15–20\nbiceps curl 2 × 8–10\nhollow body hold 3 × 20–30s\nPallof press 2 × 10/side\nsuitcase or farmer carry 3 × 30–40 m\nCopenhagen plank 2 × 20–30s/side\nskill: toe-to-bar / front lever / dragon flag\nno leg loading — this session survives the whole block';
+const GYM_B='belt squat 3 × 6–10\nBulgarian split squat 3 × 8–10/leg\nsingle-leg RDL 2 × 8–10/leg\nsplit-squat iso hold 2 × 20–30s/leg\nsled push/pull 2–3 rounds\nsingle-leg calf + soleus raise 2 × 12–15\nsingle-leg calf iso hold 1 × 30–45s\nDB shoulder press 2 × 10–12\nface pull 2 × 12–15\nab wheel or weighted plank\n~6 h after track · no sets to failure';
+const GYM_C='pull-ups 3 × 6–10\npush-ups 3 × 12–15\nsandbag lunges 2 × 10/leg\nwall balls 2 × 12–15\nburpee broad jumps cap 2 × 5 — first thing cut on any niggle\nsingle-leg step-down 2 × 10–12/leg\nreverse nordic or sissy squat 2 × 8–10\nsingle-leg ball curl 2 × 8–10/leg\nback extension or bird dog 2 × 10–12\nside plank 2 × 30–45s/side\ntib raise 2 × 15\ncheck the run first — trim HYROX rows on quality-run weeks';
+const gA=function(x){return{d:6,kind:'gym',title:'Gym — Upper + core',km:0,details:GYM_A+(x||'')};};
+const gB=function(x){return{d:1,kind:'gym',title:'Gym — Lower + single-leg',km:0,details:GYM_B+(x||'')};};
+const gC=function(x){return{d:3,kind:'gym',title:'Gym — HYROX + stability',km:0,details:GYM_C+(x||'')};};
+const LIGHT='\\ndeload: two light sets per movement\\ndrop broad jumps and wall balls';
+const TWO='\\npeak block: two work sets, no progression\\nkeep calf work and isometrics regardless';
 
 const PLAN=[
 {week:-1,start:'2026-08-17',targetKm:0,phase:'Pre-block',
@@ -486,9 +486,9 @@ const PLAN=[
  {d:3,kind:'run',title:'Aerobic run',km:11,z:[2],details:'easy-aerobic only'},gC(),
  {d:5,kind:'run',title:'28 km · final 8 km MP',km:28,mp:8,z:[2,'MP'],gate:1,details:'19 km easy\n8 km @ MP\n1 km easy\n— durability gate 1 —'}]},
 {week:8,start:'2026-10-19',targetKm:39,phase:'Great Trek 10K · B race',focus:'Freshen, race sub-45 intelligently, and use the result to recalibrate faster paces.',items:[
- {d:0,kind:'run',title:'Easy + strides',km:8,z:[2],details:'easy running\n6 × 20s relaxed strides'},gA(),
+ {d:0,kind:'run',title:'Easy + strides',km:8,z:[2],details:'easy running\n6 × 20s relaxed strides'},gA(LIGHT),
  {d:1,kind:'run',title:'4 × 800 m — 10K tune-up',km:9,z:[5],reps:'4x800',details:'2 km warm-up + drills\n4 × 800 m in 3:28–3:32, 400 m easy jog\ncool-down to 9 km\nsharp, not strained'},
- {d:1,kind:'gym',title:'Gym B — Light activation',km:0,details:'squat or trap-bar 1–2 easy sets\ncalves + tibialis\nno sled, lunges or wall balls\n25–35 min @ RPE 5'},
+ {d:1,kind:'gym',title:'Gym — Light activation',km:0,details:'belt squat 1–2 easy sets\nsingle-leg calf + tib raises\nno sled, lunges or wall balls\n25–35 min @ RPE 5'},
  {d:3,kind:'run',title:'Easy + strides',km:8,z:[2],details:'easy running\n4 × 20s relaxed strides'},
  {d:5,kind:'race',title:'Great Trek 10K · B race',km:14,details:'2 km warm-up + drills/strides\n10K race — goal sub-45 (~4:30/km avg)\ncontrolled first 2 km\n2 km easy cool-down\nB race and pace checkpoint, not a reason to compromise the block'}]},
 {week:9,start:'2026-10-26',targetKm:56,phase:'Post-10K + first 30 km',focus:'Absorb the B race. Tuesday is deliberately light; Saturday is the main specific load.',items:[
@@ -605,7 +605,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const PLANVER=4;   /* bump whenever prescriptions change */
+const PLANVER=5;   /* bump whenever prescriptions change */
 function buildDefaultWorkouts(){
   var out=[];
   PLAN.forEach(function(w){ w.items.forEach(function(it,ix){
@@ -1461,6 +1461,29 @@ $('s-reset').onclick=function(){
 /* Prescriptions live in PLAN; results live in saved state. This pushes updated
    prescription text onto existing sessions and leaves everything the athlete
    entered alone. Sessions they have edited themselves are skipped. */
+function relocateGym(st){
+  /* v5: gym moved Mon/Tue/Fri -> Sun/Tue/Thu. syncPrescriptions matches by pid or
+     date|title|kind and never moves a date, so planned gym sessions are rebuilt at
+     the new dates here. Anything logged, modified or hand-edited is left untouched. */
+  var all=st.workouts||[], keep=[], dropped=0;
+  all.forEach(function(w){
+    if(w.kind==='gym'&&w.status==='planned'&&!w.custom){dropped++;return;}
+    keep.push(w);
+  });
+  if(!dropped)return 0;
+  var taken={};
+  keep.forEach(function(w){ if(w.kind==='gym')taken[w.date]=1; });
+  PLAN.forEach(function(wk){ wk.items.forEach(function(it,ix){
+    if(it.kind!=='gym')return;
+    var d=addDays(wk.start,it.d);
+    if(taken[d])return;
+    taken[d]=1;
+    keep.push({id:uid(),pid:wk.week+'-'+it.d+'-'+ix,date:d,kind:'gym',title:it.title,
+      plannedKm:0,mpKm:0,zones:[],reps:'',gate:0,details:it.details,status:'planned'});
+  });});
+  st.workouts=keep;
+  return dropped;
+}
 function syncPrescriptions(st){
   var byPid={}, byKey={}, used={};
   (st.workouts||[]).forEach(function(w){
@@ -1500,6 +1523,7 @@ function migrate(st){
   if(!st.mpHistory)st.mpHistory=[{date:todayISO(),kind:'goal',pace:st.zones.goalMp||'5:00',
     reason:'Block starting value'}];
   if(st.planVer!==PLANVER){
+    if((st.planVer||0)<5)relocateGym(st);
     var n=syncPrescriptions(st);
     st.planVer=PLANVER;
     if(n)setTimeout(function(){toast('Updated '+n+' session description'+(n===1?'':'s'));},900);
