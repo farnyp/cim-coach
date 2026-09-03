@@ -228,7 +228,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM · build 2026-08-25 rx-channel</div></div>
+    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM · build 2026-08-25 rx-channel2</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-zones">Zones</button>
       <button class="btn" id="btn-log">Log</button>
@@ -605,7 +605,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-08-25 rx-channel';
+const BUILD='2026-08-25 rx-channel2';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -750,7 +750,7 @@ function render(){
 function card(w){
   var isRun=(w.kind==='run'||w.kind==='race');
   var cls='w'+(isRun?'':' gym')+(w.kind==='race'?' race':'')+
-    (w.status==='done'?' is-done':'')+(w.status==='skipped'?' is-skipped':'');
+    (w.status==='done'||w.status==='modified'?' is-done':'')+(w.status==='skipped'?' is-skipped':'');
   var dot=w.status==='done'?'done':w.status==='modified'?'mod':'';
   var h='<div class="'+cls+'" data-id="'+w.id+'" draggable="true" tabindex="0" role="button">'+
     '<div class="w-top"><span class="w-title">'+esc(w.title)+'</span>'+
