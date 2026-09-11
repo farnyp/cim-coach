@@ -228,7 +228,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM · build 2026-08-25 rx-channel2</div></div>
+    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM · build 2026-09-10 cuboid-rebuild</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-zones">Zones</button>
       <button class="btn" id="btn-log">Log</button>
@@ -455,21 +455,21 @@ const PLAN=[
  {d:1,kind:'run',title:'4 × 1 km threshold',km:8,z:[4],reps:'4x1000',details:'2 km warm-up + drills/strides\n4 × 1 km @ 4:35–4:40, 60–75s easy jog\ncool-down to 8 km\nfinish with another rep available'},gB(),
  {d:3,kind:'run',title:'Aerobic run',km:8,z:[2],details:'conversational, no progression\neffort-led'},gC(),
  {d:5,kind:'run',title:'18 km long run — easy',km:18,z:[2,3],details:'easy throughout @ 6:00–6:30\noptional final 15 min @ steady 5:25–5:40 only if fresh'}]},
-{week:2,start:'2026-09-07',targetKm:44,phase:'Threshold + first MP',focus:'First controlled marathon-pace exposure inside the long run.',items:[
+{week:2,start:'2026-09-07',targetKm:6,phase:'Interrupted — cuboid syndrome',focus:'Diagnosed 8 Sep. No running after Monday. Physio cleared everything that is not running, so the week became swim, gym and bike.',items:[
+ {d:0,kind:'run',title:'Easy run — last before layoff',km:6,z:[2],details:'6.05 km @ 6:42/km, HR 141 max 149 — entirely Z1, strides dropped\nmidfoot pain worse afterwards\nrunning stopped from here'},gA(),
+ {d:1,kind:'run',title:'CANCELLED — no running (cuboid)',km:0,z:[],details:'3 × 1600 m threshold removed\nswam 2 km + upper gym instead'},gB('\nlayoff week — replaced by upper + core'),
+ {d:3,kind:'run',title:'CANCELLED — no running (cuboid)',km:0,z:[],details:'aerobic run removed\ngym + easy ride instead'},gC(),
+ {d:5,kind:'run',title:'CANCELLED — first MP exposure deferred',km:0,z:[],details:'20 km with 4 km MP removed\nfirst MP exposure moves to Sat 3 Oct\n2–2.5 h easy ride instead'}]},
+{week:3,start:'2026-09-14',targetKm:31,phase:'Return to run',focus:'Nine days off. Rebuild the habit, not the fitness. Nothing in this week is worth a second layoff.',items:[
+ {d:0,kind:'run',title:'Return to run — 4–5 km run/walk',km:5,z:[1,2],details:'physio protocol: run/walk intervals, not continuous\n4–5 km total, HR under 150\nstop on pain above 2/10 or any change in gait\nrehab daily whether or not you run'},gA(),
+ {d:1,kind:'run',title:'Easy run — no track',km:6,z:[2],details:'5–6 km easy, conversational\nno reps, no strides, no faster running\nday two back is not the day to test 4:15/km'},gB('\nconfirm split squats and single-leg RDL are cleared before loading'),
+ {d:3,kind:'run',title:'Easy run',km:8,z:[2],details:'7–8 km fully conversational\nno MP, no steady finish'},gC(),
+ {d:5,kind:'run',title:'12 km easy',km:12,z:[2],details:'easy throughout @ 6:00–6:30\nno steady finish, no progression\ncap it even if it feels good'}]},
+{week:4,start:'2026-09-21',targetKm:42,phase:'Rebuild — threshold returns',focus:'Back to business. The layoff supplied the deload, so this week builds rather than absorbs.',items:[
  {d:0,kind:'run',title:'Easy + strides',km:6,z:[2],details:'easy running\n6 × 20s relaxed strides, full recovery'},gA(),
- {d:1,kind:'run',title:'3 × 1600 m threshold',km:9,z:[4],reps:'3x1600',details:'2 km warm-up\n3 × 1600 m in 7:20–7:28 (~4:35–4:40/km), 75–90s jog\ncool-down to 9 km'},gB(),
+ {d:1,kind:'run',title:'3 × 1600 m threshold',km:9,z:[4],reps:'3x1600',details:'2 km warm-up\n3 × 1600 m in 7:20–7:28 (~4:35–4:40/km), 75–90s jog\ncool-down to 9 km\nthreshold, not intervals — a first rep under 7:15 is the wrong session'},gB(),
  {d:3,kind:'run',title:'Aerobic run',km:9,z:[2],details:'conversational\nprotect Saturday'},gC(),
- {d:5,kind:'run',title:'20 km · final 4 km MP',km:20,mp:4,z:[2,'MP'],details:'15 km easy\n4 km @ MP\n1 km easy\ncontrolled, not a test'}]},
-{week:3,start:'2026-09-14',targetKm:48,phase:'Aerobic power + midweek MP',focus:'Tuesday raises the ceiling; Thursday carries the MP so Saturday stays aerobic.',items:[
- {d:0,kind:'run',title:'Easy + strides',km:6,z:[2],details:'easy running\n6 × 20s relaxed strides'},gA(),
- {d:1,kind:'run',title:'4 × 1 km — aerobic power',km:10,z:[5],reps:'4x1000',details:'2 km warm-up + drills\n4 × 1 km @ 4:15–4:22, 2–3 min easy jog\ncool-down to 10 km\nhard but repeatable'},gB(),
- {d:3,kind:'run',title:'Marathon aerobic — 5 km MP',km:10,mp:5,z:[2,'MP'],details:'2 km easy\n5 km @ MP\n3 km easy\nmoderate, not a test'},gC(),
- {d:5,kind:'run',title:'22 km · steady finish',km:22,z:[2,3],details:'18 km easy\n4 km @ steady 5:20–5:35\nno MP'}]},
-{week:4,start:'2026-09-21',targetKm:39,phase:'Deload / economy',focus:'Absorb three weeks. Keep the Tuesday speed touch smooth, not taxing.',items:[
- {d:0,kind:'run',title:'Recovery run',km:5,z:[1],details:'very easy @ 6:15–6:45+'},gA(LIGHT),
- {d:1,kind:'run',title:'6 × 400 m smooth economy',km:8,z:[5],reps:'6x400',details:'2 km warm-up\n6 × 400 m in 1:42–1:46, 200 m easy jog\ncool-down to 8 km\nrelaxed, not R-pace racing'},gB(LIGHT),
- {d:3,kind:'run',title:'Easy aerobic run',km:10,z:[2],details:'easy, no progression'},gC(LIGHT),
- {d:5,kind:'run',title:'16 km deload long run',km:16,z:[2],details:'easy throughout\nRPE 2–3\nno fast finish'}]},
+ {d:5,kind:'run',title:'18 km · steady finish',km:18,z:[2,3],details:'14 km easy\n4 km @ steady 5:20–5:35\nno MP — first MP exposure is 3 Oct'}]},
 {week:5,start:'2026-09-28',targetKm:50,phase:'Threshold + late MP',focus:'Increase threshold volume Tuesday; teach MP late in the long run Saturday.',items:[
  {d:0,kind:'run',title:'Easy + strides',km:6,z:[2],details:'easy running\n6 × 20s strides'},gA(),
  {d:1,kind:'run',title:'3 × 2 km threshold',km:10,z:[4],reps:'3x2000',details:'2 km warm-up\n3 × 2 km @ 4:35–4:40, 90s easy jog\ncool-down to 10 km'},gB(),
@@ -605,7 +605,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-08-25 rx-channel2';
+const BUILD='2026-09-10 cuboid-rebuild';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -623,7 +623,7 @@ const BUILD='2026-08-25 rx-channel2';
       }).catch(function(){});
   }catch(e){}
 })();
-const PLANVER=5;   /* bump whenever prescriptions change */
+const PLANVER=6;   /* bump whenever prescriptions change */
 function buildDefaultWorkouts(){
   var out=[];
   PLAN.forEach(function(w){ w.items.forEach(function(it,ix){
