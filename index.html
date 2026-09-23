@@ -228,7 +228,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM · build 2026-09-23 return-ramp</div></div>
+    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM · build 2026-09-23 drop-placeholders</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-zones">Zones</button>
       <button class="btn" id="btn-log">Log</button>
@@ -457,23 +457,23 @@ const PLAN=[
  {d:5,kind:'run',title:'18 km long run — easy',km:18,z:[2,3],details:'easy throughout @ 6:00–6:30\noptional final 15 min @ steady 5:25–5:40 only if fresh'}]},
 {week:2,start:'2026-09-07',targetKm:6,phase:'Interrupted — cuboid syndrome',focus:'Diagnosed 8 Sep. No running after Monday. Physio cleared everything that is not running, so the week became swim, gym and bike.',items:[
  {d:0,kind:'run',title:'Easy run — last before layoff',km:6,z:[2],details:'6.05 km @ 6:42/km, HR 141 max 149 — entirely Z1, strides dropped\nmidfoot pain worse afterwards\nrunning stopped from here'},gA(),
- {d:1,kind:'run',title:'CANCELLED — no running (cuboid)',km:0,z:[],details:'3 × 1600 m threshold removed\nswam 2 km + upper gym instead'},gB('\nlayoff week — replaced by upper + core'),
- {d:3,kind:'run',title:'CANCELLED — no running (cuboid)',km:0,z:[],details:'aerobic run removed\ngym + easy ride instead'},gC(),
- {d:5,kind:'run',title:'CANCELLED — first MP exposure deferred',km:0,z:[],details:'20 km with 4 km MP removed\nfirst MP exposure moves to Sat 3 Oct\n2–2.5 h easy ride instead'}]},
+ {d:1,kind:'run',title:'CANCELLED — no running (cuboid)',km:0,z:[],details:'3 × 1600 m threshold removed\nswam 2 km + upper gym instead',drop:1},gB('\nlayoff week — replaced by upper + core'),
+ {d:3,kind:'run',title:'CANCELLED — no running (cuboid)',km:0,z:[],details:'aerobic run removed\ngym + easy ride instead',drop:1},gC(),
+ {d:5,kind:'run',title:'CANCELLED — first MP exposure deferred',km:0,z:[],details:'20 km with 4 km MP removed\nfirst MP exposure moves to Sat 3 Oct\n2–2.5 h easy ride instead',drop:1}]},
 {week:3,start:'2026-09-14',targetKm:31,phase:'Return to run',focus:'Nine days off. Rebuild the habit, not the fitness. Nothing in this week is worth a second layoff.',items:[
  {d:0,kind:'run',title:'Return to run — 4–5 km run/walk',km:5,z:[1,2],details:'physio protocol: run/walk intervals, not continuous\n4–5 km total, HR under 150\nstop on pain above 2/10 or any change in gait\nrehab daily whether or not you run'},gA(),
  {d:1,kind:'run',title:'Easy run — no track',km:6,z:[2],details:'5–6 km easy, conversational\nno reps, no strides, no faster running\nday two back is not the day to test 4:15/km'},gB('\nconfirm split squats and single-leg RDL are cleared before loading'),
  {d:3,kind:'run',title:'Easy run',km:8,z:[2],details:'7–8 km fully conversational\nno MP, no steady finish'},gC(),
  {d:5,kind:'run',title:'12 km easy',km:12,z:[2],details:'easy throughout @ 6:00–6:30\nno steady finish, no progression\ncap it even if it feels good'}]},
 {week:4,start:'2026-09-21',targetKm:15,phase:'Graded return — physio ramp',focus:'Physio 22 Sep: minor setback, graded return. Run/walk Wed and Fri, jog Sat. Strength, bike and swim cleared at any intensity.',items:[
- {d:0,kind:'run',title:'No run — physio ramp',km:0,z:[],details:'return begins Wed 23 Sep\nbike, swim or gym instead'},gA(),
- {d:1,kind:'run',title:'No run — physio ramp',km:0,z:[],details:'lower + single-leg gym instead — done 22 Sep'},gB(),
- {d:3,kind:'run',title:'No run — Friday instead',km:0,z:[],details:'ramp puts the second run on Fri 25\nbike or swim today, any intensity'},gC(),
+ {d:0,kind:'run',title:'No run — physio ramp',km:0,z:[],details:'return begins Wed 23 Sep\nbike, swim or gym instead',drop:1},gA(),
+ {d:1,kind:'run',title:'No run — physio ramp',km:0,z:[],details:'lower + single-leg gym instead — done 22 Sep',drop:1},gB(),
+ {d:3,kind:'run',title:'No run — Friday instead',km:0,z:[],details:'ramp puts the second run on Fri 25\nbike or swim today, any intensity',drop:1},gC(),
  {d:5,kind:'run',title:'Jog 6 km',km:6,z:[2],details:'continuous, flat, 6:30–7:00/km\nfirst continuous run of the return\nSEAWALL OR PAVEMENT — no trail, no gravel, nothing uneven'},
  {d:2,kind:'run',title:'Return run/walk — 4 km',km:4,z:[1,2],details:'5 min walk to start\n5 × (3 min jog / 1 min walk)\n5 min walk to finish\nHR under 150, flat ground only\nrehab after the run, not before'},
  {d:4,kind:'run',title:'Run/walk — 5 km',km:5,z:[1,2],details:'5 min walk\n5 × (5 min jog / 1 min walk)\n5 min walk\nHR under 150, flat ground only\nstop on pain above 2/10, gait change, or cramp'}]},
 {week:5,start:'2026-09-28',targetKm:23,phase:'Graded return — jogging',focus:'Three continuous jogs, 48 h apart. Distance building resumes the week of 5 Oct, not this one.',items:[
- {d:0,kind:'run',title:'No run — 48 h spacing',km:0,z:[],details:'bike, swim or gym\nno consecutive running days until distance building starts'},gA(),
+ {d:0,kind:'run',title:'No run — 48 h spacing',km:0,z:[],details:'bike, swim or gym\nno consecutive running days until distance building starts',drop:1},gA(),
  {d:1,kind:'run',title:'Jog 6 km',km:6,z:[2],details:'continuous, easy, 6:15–6:45/km\nno track, no reps, no strides\nflat and paved'},gB(),
  {d:3,kind:'run',title:'Jog 7 km',km:7,z:[2],details:'continuous, conversational throughout\nflat and paved'},gC(),
  {d:5,kind:'run',title:'Longer jog — 10 km',km:10,z:[2],details:'continuous, easy throughout, no finish\nlongest run since the 19 Sep abort\nceiling not target — 8 km is fine if anything grumbles\nflat and paved'}]},
@@ -608,7 +608,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-09-23 return-ramp';
+const BUILD='2026-09-23 drop-placeholders';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -626,10 +626,11 @@ const BUILD='2026-09-23 return-ramp';
       }).catch(function(){});
   }catch(e){}
 })();
-const PLANVER=7;   /* bump whenever prescriptions change */
+const PLANVER=8;   /* bump whenever prescriptions change */
 function buildDefaultWorkouts(){
   var out=[];
   PLAN.forEach(function(w){ w.items.forEach(function(it,ix){
+    if(it.drop)return;
     out.push({id:uid(),pid:w.week+'-'+it.d+'-'+ix,
       date:addDays(w.start,it.d),kind:it.kind,title:it.title,
       plannedKm:it.km,mpKm:it.mp||0,zones:it.z||[],reps:it.reps||'',gate:it.gate||0,
@@ -1560,6 +1561,14 @@ function syncPrescriptions(st){
       var origDate=addDays(wk.start,it.d);
       var t=byPid[pid]||byKey[origDate+'|'+it.title+'|'+it.kind];
       if(t&&used[t.id])return;                 // never map two plan items onto one session
+      if(it.drop){                             // tombstone: keeps later pids stable, removes the session
+        if(t&&!t.custom&&t.status==='planned'&&!t.stravaId&&!(t.actualKm>0)){
+          used[t.id]=1;
+          st.workouts=st.workouts.filter(function(w){return w.id!==t.id;});
+          updated++;
+        }
+        return;
+      }
       if(!t){                                  // plan gained a session on a new day — create it
         t={id:uid(),pid:pid,date:origDate,kind:it.kind,title:it.title,
            plannedKm:it.km,mpKm:it.mp||0,zones:(it.z||[]).slice(),reps:it.reps||'',
