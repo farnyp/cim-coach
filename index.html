@@ -228,7 +228,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM · build 2026-09-10 cuboid-rebuild</div></div>
+    <div><h1>Marathon Block</h1><div class="sub" id="sub">14 weeks to CIM · build 2026-09-23 return-ramp</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-zones">Zones</button>
       <button class="btn" id="btn-log">Log</button>
@@ -465,16 +465,19 @@ const PLAN=[
  {d:1,kind:'run',title:'Easy run — no track',km:6,z:[2],details:'5–6 km easy, conversational\nno reps, no strides, no faster running\nday two back is not the day to test 4:15/km'},gB('\nconfirm split squats and single-leg RDL are cleared before loading'),
  {d:3,kind:'run',title:'Easy run',km:8,z:[2],details:'7–8 km fully conversational\nno MP, no steady finish'},gC(),
  {d:5,kind:'run',title:'12 km easy',km:12,z:[2],details:'easy throughout @ 6:00–6:30\nno steady finish, no progression\ncap it even if it feels good'}]},
-{week:4,start:'2026-09-21',targetKm:42,phase:'Rebuild — threshold returns',focus:'Back to business. The layoff supplied the deload, so this week builds rather than absorbs.',items:[
- {d:0,kind:'run',title:'Easy + strides',km:6,z:[2],details:'easy running\n6 × 20s relaxed strides, full recovery'},gA(),
- {d:1,kind:'run',title:'3 × 1600 m threshold',km:9,z:[4],reps:'3x1600',details:'2 km warm-up\n3 × 1600 m in 7:20–7:28 (~4:35–4:40/km), 75–90s jog\ncool-down to 9 km\nthreshold, not intervals — a first rep under 7:15 is the wrong session'},gB(),
- {d:3,kind:'run',title:'Aerobic run',km:9,z:[2],details:'conversational\nprotect Saturday'},gC(),
- {d:5,kind:'run',title:'18 km · steady finish',km:18,z:[2,3],details:'14 km easy\n4 km @ steady 5:20–5:35\nno MP — first MP exposure is 3 Oct'}]},
-{week:5,start:'2026-09-28',targetKm:50,phase:'Threshold + late MP',focus:'Increase threshold volume Tuesday; teach MP late in the long run Saturday.',items:[
- {d:0,kind:'run',title:'Easy + strides',km:6,z:[2],details:'easy running\n6 × 20s strides'},gA(),
- {d:1,kind:'run',title:'3 × 2 km threshold',km:10,z:[4],reps:'3x2000',details:'2 km warm-up\n3 × 2 km @ 4:35–4:40, 90s easy jog\ncool-down to 10 km'},gB(),
- {d:3,kind:'run',title:'Aerobic run',km:10,z:[2],details:'fully conversational'},gC(),
- {d:5,kind:'run',title:'24 km · final 6 km MP',km:24,mp:6,z:[2,'MP'],details:'17 km easy\n6 km @ MP\n1 km easy\ncap at RPE ~7'}]},
+{week:4,start:'2026-09-21',targetKm:15,phase:'Graded return — physio ramp',focus:'Physio 22 Sep: minor setback, graded return. Run/walk Wed and Fri, jog Sat. Strength, bike and swim cleared at any intensity.',items:[
+ {d:0,kind:'run',title:'No run — physio ramp',km:0,z:[],details:'return begins Wed 23 Sep\nbike, swim or gym instead'},gA(),
+ {d:1,kind:'run',title:'No run — physio ramp',km:0,z:[],details:'lower + single-leg gym instead — done 22 Sep'},gB(),
+ {d:3,kind:'run',title:'No run — Friday instead',km:0,z:[],details:'ramp puts the second run on Fri 25\nbike or swim today, any intensity'},gC(),
+ {d:5,kind:'run',title:'Jog 6 km',km:6,z:[2],details:'continuous, flat, 6:30–7:00/km\nfirst continuous run of the return\nSEAWALL OR PAVEMENT — no trail, no gravel, nothing uneven'},
+ {d:2,kind:'run',title:'Return run/walk — 4 km',km:4,z:[1,2],details:'5 min walk to start\n5 × (3 min jog / 1 min walk)\n5 min walk to finish\nHR under 150, flat ground only\nrehab after the run, not before'},
+ {d:4,kind:'run',title:'Run/walk — 5 km',km:5,z:[1,2],details:'5 min walk\n5 × (5 min jog / 1 min walk)\n5 min walk\nHR under 150, flat ground only\nstop on pain above 2/10, gait change, or cramp'}]},
+{week:5,start:'2026-09-28',targetKm:23,phase:'Graded return — jogging',focus:'Three continuous jogs, 48 h apart. Distance building resumes the week of 5 Oct, not this one.',items:[
+ {d:0,kind:'run',title:'No run — 48 h spacing',km:0,z:[],details:'bike, swim or gym\nno consecutive running days until distance building starts'},gA(),
+ {d:1,kind:'run',title:'Jog 6 km',km:6,z:[2],details:'continuous, easy, 6:15–6:45/km\nno track, no reps, no strides\nflat and paved'},gB(),
+ {d:3,kind:'run',title:'Jog 7 km',km:7,z:[2],details:'continuous, conversational throughout\nflat and paved'},gC(),
+ {d:5,kind:'run',title:'Longer jog — 10 km',km:10,z:[2],details:'continuous, easy throughout, no finish\nlongest run since the 19 Sep abort\nceiling not target — 8 km is fine if anything grumbles\nflat and paved'}]},
+
 {week:6,start:'2026-10-05',targetKm:53,phase:'Aerobic power + midweek MP',focus:'Second-quality Thursday is allowed because Saturday stays mostly aerobic.',items:[
  {d:0,kind:'run',title:'Easy run',km:6,z:[2],details:'relaxed\nRPE 2–3'},gA(),
  {d:1,kind:'run',title:'4 × 1200 m — aerobic power',km:11,z:[5],reps:'4x1200',details:'2 km warm-up\n4 × 1200 m in 5:08–5:15 (~4:17–4:23/km), 2–2.5 min easy jog\ncool-down to 11 km'},gB(),
@@ -605,7 +608,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-09-10 cuboid-rebuild';
+const BUILD='2026-09-23 return-ramp';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -623,7 +626,7 @@ const BUILD='2026-09-10 cuboid-rebuild';
       }).catch(function(){});
   }catch(e){}
 })();
-const PLANVER=6;   /* bump whenever prescriptions change */
+const PLANVER=7;   /* bump whenever prescriptions change */
 function buildDefaultWorkouts(){
   var out=[];
   PLAN.forEach(function(w){ w.items.forEach(function(it,ix){
@@ -1557,8 +1560,15 @@ function syncPrescriptions(st){
       var origDate=addDays(wk.start,it.d);
       var t=byPid[pid]||byKey[origDate+'|'+it.title+'|'+it.kind];
       if(t&&used[t.id])return;                 // never map two plan items onto one session
-      if(t)used[t.id]=1;
-      if(!t||t.custom)return;                 // never overwrite a hand-edited session
+      if(!t){                                  // plan gained a session on a new day — create it
+        t={id:uid(),pid:pid,date:origDate,kind:it.kind,title:it.title,
+           plannedKm:it.km,mpKm:it.mp||0,zones:(it.z||[]).slice(),reps:it.reps||'',
+           gate:it.gate||0,details:it.details,status:'planned'};
+        st.workouts.push(t); used[t.id]=1; byPid[pid]=t; updated++;
+        return;
+      }
+      used[t.id]=1;
+      if(t.custom)return;                     // never overwrite a hand-edited session
       t.pid=pid;
       if(t.details!==it.details){t.details=it.details;updated++;}
       t.title=it.title;
