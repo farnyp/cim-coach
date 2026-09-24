@@ -228,7 +228,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-09-23 season-template</div></div>
+    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-09-23 ftp-block</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-zones">Zones</button>
       <button class="btn" id="btn-log">Log</button>
@@ -493,9 +493,10 @@ const PLAN=[
  {d:4,kind:'run',title:'Easy run — 7 km',km:7,z:[2],details:'easy @ 6:00–6:30, HR 150–165\nflat and paved'},
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
- {d:3,kind:'bike',title:'Bike — sweet spot 3 × 10',km:0,z:[],details:'3 × 10 min @ 88–92% FTP, 5 min easy between\nvalidates the ramp number — if this feels like threshold, drop FTP 5%\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'bike',title:'Endurance ride — 90 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'}]},
-{week:7,start:'2026-10-12',targetKm:30,phase:'Rebuild — easy volume',focus:'Three runs. Thursday bike is the only intensity this week.',items:[
+ {d:3,kind:'bike',title:'Bike — VO2 5 × 3',km:0,z:[],details:'5 × 3 min @ 115–120% FTP, 3 min easy between\n10–15 min warm-up, 10 min cool-down'},
+ {d:6,kind:'bike',title:'Endurance ride — 90 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'},
+ {d:0,kind:'bike',title:'Bike — sweet spot 3 × 10',km:0,z:[],details:'3 × 10 min @ 88–92% FTP, 5 min easy between\nvalidates the ramp number — if this feels like threshold, drop FTP 5%\nAM — technique swim in the PM\n10–15 min warm-up, 10 min cool-down'}]},
+{week:7,start:'2026-10-12',targetKm:30,phase:'Rebuild — easy volume',focus:'Three runs. Bike quality Monday and Thursday.',items:[
  {d:0,kind:'run',title:'removed',km:0,z:[],details:'',drop:1},
  gA(),
  {d:1,kind:'run',title:'Easy run — 9 km',km:9,z:[2],details:'easy @ 6:00–6:30, HR 150–165\nflat and paved'},
@@ -506,8 +507,9 @@ const PLAN=[
  {d:4,kind:'run',title:'Easy run — 7 km',km:7,z:[2],details:'easy @ 6:00–6:30, HR 150–165\nflat and paved'},
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
- {d:3,kind:'bike',title:'Bike — VO2 5 × 3',km:0,z:[],details:'5 × 3 min @ 115–120% FTP, 3 min easy between\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'bike',title:'Endurance ride — 90 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'}]},
+ {d:3,kind:'bike',title:'Bike — VO2 5 × 4',km:0,z:[],details:'5 × 4 min @ 110–115% FTP, 4 min easy between\n10–15 min warm-up, 10 min cool-down'},
+ {d:6,kind:'bike',title:'Endurance ride — 90 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'},
+ {d:0,kind:'bike',title:'Bike — sweet spot 3 × 12',km:0,z:[],details:'3 × 12 min @ 90% FTP, 5 min easy between\nAM — technique swim in the PM\n10–15 min warm-up, 10 min cool-down'}]},
 {week:8,start:'2026-10-19',targetKm:33,phase:'Rebuild — easy volume',focus:'Three runs. Longest run since the 19 Sep abort.',items:[
  {d:0,kind:'run',title:'removed',km:0,z:[],details:'',drop:1},
  gA(),
@@ -520,9 +522,10 @@ const PLAN=[
  gC(),
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
- {d:3,kind:'bike',title:'Bike — sweet spot 3 × 12',km:0,z:[],details:'3 × 12 min @ 90% FTP, 5 min easy between\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'bike',title:'Endurance ride — 100 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'}]},
-{week:9,start:'2026-10-26',targetKm:34,phase:'Rebuild — fourth run day',focus:'Monday run joins — frequency rises, volume barely moves.',items:[
+ {d:3,kind:'bike',title:'Bike — VO2 4 × 3 (easier week)',km:0,z:[],details:'4 × 3 min @ 115% FTP, 3 min easy between\n10–15 min warm-up, 10 min cool-down'},
+ {d:6,kind:'bike',title:'Endurance ride — 100 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'},
+ {d:0,kind:'bike',title:'Bike — sweet spot 2 × 15 (easier week)',km:0,z:[],details:'2 × 15 min @ 88% FTP, 5 min easy between\nAM — technique swim in the PM\n10–15 min warm-up, 10 min cool-down'}]},
+{week:9,start:'2026-10-26',targetKm:34,phase:'Rebuild — fourth run day',focus:'Monday run joins. Bike quality moves to Thursday and Sunday — big weekend, Wednesday rest.',items:[
  {d:0,kind:'run',title:'Easy run — 6 km',km:6,z:[2],details:'easy @ 6:00–6:30, HR 150–165\nflat and paved'},
  gA(),
  {d:1,kind:'run',title:'Easy + strides — 8 km',km:8,z:[2],details:'easy @ 6:00–6:30, HR 150–165\nflat and paved\n6 × 20 s relaxed strides, full recovery'},
@@ -534,7 +537,7 @@ const PLAN=[
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
  {d:3,kind:'bike',title:'Bike — VO2 5 × 4',km:0,z:[],details:'5 × 4 min @ 110–115% FTP, 4 min easy between\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'bike',title:'Endurance ride — 105 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'}]},
+ {d:6,kind:'bike',title:'Bike — threshold 3 × 12',km:0,z:[],details:'3 × 12 min @ 95–100% FTP, 5 min easy between\n75–90 min total, rest of it Z2\nday after the long run — if the legs are gone, ride the intervals at 90%\n10–15 min warm-up, 10 min cool-down'}]},
 {week:10,start:'2026-11-02',targetKm:37,phase:'Speed returns (gated)',focus:'First track session since week 1 — only if the gate is met. Threshold, not intervals.',items:[
  {d:0,kind:'run',title:'Easy run — 6 km',km:6,z:[2],details:'easy @ 6:00–6:30, HR 150–165\nflat and paved'},
  gA(),
@@ -546,9 +549,9 @@ const PLAN=[
  {d:5,kind:'run',title:'Long run — 16 km',km:16,z:[2],details:'easy throughout @ 6:00–6:30\nflat and paved — seawall\nfuel practice from 75 min'},
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
- {d:3,kind:'bike',title:'Bike — threshold 3 × 12',km:0,z:[],details:'3 × 12 min @ 95–100% FTP, 5 min easy between\nday after the first track session — if legs are flat, go to 90%\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'bike',title:'Endurance ride — 110 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'}]},
-{week:11,start:'2026-11-09',targetKm:41,phase:'Build',focus:'FTP retest Thursday. Bike drops to one structured session from here, as planned.',items:[
+ {d:3,kind:'bike',title:'Bike — VO2 6 × 4',km:0,z:[],details:'6 × 4 min @ 110–115% FTP, 4 min easy between\ntwo days after the first track session\n10–15 min warm-up, 10 min cool-down'},
+ {d:6,kind:'bike',title:'Bike — threshold 2 × 20',km:0,z:[],details:'2 × 20 min @ 95% FTP, 5 min easy between\n75–90 min total, rest of it Z2\nday after the long run — if the legs are gone, ride the intervals at 90%\n10–15 min warm-up, 10 min cool-down'}]},
+{week:11,start:'2026-11-09',targetKm:41,phase:'Build',focus:'FTP retest Thursday, threshold ride Sunday off the new number. Last week of two bike quality sessions.',items:[
  {d:0,kind:'run',title:'Easy run — 7 km',km:7,z:[2],details:'easy @ 6:00–6:30, HR 150–165\nflat and paved'},
  gA(),
  {d:1,kind:'run',title:'Track — 3 × 1600 m threshold',km:10,z:[4],details:'2 km warm-up\n3 × 1600 m @ 4:40–4:45 (7:28–7:36), 75–90 s jog\ncool-down to 10 km\nthreshold, not intervals — first rep faster than the band means the wrong session',reps:'3x1600'},
@@ -560,7 +563,7 @@ const PLAN=[
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
  {d:3,kind:'bike',title:'Bike — FTP retest',km:0,z:[],details:'ramp test on the Kickr — spindown calibration first\nnew FTP applies from next week\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'bike',title:'Endurance ride — 120 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'}]},
+ {d:6,kind:'bike',title:'Bike — threshold 2 × 20',km:0,z:[],details:'2 × 20 min @ 95–100% of the NEW FTP from Thursday, 5 min easy between\n75–90 min total, rest of it Z2\nday after the long run — if the legs are gone, ride the intervals at 90%\n10–15 min warm-up, 10 min cool-down'}]},
 {week:12,start:'2026-11-16',targetKm:36,phase:'Recovery week',focus:'Recovery week — everything shorter, gym light.',items:[
  {d:0,kind:'run',title:'Easy run — 6 km',km:6,z:[2],details:'easy @ 6:00–6:30, HR 150–165\nflat and paved'},
  gA(LIGHT),
@@ -727,7 +730,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-09-23 season-template';
+const BUILD='2026-09-23 ftp-block';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -745,7 +748,7 @@ const BUILD='2026-09-23 season-template';
       }).catch(function(){});
   }catch(e){}
 })();
-const PLANVER=9;   /* bump whenever prescriptions change */
+const PLANVER=10;   /* bump whenever prescriptions change */
 function buildDefaultWorkouts(){
   var out=[];
   PLAN.forEach(function(w){ w.items.forEach(function(it,ix){
