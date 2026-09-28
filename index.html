@@ -228,7 +228,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-09-23 ftp-block</div></div>
+    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-09-28 runwalk-cap</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-zones">Zones</button>
       <button class="btn" id="btn-log">Log</button>
@@ -472,12 +472,12 @@ const PLAN=[
  {d:5,kind:'run',title:'Jog 6 km',km:6,z:[2],details:'continuous, flat, 6:30–7:00/km\nfirst continuous run of the return\nSEAWALL OR PAVEMENT — no trail, no gravel, nothing uneven'},
  {d:2,kind:'run',title:'Return run/walk — 4 km',km:4,z:[1,2],details:'5 min walk to start\n5 × (3 min jog / 1 min walk)\n5 min walk to finish\nHR under 150, flat ground only\nrehab after the run, not before'},
  {d:4,kind:'run',title:'Run/walk — 5 km',km:5,z:[1,2],details:'5 min walk\n5 × (5 min jog / 1 min walk)\n5 min walk\nHR under 150, flat ground only\nstop on pain above 2/10, gait change, or cramp'}]},
-{week:5,start:'2026-09-28',targetKm:23,phase:'Graded return — jogging',focus:'Three continuous jogs, 48 h apart. Distance building resumes the week of 5 Oct, not this one.',items:[
+{week:5,start:'2026-09-28',targetKm:6,phase:'Run/walk — 20 min cap until physio',focus:'Two run/walks, Tue and Sat, 20 min each. The cap sits below the 25–30 min window where it has flared. Physio next week.',items:[
  {d:0,kind:'run',title:'No run — 48 h spacing',km:0,z:[],details:'bike, swim or gym\nno consecutive running days until distance building starts',drop:1},gA(),
- {d:1,kind:'run',title:'Jog 6 km',km:6,z:[2],details:'continuous, easy, 6:15–6:45/km\nno track, no reps, no strides\nflat and paved'},gB(),
- {d:3,kind:'run',title:'Jog 7 km',km:7,z:[2],details:'continuous, conversational throughout\nflat and paved'},gC(),
- {d:5,kind:'run',title:'Longer jog — 10 km',km:10,z:[2],details:'continuous, easy throughout, no finish\nlongest run since the 19 Sep abort\nceiling not target — 8 km is fine if anything grumbles\nflat and paved'},
- {d:0,kind:'bike',title:'Bike — FTP ramp test',km:0,z:[],details:'Zwift ramp test on the Kickr — spindown calibration first\nFTP = 75% of best 1-min power\nprovisional until Thursday week 6 confirms it'},
+ {d:1,kind:'run',title:'Run/walk — 20 min cap',km:3,z:[1,2],details:'5 min walk\n5 × (3 min run / 1 min walk) @ 6:30–7:00\nwalk home\nstop on anything above 1/10\nmorning reading tomorrow'},gB(),
+ {d:3,kind:'run',title:'removed',km:0,z:[],details:'',drop:1},gC('\nno loaded lunges or sled this week — resume after the physio'),
+ {d:5,kind:'run',title:'Run/walk — 20 min cap',km:3,z:[1,2],details:'5 min walk\n5 × (3 min run / 1 min walk) @ 6:30–7:00\nwalk home\nstop on anything above 1/10\nmorning reading tomorrow'},
+ {d:0,kind:'bike',title:'Bike — FTP ramp test',km:0,z:[],details:'Zwift ramp test on the Kickr — spindown calibration first\nFTP = 75% of best 1-min power\nprovisional until Monday week 6 sweet spot confirms it'},
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km, PM, after the test\nall easy — drills only, form over speed'},
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'1.5–2 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
  {d:6,kind:'bike',title:'Endurance ride — 75 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfirst Sunday ride of the season structure'}]},
@@ -730,7 +730,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-09-23 ftp-block';
+const BUILD='2026-09-28 runwalk-cap';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -748,7 +748,7 @@ const BUILD='2026-09-23 ftp-block';
       }).catch(function(){});
   }catch(e){}
 })();
-const PLANVER=10;   /* bump whenever prescriptions change */
+const PLANVER=11;   /* bump whenever prescriptions change */
 function buildDefaultWorkouts(){
   var out=[];
   PLAN.forEach(function(w){ w.items.forEach(function(it,ix){
