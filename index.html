@@ -211,6 +211,25 @@ window.storage = {
     font-size:.72rem;color:var(--muted);line-height:1.45;}
   #app-root .empty{text-align:center;color:var(--muted);font-size:.8rem;padding:26px 12px;line-height:1.55;}
   #app-root .tabs{display:flex;gap:7px;margin-bottom:12px;}
+  #app-root .bk-h{font-size:.64rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:12px 0 6px;}
+  #app-root .bk-sum{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:0 0 10px;}
+  #app-root .bk-sum>div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:7px 8px;min-width:0;}
+  #app-root .bk-sum .k{font-size:.56rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:750;}
+  #app-root .bk-sum .v{font-size:.95rem;font-weight:800;white-space:nowrap;}
+  #app-root .bk-chart{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 4px 2px;margin-bottom:10px;}
+  #app-root .bk-chart svg{width:100%;height:auto;display:block;}
+  #app-root .bk-leg{display:flex;gap:12px;flex-wrap:wrap;font-size:.6rem;color:var(--muted);padding:2px 8px 6px;}
+  #app-root .bk-leg i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:4px;vertical-align:middle;}
+  #app-root .bk-scroll{overflow-x:auto;margin-bottom:12px;}
+  #app-root .bk-tbl{width:100%;border-collapse:collapse;font-size:.7rem;}
+  #app-root .bk-tbl th{text-align:right;color:var(--muted);font-weight:750;font-size:.58rem;text-transform:uppercase;letter-spacing:.05em;padding:5px;border-bottom:1px solid var(--line);white-space:nowrap;}
+  #app-root .bk-tbl td{text-align:right;padding:6px 5px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  #app-root .bk-tbl th:first-child,#app-root .bk-tbl td:first-child{text-align:left;}
+  #app-root .bk-tbl td.nm{text-align:left;white-space:normal;}
+  #app-root .bk-tbl tr.work td{font-weight:750;background:var(--orange-soft);}
+  #app-root .bk-tbl tr.go{cursor:pointer;}
+  #app-root .bk-note{font-size:.72rem;color:var(--muted);line-height:1.45;margin:0 0 12px;}
+  #app-root .bk-flag{font-size:.74rem;line-height:1.45;border-radius:12px;padding:9px 11px;margin:0 0 12px;background:var(--green-soft);border:1px solid var(--done-border);}
   #app-root .tabs .btn{flex:1;text-align:center;}
   #app-root .tabs .btn[aria-selected="true"]{background:var(--navy);color:#fff;border-color:var(--navy);}
 
@@ -228,8 +247,9 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-09-28 runwalk-cap</div></div>
+    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-09-28 bike-analysis</div></div>
     <div class="hdr-actions">
+      <button class="btn" id="btn-bike">Bike</button>
       <button class="btn" id="btn-zones">Zones</button>
       <button class="btn" id="btn-log">Log</button>
       <button class="btn" id="btn-sync">Sync</button>
@@ -245,6 +265,7 @@ window.storage = {
 <div class="sheet" id="sheet-w" role="dialog" aria-modal="true" aria-label="Edit session">
   <div class="sheet-h"><h3 id="w-heading">Edit session</h3><button class="btn ghost" data-close>Close</button></div>
   <div class="fld"><label>Title</label><input id="f-title"></div>
+  <div id="f-bike"></div>
   <div class="row2">
     <div class="fld"><label>Date</label><input id="f-date" type="date"></div>
     <div class="fld"><label>Type</label><select id="f-kind">
@@ -375,6 +396,11 @@ window.storage = {
   <div id="log-body"></div>
 </div>
 
+<div class="sheet" id="sheet-b" role="dialog" aria-modal="true" aria-label="Bike">
+  <div class="sheet-h"><h3>Bike</h3><button class="btn ghost" data-close>Close</button></div>
+  <div id="bike-body"></div>
+</div>
+
 <div class="sheet" id="sheet-s" role="dialog" aria-modal="true" aria-label="Sync">
   <div class="sheet-h"><h3>Sync</h3><button class="btn ghost" data-close>Close</button></div>
   <div class="hint">Paste the gist ID once. Refresh pulls updates from it.</div>
@@ -472,7 +498,7 @@ const PLAN=[
  {d:5,kind:'run',title:'Jog 6 km',km:6,z:[2],details:'continuous, flat, 6:30–7:00/km\nfirst continuous run of the return\nSEAWALL OR PAVEMENT — no trail, no gravel, nothing uneven'},
  {d:2,kind:'run',title:'Return run/walk — 4 km',km:4,z:[1,2],details:'5 min walk to start\n5 × (3 min jog / 1 min walk)\n5 min walk to finish\nHR under 150, flat ground only\nrehab after the run, not before'},
  {d:4,kind:'run',title:'Run/walk — 5 km',km:5,z:[1,2],details:'5 min walk\n5 × (5 min jog / 1 min walk)\n5 min walk\nHR under 150, flat ground only\nstop on pain above 2/10, gait change, or cramp'}]},
-{week:5,start:'2026-09-28',targetKm:6,phase:'Run/walk — 20 min cap until physio',focus:'Two run/walks, Tue and Sat, 20 min each. The cap sits below the 25–30 min window where it has flared. Physio next week.',items:[
+{week:5,start:'2026-09-28',targetKm:6,phase:'Run/walk — 20 min cap until physio',focus:'Two run/walks, Tue and Sat, 20 min each, capped below the window where it has flared. Zwift FTP Builder begins: Mon, Wed, Thu, Sat, Sun. Physio next week.',items:[
  {d:0,kind:'run',title:'No run — 48 h spacing',km:0,z:[],details:'bike, swim or gym\nno consecutive running days until distance building starts',drop:1},gA(),
  {d:1,kind:'run',title:'Run/walk — 20 min cap',km:3,z:[1,2],details:'5 min walk\n5 × (3 min run / 1 min walk) @ 6:30–7:00\nwalk home\nstop on anything above 1/10\nmorning reading tomorrow'},gB(),
  {d:3,kind:'run',title:'removed',km:0,z:[],details:'',drop:1},gC('\nno loaded lunges or sled this week — resume after the physio'),
@@ -480,7 +506,10 @@ const PLAN=[
  {d:0,kind:'bike',title:'Bike — FTP ramp test',km:0,z:[],details:'Zwift ramp test on the Kickr — spindown calibration first\nFTP = 75% of best 1-min power\nprovisional until Monday week 6 sweet spot confirms it'},
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km, PM, after the test\nall easy — drills only, form over speed'},
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'1.5–2 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
- {d:6,kind:'bike',title:'Endurance ride — 75 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfirst Sunday ride of the season structure'}]},
+ {d:6,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nno hard ride the day before a run'},
+ {d:2,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nno hard ride the day before a run\nWednesday is no longer a rest day during the block'},
+ {d:3,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nno hard ride the day before a run'},
+ {d:5,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nno hard ride the day before a run\nafter the run/walk — keep it the easy one'}]},
 
 {week:6,start:'2026-10-05',targetKm:27,phase:'Rebuild — easy volume',focus:'Three runs Tue / Fri / Sat. Hard days Tue, Thu, Sat — never two in a row.',items:[
  {d:0,kind:'run',title:'removed',km:0,z:[],details:'',drop:1},
@@ -493,9 +522,11 @@ const PLAN=[
  {d:4,kind:'run',title:'Easy run — 7 km',km:7,z:[2],details:'easy @ 6:00–6:30, HR 150–165\nflat and paved'},
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
- {d:3,kind:'bike',title:'Bike — VO2 5 × 3',km:0,z:[],details:'5 × 3 min @ 115–120% FTP, 3 min easy between\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'bike',title:'Endurance ride — 90 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'},
- {d:0,kind:'bike',title:'Bike — sweet spot 3 × 10',km:0,z:[],details:'3 × 10 min @ 88–92% FTP, 5 min easy between\nvalidates the ramp number — if this feels like threshold, drop FTP 5%\nAM — technique swim in the PM\n10–15 min warm-up, 10 min cool-down'}]},
+ {d:3,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nno hard ride the day before a run'},
+ {d:6,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nno hard ride the day before a run'},
+ {d:0,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nno hard ride the day before a run\nAM — technique swim in the PM'},
+ {d:2,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nno hard ride the day before a run\nWednesday is no longer a rest day during the block — keep this one honest if you are tired'},
+ {d:5,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nno hard ride the day before a run\nSaturday is a run day — make this the easy Zwift workout, after the run'}]},
 {week:7,start:'2026-10-12',targetKm:30,phase:'Rebuild — easy volume',focus:'Three runs. Bike quality Monday and Thursday.',items:[
  {d:0,kind:'run',title:'removed',km:0,z:[],details:'',drop:1},
  gA(),
@@ -507,9 +538,11 @@ const PLAN=[
  {d:4,kind:'run',title:'Easy run — 7 km',km:7,z:[2],details:'easy @ 6:00–6:30, HR 150–165\nflat and paved'},
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
- {d:3,kind:'bike',title:'Bike — VO2 5 × 4',km:0,z:[],details:'5 × 4 min @ 110–115% FTP, 4 min easy between\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'bike',title:'Endurance ride — 90 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'},
- {d:0,kind:'bike',title:'Bike — sweet spot 3 × 12',km:0,z:[],details:'3 × 12 min @ 90% FTP, 5 min easy between\nAM — technique swim in the PM\n10–15 min warm-up, 10 min cool-down'}]},
+ {d:3,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run'},
+ {d:6,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run'},
+ {d:0,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run\nAM — technique swim in the PM'},
+ {d:2,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run\nWednesday is no longer a rest day during the block — keep this one honest if you are tired'},
+ {d:5,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run\nSaturday is a run day — make this the easy Zwift workout, after the run'}]},
 {week:8,start:'2026-10-19',targetKm:33,phase:'Rebuild — easy volume',focus:'Three runs. Longest run since the 19 Sep abort.',items:[
  {d:0,kind:'run',title:'removed',km:0,z:[],details:'',drop:1},
  gA(),
@@ -522,9 +555,11 @@ const PLAN=[
  gC(),
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
- {d:3,kind:'bike',title:'Bike — VO2 4 × 3 (easier week)',km:0,z:[],details:'4 × 3 min @ 115% FTP, 3 min easy between\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'bike',title:'Endurance ride — 100 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'},
- {d:0,kind:'bike',title:'Bike — sweet spot 2 × 15 (easier week)',km:0,z:[],details:'2 × 15 min @ 88% FTP, 5 min easy between\nAM — technique swim in the PM\n10–15 min warm-up, 10 min cool-down'}]},
+ {d:3,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run'},
+ {d:6,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run'},
+ {d:0,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run\nAM — technique swim in the PM'},
+ {d:2,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run\nWednesday is no longer a rest day during the block — keep this one honest if you are tired'},
+ {d:5,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run\nSaturday is a run day — make this the easy Zwift workout, after the run'}]},
 {week:9,start:'2026-10-26',targetKm:34,phase:'Rebuild — fourth run day',focus:'Monday run joins. Bike quality moves to Thursday and Sunday — big weekend, Wednesday rest.',items:[
  {d:0,kind:'run',title:'Easy run — 6 km',km:6,z:[2],details:'easy @ 6:00–6:30, HR 150–165\nflat and paved'},
  gA(),
@@ -536,8 +571,11 @@ const PLAN=[
  {d:5,kind:'run',title:'Long run — 14 km',km:14,z:[2],details:'easy throughout @ 6:00–6:30\nflat and paved — seawall'},
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
- {d:3,kind:'bike',title:'Bike — VO2 5 × 4',km:0,z:[],details:'5 × 4 min @ 110–115% FTP, 4 min easy between\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'bike',title:'Bike — threshold 3 × 12',km:0,z:[],details:'3 × 12 min @ 95–100% FTP, 5 min easy between\n75–90 min total, rest of it Z2\nday after the long run — if the legs are gone, ride the intervals at 90%\n10–15 min warm-up, 10 min cool-down'}]},
+ {d:3,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run'},
+ {d:6,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run'},
+ {d:0,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run\nAM — easy run and technique swim also today'},
+ {d:2,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run\nWednesday is no longer a rest day during the block — keep this one honest if you are tired'},
+ {d:5,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run\nSaturday is a run day — make this the easy Zwift workout, after the run'}]},
 {week:10,start:'2026-11-02',targetKm:37,phase:'Speed returns (gated)',focus:'First track session since week 1 — only if the gate is met. Threshold, not intervals.',items:[
  {d:0,kind:'run',title:'Easy run — 6 km',km:6,z:[2],details:'easy @ 6:00–6:30, HR 150–165\nflat and paved'},
  gA(),
@@ -549,8 +587,11 @@ const PLAN=[
  {d:5,kind:'run',title:'Long run — 16 km',km:16,z:[2],details:'easy throughout @ 6:00–6:30\nflat and paved — seawall\nfuel practice from 75 min'},
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
- {d:3,kind:'bike',title:'Bike — VO2 6 × 4',km:0,z:[],details:'6 × 4 min @ 110–115% FTP, 4 min easy between\ntwo days after the first track session\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'bike',title:'Bike — threshold 2 × 20',km:0,z:[],details:'2 × 20 min @ 95% FTP, 5 min easy between\n75–90 min total, rest of it Z2\nday after the long run — if the legs are gone, ride the intervals at 90%\n10–15 min warm-up, 10 min cool-down'}]},
+ {d:3,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run'},
+ {d:6,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run'},
+ {d:0,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run\nAM — easy run and technique swim also today'},
+ {d:2,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run\nWednesday is no longer a rest day during the block — keep this one honest if you are tired'},
+ {d:5,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nif running is rebuilding: keep the two hardest Zwift workouts this week, ride the rest Z2 or skip\nno hard ride the day before a run\nSaturday is a run day — make this the easy Zwift workout, after the run'}]},
 {week:11,start:'2026-11-09',targetKm:41,phase:'Build',focus:'FTP retest Thursday, threshold ride Sunday off the new number. Last week of two bike quality sessions.',items:[
  {d:0,kind:'run',title:'Easy run — 7 km',km:7,z:[2],details:'easy @ 6:00–6:30, HR 150–165\nflat and paved'},
  gA(),
@@ -730,7 +771,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-09-28 runwalk-cap';
+const BUILD='2026-09-28 bike-analysis';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -748,7 +789,7 @@ const BUILD='2026-09-28 runwalk-cap';
       }).catch(function(){});
   }catch(e){}
 })();
-const PLANVER=11;   /* bump whenever prescriptions change */
+const PLANVER=12;   /* bump whenever prescriptions change */
 function buildDefaultWorkouts(){
   var out=[];
   PLAN.forEach(function(w){ w.items.forEach(function(it,ix){
@@ -763,7 +804,7 @@ function buildDefaultWorkouts(){
 function freshState(){
   return {v:2,planVer:PLANVER,workouts:buildDefaultWorkouts(),weekNotes:{},
     zones:JSON.parse(JSON.stringify(DEFAULT_ZONES)),analyses:[],decisions:[],
-    sync:{gistUrl:'',lastUpdateId:'',lastFetch:''},
+    sync:{gistUrl:'',lastUpdateId:'',lastFetch:''},bikeFtp:[],
     mpHistory:[
       {date:'2026-05-03',kind:'current',pace:'5:54',reason:'BMO Vancouver Marathon — 4:09:21, avg HR 176, faded over final 11 km'},
       {date:todayISO(),kind:'goal',pace:'5:00',reason:'3:30 target. 5K of 21:46 (avg HR 191) projects ~3:28 equivalent; durability is the gap.'}]};
@@ -830,7 +871,7 @@ function render(){
   var h='';
   h+='<div class="weeknav">'+
      '<button class="nav-btn" id="prev" '+(wk<=1?'disabled':'')+' aria-label="Previous week">‹</button>'+
-     '<div class="label">'+(m.week<1?'Pre-block':'Week '+m.week+' of 14')+' · '+
+     '<div class="label">'+(m.week<1?'Pre-block':'Week '+m.week)+' · '+
      fmtDate(m.start)+' – '+fmtDate(addDays(m.start,6))+'</div>'+
      '<button class="nav-btn" id="next" '+(wk>=PLAN.length?'disabled':'')+' aria-label="Next week">›</button></div>';
 
@@ -957,7 +998,7 @@ function wireCards(){
 /* ---------- sheets ---------- */
 function openSheet(id){$('scrim').classList.add('open');$(id).classList.add('open');}
 function closeSheets(){$('scrim').classList.remove('open');
-  ['sheet-w','sheet-z','sheet-l','sheet-s','sheet-r'].forEach(function(s){$(s).classList.remove('open');});
+  ['sheet-w','sheet-z','sheet-l','sheet-s','sheet-r','sheet-b'].forEach(function(s){$(s).classList.remove('open');});
   editingId=null;}
 $('scrim').onclick=closeSheets;
 Array.prototype.forEach.call(document.querySelectorAll('#app-root [data-close]'),
@@ -994,6 +1035,7 @@ function openWorkout(id){
   $('f-ahr').value=w.avgHr||''; $('f-mhr').value=w.maxHr||'';
   $('f-notes').value=w.notes||'';
   editZones=(w.zones||[]).slice(); renderZonePicker();
+  $('f-bike').innerHTML=w.bike?bikePanel(w):'';
   openSheet('sheet-w');
 }
 $('fab').onclick=function(){
@@ -1031,6 +1073,118 @@ $('f-save').onclick=function(){
     for(var i=0;i<PLAN.length;i++) if(w.date>=PLAN[i].start&&w.date<=addDays(PLAN[i].start,6)){wk=i+1;break;}
   render(); toast('Saved');
 };
+
+
+/* ---------- bike: ride analysis + FTP progress ----------
+   Ride data arrives from Claude via the gist (activities[].bike): intervals from
+   Zwift's laps, downsampled power/HR/cadence streams, FTP at the time of the ride.
+   Work intervals are laps at >=75% of that FTP; "work avg" is time-weighted. */
+function curFtp(){var h=S.bikeFtp||[];return h.length?h[h.length-1].ftp:null;}
+function bkBox(k,v){return '<div><div class="k">'+k+'</div><div class="v">'+v+'</div></div>';}
+function bikeSvg(b){
+  var s=b.s; if(!s||!s.t||s.t.length<2)return '';
+  var W=600,H=230,L=34,R=32,T=10,B=22,pw=W-L-R,ph=H-T-B,tMax=s.t[s.t.length-1]||1;
+  var wv=s.w.filter(function(v){return v!=null;}).concat([b.ftp||0]);
+  var wMax=Math.ceil(Math.max.apply(null,wv)*1.08/50)*50||100;
+  var hv=(s.hr||[]).filter(function(v){return v;});
+  var hMin=hv.length?Math.floor((Math.min.apply(null,hv)-6)/10)*10:90, hMax=hv.length?Math.ceil((Math.max.apply(null,hv)+4)/10)*10:190;
+  function x(t){return L+pw*t/tMax;} function yW(v){return T+ph*(1-v/wMax);}
+  function yH(v){return T+ph*(1-(v-hMin)/(hMax-hMin));} function yC(v){var c=Math.max(0,Math.min(1,(v-60)/50));return T+ph*(1-.2*c);}  /* cadence 60-110 rpm in the bottom band */
+  var o='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Power, heart rate and cadence over the ride">';
+  (b.intervals||[]).forEach(function(iv){if(iv.kind!=='work')return;
+    o+='<rect x="'+x(iv.start).toFixed(1)+'" y="'+T+'" width="'+Math.max(1,x(iv.start+iv.dur)-x(iv.start)).toFixed(1)+'" height="'+ph+'" fill="var(--orange-soft)"/>';});
+  var gs=wMax>320?100:50;
+  for(var g=0;g<=wMax;g+=gs){var yy=yW(g);
+    o+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+yy.toFixed(1)+'" y2="'+yy.toFixed(1)+'" stroke="var(--line)"/>'+
+       '<text x="'+(L-4)+'" y="'+(yy+3).toFixed(1)+'" text-anchor="end" font-size="9" fill="var(--muted)">'+g+'</text>';}
+  for(var h=hMin;h<=hMax;h+=20)o+='<text x="'+(W-R+4)+'" y="'+(yH(h)+3).toFixed(1)+'" font-size="9" fill="var(--navy)">'+h+'</text>';
+  var st=tMax>3600?900:tMax>1500?300:120;
+  for(var tt=0;tt<=tMax;tt+=st)o+='<text x="'+x(tt).toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" font-size="9" fill="var(--muted)">'+Math.round(tt/60)+'′</text>';
+  if(b.ftp){var fy=yW(b.ftp);
+    o+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+fy.toFixed(1)+'" y2="'+fy.toFixed(1)+'" stroke="var(--orange)" stroke-dasharray="5 4"/>'+
+       '<text x="'+(L+4)+'" y="'+(fy-4).toFixed(1)+'" font-size="9" font-weight="750" fill="var(--orange)">FTP '+b.ftp+' W</text>';}
+  function path(arr,fy,skip0){var d='',pen=false;
+    for(var i=0;i<arr.length&&i<s.t.length;i++){var v=arr[i];
+      if(v==null||(skip0&&!v)){pen=false;continue;}
+      d+=(pen?'L':'M')+x(s.t[i]).toFixed(1)+' '+fy(v).toFixed(1);pen=true;}return d;}
+  if(s.cad)o+='<path d="'+path(s.cad,yC,true)+'" fill="none" stroke="#9aa6b1" stroke-width="1" opacity=".75"/>';
+  o+='<path d="'+path(s.w,yW,false)+'" fill="none" stroke="var(--orange)" stroke-width="1.7" stroke-linejoin="round"/>';
+  if(s.hr)o+='<path d="'+path(s.hr,yH,true)+'" fill="none" stroke="var(--navy)" stroke-width="1.5" stroke-linejoin="round"/>';
+  return o+'</svg>';
+}
+function bikePanel(w){
+  var b=w.bike, ftp=b.ftp||curFtp(), k=b.work||{};
+  var h='<div class="bk-h">Ride analysis'+(b.label?' · '+esc(b.label):'')+'</div>';
+  if(k.avgW)h+='<div class="bk-sum">'+bkBox('Work avg',Math.round(k.avgW)+' W')+
+    bkBox('% FTP',ftp?Math.round(100*k.avgW/ftp)+'%':'—')+
+    bkBox('Work HR',k.avgHr?Math.round(k.avgHr):'—')+
+    bkBox('W / HR',k.avgHr?(k.avgW/k.avgHr).toFixed(2):'—')+'</div>';
+  else if(b.avgW)h+='<div class="bk-sum">'+bkBox('Avg power',Math.round(b.avgW)+' W')+
+    bkBox('% FTP',ftp?Math.round(100*b.avgW/ftp)+'%':'—')+bkBox('Avg HR',b.avgHr?Math.round(b.avgHr):'—')+
+    bkBox('W / HR',b.avgHr?(b.avgW/b.avgHr).toFixed(2):'—')+'</div>';
+  if(b.note)h+='<p class="bk-note">'+esc(b.note)+'</p>';
+  var ch=bikeSvg(b);
+  if(ch)h+='<div class="bk-chart">'+ch+'<div class="bk-leg"><span><i style="background:var(--orange)"></i>Power</span>'+
+    '<span><i style="background:var(--navy)"></i>Heart rate</span><span><i style="background:#9aa6b1"></i>Cadence</span>'+
+    '<span><i style="background:var(--orange-soft);height:9px"></i>Work interval</span></div></div>';
+  if(b.intervals&&b.intervals.length){
+    h+='<div class="bk-scroll"><table class="bk-tbl"><thead><tr><th>Block</th><th>Time</th><th>Watts</th><th>%FTP</th><th>HR</th><th>Cad</th></tr></thead><tbody>';
+    b.intervals.forEach(function(iv,i){
+      h+='<tr'+(iv.kind==='work'?' class="work"':'')+'><td>'+(i+1)+(iv.kind==='work'?' · work':iv.kind==='steady'?' · steady':'')+'</td><td>'+s2hms(iv.dur)+'</td><td>'+Math.round(iv.avgW)+
+         '</td><td>'+(ftp?Math.round(100*iv.avgW/ftp)+'%':'—')+'</td><td>'+(iv.avgHr?Math.round(iv.avgHr):'—')+'</td><td>'+(iv.avgCad?Math.round(iv.avgCad):'—')+'</td></tr>';});
+    h+='</tbody></table></div>';
+  }
+  return h;
+}
+function efSvg(pts){
+  if(pts.length<2)return '';
+  var W=600,H=150,L=34,R=12,T=12,B=22,pw=W-L-R,ph=H-T-B;
+  var vs=pts.map(function(p){return p.ef;}), lo=Math.min.apply(null,vs), hi=Math.max.apply(null,vs);
+  var pad=Math.max(.05,(hi-lo)*.25); lo-=pad; hi+=pad;
+  function x(i){return L+pw*(pts.length===1?.5:i/(pts.length-1));} function y(v){return T+ph*(1-(v-lo)/(hi-lo));}
+  var o='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Watts per heartbeat over time">';
+  [lo+pad,(lo+hi)/2,hi-pad].forEach(function(v){o+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v).toFixed(1)+'" y2="'+y(v).toFixed(1)+'" stroke="var(--line)"/><text x="'+(L-4)+'" y="'+(y(v)+3).toFixed(1)+'" text-anchor="end" font-size="9" fill="var(--muted)">'+v.toFixed(2)+'</text>';});
+  var d='';pts.forEach(function(p,i){d+=(i?'L':'M')+x(i).toFixed(1)+' '+y(p.ef).toFixed(1);});
+  o+='<path d="'+d+'" fill="none" stroke="var(--green)" stroke-width="1.8"/>';
+  pts.forEach(function(p,i){o+='<circle cx="'+x(i).toFixed(1)+'" cy="'+y(p.ef).toFixed(1)+'" r="3.2" fill="var(--green)"/>';
+    if(i===0||i===pts.length-1||pts.length<=8)o+='<text x="'+x(i).toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" font-size="9" fill="var(--muted)">'+fmtDate(p.date)+'</text>';});
+  return o+'</svg>';
+}
+function openBike(){
+  var ftp=curFtp(), hist=S.bikeFtp||[];
+  var rides=S.workouts.filter(function(w){return w.bike;}).sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:0;});
+  var work=rides.filter(function(w){return w.bike.work&&w.bike.work.avgW&&w.bike.work.avgHr;});
+  var h='<div class="bk-sum" style="grid-template-columns:repeat(3,1fr)">'+bkBox('Current FTP',ftp?ftp+' W':'—')+
+    bkBox('Set',hist.length?fmtDate(hist[hist.length-1].date):'—')+bkBox('Rides analysed',rides.length)+'</div>';
+  var pts=work.map(function(w){return {date:w.date,ef:w.bike.work.avgW/w.bike.work.avgHr};});
+  if(pts.length>=4){
+    var first=pts.slice(0,2), last=pts.slice(-2), f=0,l=0;
+    first.forEach(function(p){f+=p.ef/2;}); last.forEach(function(p){l+=p.ef/2;});
+    var ch=Math.round(100*(l-f)/f);
+    if(ch>=5)h+='<div class="bk-flag"><b>Worth a look.</b> Watts per heartbeat on work intervals is up '+ch+'% from your first two sessions to your last two. If the same kinds of workouts also feel easier, FTP is probably set low — a retest or a 3–5% bump is reasonable.</div>';
+  }
+  h+='<div class="bk-h">Watts per heartbeat on work intervals</div>';
+  h+=pts.length>=2?'<div class="bk-chart">'+efSvg(pts)+'</div>':'<p class="bk-note">Needs two rides with work intervals before there is a trend to draw.</p>';
+  h+='<p class="bk-note">Rising means more power for the same heart rate. Only compare like with like — heat, fatigue and a hard gym day all push HR up. The signal to raise FTP is the same kind of workout getting cheaper two weeks running, or a retest.</p>';
+  if(rides.length){
+    h+='<div class="bk-h">Rides</div><div class="bk-scroll"><table class="bk-tbl"><thead><tr><th>Date</th><th>Session</th><th>Work W</th><th>%FTP</th><th>HR</th><th>W/HR</th></tr></thead><tbody>';
+    rides.slice().reverse().forEach(function(w){var b=w.bike,k=b.work||{},f=b.ftp||ftp;
+      var wv=k.avgW||b.avgW, hv=k.avgHr||b.avgHr;
+      h+='<tr class="go" data-id="'+w.id+'"><td>'+fmtDate(w.date)+'</td><td class="nm">'+esc(b.label||w.title)+'</td><td>'+(wv?Math.round(wv):'—')+
+         '</td><td>'+(wv&&f?Math.round(100*wv/f)+'%':'—')+'</td><td>'+(hv?Math.round(hv):'—')+'</td><td>'+(wv&&hv?(wv/hv).toFixed(2):'—')+'</td></tr>';});
+    h+='</tbody></table></div>';
+  }
+  if(hist.length){
+    h+='<div class="bk-h">FTP history</div><div class="bk-scroll"><table class="bk-tbl"><tbody>';
+    hist.slice().reverse().forEach(function(e){h+='<tr><td>'+fmtDate(e.date)+'</td><td>'+e.ftp+' W</td><td class="nm">'+esc(e.source||'')+'</td></tr>';});
+    h+='</tbody></table></div>';
+  }
+  $('bike-body').innerHTML=h;
+  Array.prototype.forEach.call(document.querySelectorAll('#bike-body tr.go'),function(tr){
+    tr.onclick=function(){var id=tr.getAttribute('data-id');closeSheets();setTimeout(function(){openWorkout(id);},60);};});
+  openSheet('sheet-b');
+}
+$('btn-bike').onclick=openBike;
 
 /* zones sheet */
 function openZones(){renderZoneRows();openSheet('sheet-z');}
@@ -1402,9 +1556,27 @@ $('s-copy').onclick=function(){
   function fb(t){$('s-paste').value=t;$('s-paste').select();
     try{document.execCommand('copy');toast('State copied');}catch(e){toast('Copy from the box');}}
 };
+/* The gist carries a QUEUE of updates, not one. Every update not yet applied on
+   this device is applied in order, so an update is never lost because another
+   one was written before this device refreshed. */
+function appliedIds(){S.sync=S.sync||{};
+  if(!Array.isArray(S.sync.applied))S.sync.applied=S.sync.lastUpdateId?[S.sync.lastUpdateId]:[];
+  return S.sync.applied;}
+function applyAny(p,srcLabel){
+  if(p&&p.type==='cim-coach-updates'&&Array.isArray(p.updates)){
+    var ap=appliedIds(),tot=0,dup=0,k=0;
+    p.updates.forEach(function(u){
+      if(!u||typeof u!=='object'||(u.updateId&&ap.indexOf(u.updateId)!==-1))return;
+      var r=applyPayload(u,srcLabel); if(r&&r.ok){tot+=r.n||0;dup+=r.dup||0;k++;}});
+    if(!k)return {ok:true,msg:'Already up to date',n:0};
+    return {ok:true,n:tot,dup:dup,msg:(tot?'Applied '+tot+' update'+(tot===1?'':'s'):'Nothing new')+
+      (k>1?' from '+k+' batches':'')+(dup?' · '+dup+' skipped':'')};
+  }
+  return applyPayload(p,srcLabel);
+}
 function applyPayload(p,srcLabel){
   if(!p||typeof p!=='object')return {ok:false,msg:'Not a valid update'};
-  if(p.updateId&&S.sync&&p.updateId===S.sync.lastUpdateId)
+  if(p.updateId&&appliedIds().indexOf(p.updateId)!==-1)
     return {ok:true,msg:'Already up to date',n:0};
   snapshot();
   var n=0,dup=0;
@@ -1432,6 +1604,9 @@ function applyPayload(p,srcLabel){
       n++;
     }
   }
+  if(p.ftp&&p.ftp.ftp){S.bikeFtp=S.bikeFtp||[];
+    var lf=S.bikeFtp[S.bikeFtp.length-1];
+    if(!lf||lf.ftp!==+p.ftp.ftp){S.bikeFtp.push({date:p.ftp.date||todayISO(),ftp:+p.ftp.ftp,source:p.ftp.source||''});n++;}}
   if(p.weekNotes)Object.keys(p.weekNotes).forEach(function(k){S.weekNotes[k]=p.weekNotes[k];n++;});
 
   /* prescriptions: rewrite a single session without redeploying the app.
@@ -1485,7 +1660,8 @@ function applyPayload(p,srcLabel){
   pushUnique(S.decisions,p.decisions);
 
   (p.activities||[]).forEach(function(a){
-    if(a.stravaId&&S.workouts.some(function(w){return w.stravaId===a.stravaId;})){dup++;return;}
+    var ex=a.stravaId&&S.workouts.filter(function(w){return w.stravaId===a.stravaId;})[0];
+    if(ex){if(a.bike){ex.bike=a.bike;n++;}else dup++;return;}
     var nm=function(x){return String(x||'').toLowerCase().replace(/[^a-z0-9]/g,'');};
     if(S.workouts.some(function(w){
       if(w.date!==a.date||w.status!=='done')return false;
@@ -1498,7 +1674,10 @@ function applyPayload(p,srcLabel){
     if(!t&&a.date&&(a.kind||'run')==='run')
       t=S.workouts.filter(function(w){
         return w.date===a.date&&(w.kind==='run'||w.kind==='race')&&!w.stravaId;})[0];
+    if(!t&&a.date&&a.kind==='bike')
+      t=S.workouts.filter(function(w){return w.date===a.date&&w.kind==='bike'&&!w.stravaId&&w.status==='planned';})[0];
     if(t){
+      if(a.bike)t.bike=a.bike;
       if(a.km!=null)t.actualKm=a.km;
       if(a.movingTime)t.movingTime=a.movingTime;
       if(a.avgHr)t.avgHr=a.avgHr; if(a.maxHr)t.maxHr=a.maxHr;
@@ -1512,7 +1691,7 @@ function applyPayload(p,srcLabel){
         plannedKm:0,mpKm:a.mpKm||0,zones:[],reps:'',
         details:a.details||('Imported from Strava'+(srcLabel?' · '+srcLabel:'')+'.'),
         status:'done',actualKm:a.km,movingTime:a.movingTime,avgHr:a.avgHr,maxHr:a.maxHr,
-        timeInZone:a.timeInZone,rpe:a.rpe,notes:a.notes,stravaId:a.stravaId});
+        timeInZone:a.timeInZone,rpe:a.rpe,notes:a.notes,stravaId:a.stravaId,bike:a.bike});
     }
     n++;
   });
@@ -1532,7 +1711,8 @@ function applyPayload(p,srcLabel){
       timeInZone:u.timeInZone,rpe:u.rpe,niggle:u.niggle,notes:u.notes});n++;}
   });
 
-  if(p.updateId){S.sync=S.sync||{};S.sync.lastUpdateId=p.updateId;}
+  if(p.updateId){S.sync=S.sync||{};S.sync.lastUpdateId=p.updateId;
+    var ap=appliedIds(); if(ap.indexOf(p.updateId)===-1){ap.push(p.updateId); if(ap.length>400)ap.splice(0,ap.length-400);}}
   save();
   return {ok:true,n:n,dup:dup,
     msg:(n?'Applied '+n+' update'+(n===1?'':'s'):'Nothing new')+(dup?' · '+dup+' skipped':'')};
@@ -1584,7 +1764,7 @@ async function refreshFromGist(loud){
   try{
     var got=await fetchUpdate(id);
     var p=parseLoose(got.body);
-    var out=applyPayload(p,'via '+got.via);
+    var out=applyAny(p,'via '+got.via);
     S.sync.lastFetch=new Date().toISOString(); S.sync.via=got.via; save();
     render();
     if(loud||out.n)toast(out.msg,out.n>0);
@@ -1624,7 +1804,7 @@ $('s-apply').onclick=function(){
   if(!raw){toast('Nothing to apply');return;}
   var p;
   try{p=parseLoose(raw);}catch(e){toast('That is not valid JSON');return;}
-  var out=applyPayload(p,'pasted');
+  var out=applyAny(p,'pasted');
   closeSheets();render();toast(out.msg,out.n>0);
 };
 
@@ -1719,6 +1899,7 @@ function migrate(st){
   if(!st.analyses)st.analyses=[];
   if(!st.decisions)st.decisions=[];
   if(!st.weekNotes)st.weekNotes={};
+  if(!st.bikeFtp)st.bikeFtp=[];
   if(!st.sync)st.sync={gistUrl:'',lastUpdateId:'',lastFetch:''};
   if(!st.mpHistory)st.mpHistory=[{date:todayISO(),kind:'goal',pace:st.zones.goalMp||'5:00',
     reason:'Block starting value'}];
