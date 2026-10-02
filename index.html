@@ -247,7 +247,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-09-30 bike-mainset</div></div>
+    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-10-01 bike-sprints</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-bike">Bike</button>
       <button class="btn" id="btn-zones">Zones</button>
@@ -771,7 +771,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-09-30 bike-mainset';
+const BUILD='2026-10-01 bike-sprints';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -1078,6 +1078,8 @@ $('f-save').onclick=function(){
 /* ---------- bike: ride analysis + FTP progress ----------
    b.main = steady blocks (62-75% FTP) for rides with no work intervals — a Z2 ride's
    main set, so warm-up and cool-down don't drag its averages down.
+   b.sprint = neuromuscular sessions: short maximal efforts are never "work", so a
+   sprint day can't distort the watts-per-heartbeat trend used to judge FTP.
    Ride data arrives from Claude via the gist (activities[].bike): intervals from
    Zwift's laps, downsampled power/HR/cadence streams, FTP at the time of the ride.
    Work intervals are laps at >=75% of that FTP; "work avg" is time-weighted. */
@@ -1093,7 +1095,7 @@ function bikeSvg(b){
   function x(t){return L+pw*t/tMax;} function yW(v){return T+ph*(1-v/wMax);}
   function yH(v){return T+ph*(1-(v-hMin)/(hMax-hMin));} function yC(v){var c=Math.max(0,Math.min(1,(v-60)/50));return T+ph*(1-.2*c);}  /* cadence 60-110 rpm in the bottom band */
   var o='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Power, heart rate and cadence over the ride">';
-  (b.intervals||[]).forEach(function(iv){if(iv.kind!=='work')return;
+  (b.intervals||[]).forEach(function(iv){if(iv.kind!=='work'&&iv.kind!=='sprint')return;
     o+='<rect x="'+x(iv.start).toFixed(1)+'" y="'+T+'" width="'+Math.max(1,x(iv.start+iv.dur)-x(iv.start)).toFixed(1)+'" height="'+ph+'" fill="var(--orange-soft)"/>';});
   var gs=wMax>320?100:50;
   for(var g=0;g<=wMax;g+=gs){var yy=yW(g);
@@ -1121,6 +1123,8 @@ function bikePanel(w){
     bkBox('% FTP',ftp?Math.round(100*k.avgW/ftp)+'%':'—')+
     bkBox('Work HR',k.avgHr?Math.round(k.avgHr):'—')+
     bkBox('W / HR',k.avgHr?(k.avgW/k.avgHr).toFixed(2):'—')+'</div>';
+  else if(b.sprint)h+='<div class="bk-sum">'+bkBox('Sprints',b.sprint.n+' × '+b.sprint.dur+' s')+bkBox('Avg sprint',Math.round(b.sprint.avgW)+' W')+
+    bkBox('Best sprint',Math.round(b.sprint.best)+' W')+bkBox('Peak 5 s',b.sprint.best5s?Math.round(b.sprint.best5s)+' W':'—')+'</div>';
   else if(b.main&&b.main.avgW)h+='<div class="bk-sum">'+bkBox('Main set',Math.round(b.main.avgW)+' W')+
     bkBox('% FTP',ftp?Math.round(100*b.main.avgW/ftp)+'%':'—')+bkBox('Main HR',b.main.avgHr?Math.round(b.main.avgHr):'—')+
     bkBox('W / HR',b.main.avgHr?(b.main.avgW/b.main.avgHr).toFixed(2):'—')+'</div>';
@@ -1135,7 +1139,7 @@ function bikePanel(w){
   if(b.intervals&&b.intervals.length){
     h+='<div class="bk-scroll"><table class="bk-tbl"><thead><tr><th>Block</th><th>Time</th><th>Watts</th><th>%FTP</th><th>HR</th><th>Cad</th></tr></thead><tbody>';
     b.intervals.forEach(function(iv,i){
-      h+='<tr'+(iv.kind==='work'?' class="work"':'')+'><td>'+(i+1)+(iv.kind==='work'?' · work':iv.kind==='steady'?' · steady':'')+'</td><td>'+s2hms(iv.dur)+'</td><td>'+Math.round(iv.avgW)+
+      h+='<tr'+(iv.kind==='work'||iv.kind==='sprint'?' class="work"':'')+'><td>'+(i+1)+(iv.kind==='work'?' · work':iv.kind==='sprint'?' · sprint':iv.kind==='steady'?' · steady':'')+'</td><td>'+s2hms(iv.dur)+'</td><td>'+Math.round(iv.avgW)+
          '</td><td>'+(ftp?Math.round(100*iv.avgW/ftp)+'%':'—')+'</td><td>'+(iv.avgHr?Math.round(iv.avgHr):'—')+'</td><td>'+(iv.avgCad?Math.round(iv.avgCad):'—')+'</td></tr>';});
     h+='</tbody></table></div>';
   }
@@ -1174,7 +1178,7 @@ function openBike(){
   if(rides.length){
     h+='<div class="bk-h">Rides</div><div class="bk-scroll"><table class="bk-tbl"><thead><tr><th>Date</th><th>Session</th><th>Work W</th><th>%FTP</th><th>HR</th><th>W/HR</th></tr></thead><tbody>';
     rides.slice().reverse().forEach(function(w){var b=w.bike,k=b.work||{},f=b.ftp||ftp;
-      var mn=b.main||{}, wv=k.avgW||mn.avgW||b.avgW, hv=k.avgHr||mn.avgHr||b.avgHr;
+      var mn=b.main||{}, wv=k.avgW||mn.avgW||(b.sprint?null:b.avgW), hv=k.avgHr||mn.avgHr||(b.sprint?null:b.avgHr);
       h+='<tr class="go" data-id="'+w.id+'"><td>'+fmtDate(w.date)+'</td><td class="nm">'+esc(b.label||w.title)+'</td><td>'+(wv?Math.round(wv):'—')+
          '</td><td>'+(wv&&f?Math.round(100*wv/f)+'%':'—')+'</td><td>'+(hv?Math.round(hv):'—')+'</td><td>'+(wv&&hv?(wv/hv).toFixed(2):'—')+'</td></tr>';});
     h+='</tbody></table></div>';
