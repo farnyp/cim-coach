@@ -176,6 +176,12 @@ window.storage = {
   #app-root .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
   #app-root .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
   #app-root .row4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+  #app-root .row2>*,#app-root .row3>*,#app-root .row4>*{min-width:0;}
+  #app-root input[type=date]{min-width:0;max-width:100%;display:block;-webkit-appearance:none;appearance:none;}
+  #app-root .row2.k1{grid-template-columns:1fr;} #app-root .row3.k2{grid-template-columns:1fr 1fr;} #app-root .row3.k1{grid-template-columns:1fr;}
+  #app-root .coach{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--navy);border-radius:12px;
+    padding:9px 11px;margin:0 0 12px;font-size:.74rem;line-height:1.5;white-space:pre-line;}
+  #app-root .coach b{display:block;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
   #app-root .shift{display:flex;gap:8px;margin-top:6px;}
   #app-root .shift .btn{flex:1;text-align:center;}
   #app-root .sheet-foot{display:flex;gap:9px;margin-top:16px;position:sticky;z-index:3;
@@ -267,7 +273,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-10-02 progress</div></div>
+    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-10-02 session-sheet</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-prog">Progress</button>
       <button class="btn" id="btn-zones">Zones</button>
@@ -287,6 +293,7 @@ window.storage = {
   <div class="fld"><label>Title</label><input id="f-title"></div>
   <div id="f-bike"></div>
   <div id="f-gym"></div>
+  <div id="f-coach"></div>
   <div class="row2">
     <div class="fld"><label>Date</label><input id="f-date" type="date"></div>
     <div class="fld"><label>Type</label><select id="f-kind">
@@ -299,28 +306,28 @@ window.storage = {
     <button class="btn" id="f-next">Day later →</button>
   </div>
   <div class="row2" style="margin-top:11px">
-    <div class="fld"><label>Planned km</label><input id="f-km" type="number" step="0.1" inputmode="decimal"></div>
     <div class="fld"><label>Status</label><select id="f-status">
       <option value="planned">Planned</option><option value="done">Done</option>
       <option value="modified">Modified</option><option value="skipped">Skipped</option></select></div>
+    <div class="fld" data-k="run race bike swim other"><label>Planned km</label><input id="f-km" type="number" step="0.1" inputmode="decimal"></div>
   </div>
-  <div class="fld"><label>Zones</label><div class="zpick" id="f-zones"></div></div>
+  <div class="fld" data-k="run race"><label>Zones</label><div class="zpick" id="f-zones"></div></div>
   <div class="row2">
-    <div class="fld"><label>MP km</label><input id="f-mp" type="number" step="0.1" inputmode="decimal"></div>
-    <div class="fld"><label>Reps</label><input id="f-reps" placeholder="blank if none"></div>
+    <div class="fld" data-k="run race"><label>MP km</label><input id="f-mp" type="number" step="0.1" inputmode="decimal"></div>
+    <div class="fld" data-k="run race"><label>Reps</label><input id="f-reps" placeholder="blank if none"></div>
   </div>
-  <div class="fld"><label>Structure</label><textarea id="f-details" rows="4"></textarea></div>
+  <div class="fld"><label>Plan</label><textarea id="f-details" rows="4"></textarea></div>
   <div class="row3">
-    <div class="fld"><label>Actual km</label><input id="f-akm" type="number" step="0.1" inputmode="decimal"></div>
+    <div class="fld" data-k="run race bike swim other"><label>Actual km</label><input id="f-akm" type="number" step="0.1" inputmode="decimal"></div>
     <div class="fld"><label>RPE 1–10</label><input id="f-rpe" type="number" min="1" max="10" inputmode="numeric"></div>
     <div class="fld"><label>Niggle 0–10</label><input id="f-nig" type="number" min="0" max="10" inputmode="numeric"></div>
   </div>
   <div class="row3">
     <div class="fld"><label>Time</label><input id="f-time" placeholder="—"></div>
-    <div class="fld"><label>Avg HR</label><input id="f-ahr" type="number" inputmode="numeric"></div>
-    <div class="fld"><label>Max HR</label><input id="f-mhr" type="number" inputmode="numeric"></div>
+    <div class="fld" data-k="run race bike swim other"><label>Avg HR</label><input id="f-ahr" type="number" inputmode="numeric"></div>
+    <div class="fld" data-k="run race bike swim other"><label>Max HR</label><input id="f-mhr" type="number" inputmode="numeric"></div>
   </div>
-  <div class="fld"><label>Notes</label><textarea id="f-notes" rows="3"></textarea></div>
+  <div class="fld"><label>Your notes</label><textarea id="f-notes" rows="3" placeholder="How it felt, anything odd — this field is yours"></textarea></div>
   <div class="sheet-foot">
     <button class="btn danger" id="f-del">Delete</button>
     <button class="btn accent" id="f-save">Save session</button>
@@ -528,7 +535,7 @@ const PLAN=[
 {week:5,start:'2026-09-28',targetKm:6,phase:'Run/walk — 20 min cap until physio',focus:'Two run/walks, Tue and Sat, 20 min each, capped below the window where it has flared. Zwift FTP Builder begins: Mon, Wed, Thu, Sat, Sun. Physio next week.',items:[
  {d:0,kind:'run',title:'No run — 48 h spacing',km:0,z:[],details:'bike, swim or gym\nno consecutive running days until distance building starts',drop:1},gA(),
  {d:1,kind:'run',title:'Run/walk — 20 min cap',km:3,z:[1,2],details:'5 min walk\n5 × (3 min run / 1 min walk) @ 6:30–7:00\nwalk home\nstop on anything above 1/10\nmorning reading tomorrow'},gB(),
- {d:3,kind:'run',title:'removed',km:0,z:[],details:'',drop:1},gC('\nno loaded lunges or sled this week — resume after the physio'),
+ {d:3,kind:'run',title:'removed',km:0,z:[],details:'',drop:1},gC(),
  {d:5,kind:'run',title:'Run/walk — 20 min cap',km:3,z:[1,2],details:'5 min walk\n5 × (3 min run / 1 min walk) @ 6:30–7:00\nwalk home\nstop on anything above 1/10\nmorning reading tomorrow'},
  {d:0,kind:'bike',title:'Bike — FTP ramp test',km:0,z:[],details:'Zwift ramp test on the Kickr — spindown calibration first\nFTP = 75% of best 1-min power\nprovisional until Monday week 6 sweet spot confirms it'},
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km, PM, after the test\nall easy — drills only, form over speed'},
@@ -798,7 +805,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-10-02 progress';
+const BUILD='2026-10-02 session-sheet';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -816,7 +823,7 @@ const BUILD='2026-10-02 progress';
       }).catch(function(){});
   }catch(e){}
 })();
-const PLANVER=12;   /* bump whenever prescriptions change */
+const PLANVER=13;   /* bump whenever prescriptions change */
 function buildDefaultWorkouts(){
   var out=[];
   PLAN.forEach(function(w){ w.items.forEach(function(it,ix){
@@ -1064,6 +1071,8 @@ function openWorkout(id){
   editZones=(w.zones||[]).slice(); renderZonePicker();
   $('f-bike').innerHTML=w.bike?bikePanel(w):'';
   $('f-gym').innerHTML=w.hevy?gymPanel(w):'';
+  $('f-coach').innerHTML=w.coach?'<div class="coach"><b>Coach’s read</b>'+esc(w.coach)+'</div>':'';
+  kindVis(w.kind);
   openSheet('sheet-w');
 }
 $('fab').onclick=function(){
@@ -1403,6 +1412,17 @@ function mergeDupes(st){
   return n;
 }
 
+/* session sheet shows only the fields that mean something for that kind of session */
+function kindVis(kind){
+  Array.prototype.forEach.call(document.querySelectorAll('#sheet-w [data-k]'),function(f){
+    f.style.display=f.getAttribute('data-k').split(' ').indexOf(kind)===-1?'none':'';});
+  Array.prototype.forEach.call(document.querySelectorAll('#sheet-w .row2,#sheet-w .row3'),function(r){
+    var vis=Array.prototype.filter.call(r.children,function(c){return c.style.display!=='none';}).length;
+    r.style.display=vis?'':'none'; r.classList.remove('k1','k2');
+    if(r.classList.contains('row2')&&vis===1)r.classList.add('k1');
+    if(r.classList.contains('row3')&&vis<3)r.classList.add(vis===2?'k2':'k1');});
+}
+$('f-kind').addEventListener('change',function(){kindVis($('f-kind').value);});
 /* zones sheet */
 function openZones(){renderZoneRows();openSheet('sheet-z');}
 function renderZoneRows(){
@@ -1822,6 +1842,18 @@ function applyPayload(p,srcLabel){
       n++;
     }
   }
+  /* Claude's commentary belongs in coach, never in the athlete's notes. Only text Claude
+     wrote is moved: a note is cleared only if it still matches a version Claude sent. */
+  if(Array.isArray(p.notesToCoach))S.workouts.forEach(function(w){
+    if(!w.notes)return;
+    var ops=p.notesToCoach.filter(function(o){return o.stravaId?w.stravaId===o.stravaId:(w.date===o.date&&w.kind===(o.kind||w.kind));});
+    if(!ops.length)return;
+    var rest=w.notes, coach=[], hit=false;
+    ops.forEach(function(o){(o.texts||[]).forEach(function(t){if(t&&rest.indexOf(t)!==-1){rest=rest.split(t).join('');hit=true;}});
+      if(o.coach&&coach.indexOf(o.coach)===-1)coach.push(o.coach);});
+    if(!hit)return;
+    w.notes=rest.replace(/^\s+|\s+$/g,'').replace(/\n{2,}/g,'\n');   /* only Claude's exact text is removed */
+    if(coach.length)w.coach=coach.join('\n\n'); n++;});
   if(Array.isArray(p.benchmarks)){S.benchmarks=S.benchmarks||[];
     p.benchmarks.forEach(function(b){if(!b||!b.id)return;var i=-1;
       S.benchmarks.forEach(function(x,j){if(x.id===b.id)i=j;});
@@ -1884,6 +1916,7 @@ function applyPayload(p,srcLabel){
   (p.activities||[]).forEach(function(a){
     var ex=a.stravaId&&S.workouts.filter(function(w){return w.stravaId===a.stravaId;})[0];
     if(ex){var ch=false;if(a.bike){ex.bike=a.bike;ch=true;}if(a.hevy&&ex.hevy!==a.hevy){ex.hevy=a.hevy;ch=true;}
+      if(a.coach!=null&&ex.coach!==a.coach){ex.coach=a.coach;ch=true;}
       [['km','actualKm'],['movingTime','movingTime'],['avgHr','avgHr'],['maxHr','maxHr'],['timeInZone','timeInZone']].forEach(function(f){
         if(a[f[0]]!=null&&(ex[f[1]]==null||ex[f[1]]==='')){ex[f[1]]=a[f[0]];ch=true;}});
       if(ch)n++;else dup++;return;}
@@ -1904,6 +1937,7 @@ function applyPayload(p,srcLabel){
     if(t){
       if(a.bike)t.bike=a.bike;
       if(a.hevy)t.hevy=a.hevy;
+      if(a.coach)t.coach=a.coach;
       if(a.km!=null)t.actualKm=a.km;
       if(a.movingTime)t.movingTime=a.movingTime;
       if(a.avgHr)t.avgHr=a.avgHr; if(a.maxHr)t.maxHr=a.maxHr;
@@ -1917,7 +1951,7 @@ function applyPayload(p,srcLabel){
         plannedKm:0,mpKm:a.mpKm||0,zones:[],reps:'',
         details:a.details||('Imported from Strava'+(srcLabel?' · '+srcLabel:'')+'.'),
         status:'done',actualKm:a.km,movingTime:a.movingTime,avgHr:a.avgHr,maxHr:a.maxHr,
-        timeInZone:a.timeInZone,rpe:a.rpe,notes:a.notes,stravaId:a.stravaId,bike:a.bike,hevy:a.hevy});
+        timeInZone:a.timeInZone,rpe:a.rpe,notes:a.notes,stravaId:a.stravaId,bike:a.bike,hevy:a.hevy,coach:a.coach});
     }
     n++;
   });
