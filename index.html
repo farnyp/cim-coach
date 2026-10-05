@@ -273,7 +273,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-10-03 km-plan</div></div>
+    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-10-04 abs</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-prog">Progress</button>
       <button class="btn" id="btn-zones">Zones</button>
@@ -496,9 +496,9 @@ const ZC={1:'var(--z1)',2:'var(--z2)',3:'var(--z3)',4:'var(--z5)',5:'var(--z6)',
 const ZN={1:'Z1',2:'Z2',3:'Z3',4:'Z4',5:'Z5',MP:'MP'};
 const ZORDER=[1,2,3,4,5,'MP'];
 
-const GYM_A='incline DB press 3 × 8–12\nseated cable row 3 × 10\npull-ups 3 × near-failure\nlateral raise 2 × 15–20\nbiceps curl 2 × 8–10\nhollow body hold 3 × 20–30s\nPallof press 2 × 10/side\nsuitcase or farmer carry 3 × 30–40 m\nCopenhagen plank 2 × 20–30s/side\nskill: toe-to-bar / front lever / dragon flag\nno leg loading — this session survives the whole block';
-const GYM_B='belt squat 3 × 6–10\nBulgarian split squat 3 × 8–10/leg\nsingle-leg RDL 2 × 8–10/leg\nsplit-squat iso hold 2 × 20–30s/leg\nsled push/pull 2–3 rounds\nsingle-leg calf + soleus raise 2 × 12–15\nsingle-leg calf iso hold 1 × 30–45s\nDB shoulder press 2 × 10–12\nface pull 2 × 12–15\nab wheel or weighted plank\n~6 h after track · no sets to failure';
-const GYM_C='pull-ups 3 × 6–10\npush-ups 3 × 12–15\nsandbag lunges 2 × 10/leg\nwall balls 2 × 12–15\nburpee broad jumps cap 2 × 5 — first thing cut on any niggle\nsingle-leg step-down 2 × 10–12/leg\nreverse nordic or sissy squat 2 × 8–10\nsingle-leg ball curl 2 × 8–10/leg\nback extension or bird dog 2 × 10–12\nside plank 2 × 30–45s/side\ntib raise 2 × 15\ncheck the run first — trim HYROX rows on quality-run weeks';
+const GYM_A='incline DB press 3 × 8–12\nseated cable row 3 × 10\npull-ups 3 × near-failure\nlateral raise 2 × 15–20\nbiceps curl 2 × 8–10\ncable crunch 4 × 10–15 — real load, full stretch at the top, last two reps hard\nPallof press 2 × 10/side\nsuitcase or farmer carry 3 × 30–40 m\nCopenhagen plank 2 × 20–30s/side\nskill: toe-to-bar / front lever / dragon flag\nno leg loading — this session survives the whole block\nabs last, after pressing and pulling';
+const GYM_B='belt squat 3 × 6–10\nBulgarian split squat 3 × 8–10/leg\nsingle-leg RDL 2 × 8–10/leg\nsplit-squat iso hold 2 × 20–30s/leg\nsled push/pull 2–3 rounds\nsingle-leg calf + soleus raise 2 × 12–15\nsingle-leg calf iso hold 1 × 30–45s\nDB shoulder press 2 × 10–12\nface pull 2 × 12–15\nhanging leg raise 3 × 8–12 — curl the pelvis up, lower slowly\nabs last, never before squats\n~6 h after track · no sets to failure';
+const GYM_C='pull-ups 3 × 6–10\npush-ups 3 × 12–15\nsandbag lunges 2 × 10/leg\nwall balls 2 × 12–15\nburpee broad jumps cap 2 × 5 — first thing cut on any niggle\nsingle-leg step-down 2 × 10–12/leg\nreverse nordic or sissy squat 2 × 8–10\nsingle-leg ball curl 2 × 8–10/leg\nback extension or bird dog 2 × 10–12\nab wheel rollout 3 × 8–12 — add range before anything else\ncable woodchop or DB side bend 3 × 10–12/side\nside plank 2 × 30–45s/side\ntib raise 2 × 15\ncheck the run first — trim HYROX rows on quality-run weeks';
 const gA=function(x){return{d:6,kind:'gym',title:'Gym — Upper + core',km:0,details:GYM_A+(x||'')};};
 const gB=function(x){return{d:1,kind:'gym',title:'Gym — Lower + single-leg',km:0,details:GYM_B+(x||'')};};
 const gC=function(x){return{d:3,kind:'gym',title:'Gym — HYROX + stability',km:0,details:GYM_C+(x||'')};};
@@ -806,7 +806,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-10-03 km-plan';
+const BUILD='2026-10-04 abs';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -824,7 +824,7 @@ const BUILD='2026-10-03 km-plan';
       }).catch(function(){});
   }catch(e){}
 })();
-const PLANVER=16;   /* bump whenever prescriptions change */
+const PLANVER=17;   /* bump whenever prescriptions change */
 function buildDefaultWorkouts(){
   var out=[];
   PLAN.forEach(function(w){ w.items.forEach(function(it,ix){
@@ -2141,6 +2141,7 @@ function syncPrescriptions(st){
       }
       used[t.id]=1;
       if(t.custom)return;                     // never overwrite a hand-edited session
+      if(t.status!=='planned')return;         // a completed session keeps the plan it was done against
       t.pid=pid;
       if(t.details!==it.details){t.details=it.details;updated++;}
       t.title=it.title;
