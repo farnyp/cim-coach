@@ -273,7 +273,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-10-04 abs</div></div>
+    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-10-04 continuous-early</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-prog">Progress</button>
       <button class="btn" id="btn-zones">Zones</button>
@@ -545,14 +545,14 @@ const PLAN=[
  {d:3,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nno hard ride the day before a run'},
  {d:5,kind:'bike',title:'Zwift FTP Builder',km:0,z:[],details:'workout per the Zwift FTP Builder plan\nERG on the Kickr — it syncs to Strava and the ride analysis fills in automatically\nno hard ride the day before a run\nafter the run/walk — keep it the easy one'}]},
 
-{week:6,start:'2026-10-05',targetKm:12,phase:'Return to run — last run/walk week',focus:'Last week of run/walk: steps 2, 3 and 4 Tue / Thu / Sat. Physio this week — their plan beats this one.',items:[
+{week:6,start:'2026-10-05',targetKm:11,phase:'Return to run — continuous begins',focus:'Run/walk Tuesday, then the first two continuous runs: 3 km Thursday, 4 km Saturday. Physio this week — their plan beats this one.',items:[
  {d:0,kind:'run',title:'removed',km:0,z:[],details:'',drop:1},
  gA(),
  {d:1,kind:'run',title:'Run/walk — 2 of 5 · 25 min',km:3.6,z:[1,2],details:'5 min walk first\n5 × (4 min run / 1 min walk)\nrun bits 6:30–7:00, HR under 150, flat and paved\nmove up only if the last run stayed at or below 1/10 and the next morning read 0 — otherwise repeat this step; anything 2/10+ drops back one step'},
  gB(),
- {d:3,kind:'run',title:'Run/walk — 3 of 5 · 28 min',km:4.1,z:[1,2],details:'5 min walk first\n4 × (6 min run / 1 min walk)\nrun bits 6:30–7:00, HR under 150, flat and paved\nmove up only if the last run stayed at or below 1/10 and the next morning read 0 — otherwise repeat this step; anything 2/10+ drops back one step'},
+ {d:3,kind:'run',title:'Easy run — 3 km continuous',km:3,z:[2],details:'first continuous run of the return'+'\n6:30–7:00, HR under 155, flat and paved\nstop on anything above 1/10\nnext morning must read 0 — otherwise Saturday goes back to run/walk 3 × (9/1)'},
  gC(),
- {d:5,kind:'run',title:'Run/walk — 4 of 5 · 30 min',km:4.4,z:[1,2],details:'5 min walk first\n3 × (9 min run / 1 min walk)\nrun bits 6:30–7:00, HR under 150, flat and paved\nmove up only if the last run stayed at or below 1/10 and the next morning read 0 — otherwise repeat this step; anything 2/10+ drops back one step'},
+ {d:5,kind:'run',title:'Easy run — 4 km continuous',km:4,z:[2],details:'continuous, 6:30–7:00, HR under 155, flat and paved\nonly if Thursday stayed at or below 1/10 and Friday morning read 0\notherwise: run/walk 3 × (9 min run / 1 min walk)'},
  {d:4,kind:'run',title:'removed',km:0,z:[],details:'',drop:1},
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
@@ -806,7 +806,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-10-04 abs';
+const BUILD='2026-10-04 continuous-early';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -824,7 +824,7 @@ const BUILD='2026-10-04 abs';
       }).catch(function(){});
   }catch(e){}
 })();
-const PLANVER=17;   /* bump whenever prescriptions change */
+const PLANVER=18;   /* bump whenever prescriptions change */
 function buildDefaultWorkouts(){
   var out=[];
   PLAN.forEach(function(w){ w.items.forEach(function(it,ix){
