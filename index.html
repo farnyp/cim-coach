@@ -273,7 +273,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-10-05 to-50</div></div>
+    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-10-07 repo-channel</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-prog">Progress</button>
       <button class="btn" id="btn-zones">Zones</button>
@@ -437,7 +437,7 @@ window.storage = {
 
 <div class="sheet" id="sheet-s" role="dialog" aria-modal="true" aria-label="Sync">
   <div class="sheet-h"><h3>Sync</h3><button class="btn ghost" data-close>Close</button></div>
-  <div class="hint">Paste the gist ID once. Refresh pulls updates from it.</div>
+  <div class="hint">Refresh pulls Claude's updates from updates.json in the app's own repo — nothing to set up. The gist ID below is only for the cloud backup and as a fallback route.</div>
   <div class="fld"><label>Gist ID</label>
     <input id="s-url" placeholder="paste gist ID" autocomplete="off" spellcheck="false"></div>
   <div class="fld"><label>Cloud backup token (gist scope only)</label>
@@ -806,7 +806,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-10-05 to-50';
+const BUILD='2026-10-07 repo-channel';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -1989,10 +1989,14 @@ function gistId(v){
   var m=v.match(/([0-9a-f]{20,40})/i);
   return m?m[1]:'';
 }
-/* Transports, best first. api.github.com is the only one confirmed to send
-   access-control-allow-origin:* , so it leads. */
+/* Transports, best first. updates.json sits in the repo next to this page, so it is
+   same-origin: no gist ID, no CORS, no token. Claude writes it with a git push. The
+   gist routes stay as fallbacks (the old channel; Claude sessions can no longer write it).
+   Dedupe is by updateId, so overlapping queues are harmless. */
 function transports(id){
-  return [
+  var repo={name:'Repo',url:'updates.json',pick:function(txt){return txt;}};
+  if(!id)return [repo];
+  return [repo,
     {name:'Raw gist',url:'https://gist.githubusercontent.com/raw/'+id+'/cim-state.json',
      pick:function(txt){return txt;}},
     {name:'GitHub API',url:'https://api.github.com/gists/'+id,
@@ -2019,8 +2023,7 @@ async function fetchUpdate(id){
   throw new Error(errs.join(' · '));
 }
 async function refreshFromGist(loud){
-  var id=gistId(S.sync&&S.sync.gistUrl);
-  if(!id){ if(loud){openSyncSheet();toast('Add your gist ID first');} return; }
+  var id=gistId(S.sync&&S.sync.gistUrl);   /* optional now: the repo route needs none */
   if(loud)toast('Checking for updates…');
   try{
     var got=await fetchUpdate(id);
@@ -2035,14 +2038,13 @@ async function refreshFromGist(loud){
       var st=$('s-status'); st.style.display='block';
       st.innerHTML='<b>Every route failed.</b><br><span style="font-size:.68rem">'+
         esc(String(e.message||e))+'</span><br>Use the paste box below in the meantime.';
-      toast('Could not reach the gist');
+      toast('Could not reach the update file');
     }
   }
 }
 $('s-test').onclick=async function(){
   var id=gistId($('s-url').value);
   var st=$('s-status'); st.style.display='block';
-  if(!id){st.innerHTML='<b>No gist ID found.</b> Paste the ID or a full gist link.';return;}
   st.innerHTML='Testing routes…';
   var ts=transports(id), rows=[];
   for(var i=0;i<ts.length;i++){
@@ -2207,7 +2209,7 @@ function migrate(st){
   }
   if(source.indexOf('migrat')===0||source.indexOf('recover')===0)
     toast(source.charAt(0).toUpperCase()+source.slice(1));
-  if(S.sync&&S.sync.gistUrl) refreshFromGist(false);
+  S.sync=S.sync||{}; refreshFromGist(false);
   if(countData(S)===0&&S.sync&&S.sync.gistUrl&&TOKEN)
     toast('No local data — try Sync → Restore from cloud');
 })();
