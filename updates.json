@@ -1744,6 +1744,29 @@
      "rule": "Easy, HR at or under 155; walk 1 min if it drifts over. Fri morning reading decides Sat 4 km: 0 = go, anything above 0 = Sat reverts to 3 × (9/1)."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-10-08T03:50:00Z-gymC-fri",
+   "prescriptions": [
+    {
+     "match": {
+      "pid": "6-3-5"
+     },
+     "date": "2026-10-09",
+     "details": "moved from Thursday — day before Saturday's 4 km\npull-ups 3 × 6–10\npush-ups 3 × 12–15\nsandbag lunges 2 × 10/leg — moderate load, not to failure\nsingle-leg step-down 2 × 10–12/leg\nreverse nordic or sissy squat 2 × 8–10\nsingle-leg ball curl 2 × 8–10/leg\nback extension or bird dog 2 × 10–12\nab wheel rollout 3 × 8–12 — add range before anything else\ncable woodchop or DB side bend 3 × 10–12/side\nside plank 2 × 30–45s/side\ntib raise 2 × 15\nthis week only: no burpee broad jumps, no wall balls — no landings the day before a run"
+    }
+   ],
+   "decisions": [
+    {
+     "id": "dec-2026-10-07-gymC-to-fri",
+     "date": "2026-10-07",
+     "change": "Week 6 Gym C (HYROX + stability) moved Thu 8 Oct → Fri 9 Oct. Burpee broad jumps and wall balls dropped this week; lunges moderate.",
+     "evidence": "Francis can't fit run + Zwift + gym on Thursday. Friday is the day before Saturday's 4 km continuous run, so the landing work goes; the strength work stays. Gyms remain non-consecutive (Tue, Fri, Sun).",
+     "rule": "Friday's foot reading is taken in the morning, before the gym, and still decides Saturday."
+    }
+   ]
   }
  ]
 }
