@@ -1730,6 +1730,20 @@
      "flags": "Second set ~9% softer than the first; the last burst shows it wasn't fatigue so much as pacing. Nothing here is evidence about threshold. Easy enough to sit before Thursday's first continuous run."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-10-08T03:45:00Z-thu-gate",
+   "decisions": [
+    {
+     "id": "dec-2026-10-07-thu-3k-go",
+     "date": "2026-10-07",
+     "change": "Thu 8 Oct first continuous run (3 km) confirmed: go.",
+     "evidence": "Wed 7 Oct morning foot 0/10, the day after the longest run/walk of the return (6 × 4/1, 24 min running). Zwift Strength ride Wed evening, no foot issue reported.",
+     "rule": "Easy, HR at or under 155; walk 1 min if it drifts over. Fri morning reading decides Sat 4 km: 0 = go, anything above 0 = Sat reverts to 3 × (9/1)."
+    }
+   ]
   }
  ]
 }
