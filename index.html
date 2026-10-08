@@ -105,6 +105,7 @@ window.storage = {
     padding:12px 13px;margin-bottom:14px;}
   #app-root .note textarea{width:100%;border:none;background:transparent;resize:vertical;
     min-height:42px;font-family:inherit;font-size:.8rem;line-height:1.5;color:var(--ink);margin-top:6px;}
+  #app-root textarea.grow{overflow:hidden;resize:none;}
 
   #app-root .cal{display:grid;gap:10px;grid-template-columns:1fr;}
   @media(min-width:1000px){#app-root .cal{grid-template-columns:repeat(7,1fr);align-items:start;}}
@@ -273,7 +274,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-10-07 repo-channel</div></div>
+    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-10-07 textgrow</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-prog">Progress</button>
       <button class="btn" id="btn-zones">Zones</button>
@@ -316,7 +317,7 @@ window.storage = {
     <div class="fld" data-k="run race"><label>MP km</label><input id="f-mp" type="number" step="0.1" inputmode="decimal"></div>
     <div class="fld" data-k="run race"><label>Reps</label><input id="f-reps" placeholder="blank if none"></div>
   </div>
-  <div class="fld"><label>Plan</label><textarea id="f-details" rows="4"></textarea></div>
+  <div class="fld"><label>Plan</label><textarea id="f-details" class="grow" rows="4"></textarea></div>
   <div class="row3">
     <div class="fld" data-k="run race bike swim other"><label>Actual km</label><input id="f-akm" type="number" step="0.1" inputmode="decimal"></div>
     <div class="fld"><label>RPE 1–10</label><input id="f-rpe" type="number" min="1" max="10" inputmode="numeric"></div>
@@ -327,7 +328,7 @@ window.storage = {
     <div class="fld" data-k="run race bike swim other"><label>Avg HR</label><input id="f-ahr" type="number" inputmode="numeric"></div>
     <div class="fld" data-k="run race bike swim other"><label>Max HR</label><input id="f-mhr" type="number" inputmode="numeric"></div>
   </div>
-  <div class="fld"><label>Your notes</label><textarea id="f-notes" rows="3" placeholder="How it felt, anything odd — this field is yours"></textarea></div>
+  <div class="fld"><label>Your notes</label><textarea id="f-notes" class="grow" rows="3" placeholder="How it felt, anything odd — this field is yours"></textarea></div>
   <div class="sheet-foot">
     <button class="btn danger" id="f-del">Delete</button>
     <button class="btn accent" id="f-save">Save session</button>
@@ -806,7 +807,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-10-07 repo-channel';
+const BUILD='2026-10-07 textgrow';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -924,7 +925,7 @@ function render(){
      '<div class="metric done"><div class="k">Completed</div><div class="v">'+r1(mt.done)+' <small>km</small></div></div>'+
      '<div class="metric mp"><div class="k">MP logged</div><div class="v">'+r1(mt.mp)+' <small>km</small></div></div></div>';
 
-  h+='<div class="note"><div class="k">Week note</div><textarea id="wnote" rows="2" '+
+  h+='<div class="note"><div class="k">Week note</div><textarea id="wnote" class="grow" rows="2" '+
      'placeholder="Notes">'+esc(S.weekNotes[m.week]||'')+'</textarea></div>';
 
   h+='<div class="cal">';
@@ -946,6 +947,7 @@ function render(){
   $('next').onclick=function(){if(wk<PLAN.length){wk++;render();}};
   $('mp-edit').onclick=function(){openZones();};
   $('wnote').oninput=function(){S.weekNotes[m.week]=this.value;save();};
+  grow($('wnote'));
   wireCards();
 }
 
@@ -1031,7 +1033,15 @@ function wireCards(){
 }
 
 /* ---------- sheets ---------- */
-function openSheet(id){$('scrim').classList.add('open');$(id).classList.add('open');}
+function openSheet(id){$('scrim').classList.add('open');$(id).classList.add('open');
+  requestAnimationFrame(function(){growAll($(id));});}
+/* Text boxes size to their content. A fixed rows= box clips long text and iOS shows it
+   scrolled part-way (week note, 7 Oct). Height is only measurable while visible, so
+   grow on render, on sheet open, on input, and once web fonts have loaded. */
+function grow(el){if(!el||!el.offsetHeight)return;el.style.height='auto';el.style.height=(el.scrollHeight+2)+'px';}
+function growAll(root){[].forEach.call((root||document).querySelectorAll('textarea.grow'),grow);}
+document.addEventListener('input',function(e){if(e.target&&e.target.classList&&e.target.classList.contains('grow'))grow(e.target);});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){growAll();});
 function closeSheets(){$('scrim').classList.remove('open');
   ['sheet-w','sheet-z','sheet-l','sheet-s','sheet-r','sheet-b'].forEach(function(s){$(s).classList.remove('open');});
   editingId=null;}
