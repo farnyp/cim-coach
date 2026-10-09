@@ -1767,6 +1767,34 @@
      "rule": "Friday's foot reading is taken in the morning, before the gym, and still decides Saturday."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-10-09T00:30:00Z-thu8-run",
+   "activities": [
+    {
+     "stravaId": "20505930162",
+     "date": "2026-10-08",
+     "kind": "run",
+     "title": "Easy run — first continuous",
+     "km": 4.01,
+     "movingTime": 1565,
+     "maxHr": 156,
+     "status": "done",
+     "coach": "First continuous run of the return: 4.01 km in 26:05, no walk breaks. Splits roughly 6:40 · 6:15 · 6:35 · 6:30. HR settled 140–150, peak 156 in the last few hundred metres. Cadence 164–174 spm throughout. Prescribed 3 km; ran 4."
+    }
+   ],
+   "analyses": [
+    {
+     "id": "an-2026-10-08-first-continuous",
+     "date": "2026-10-08",
+     "source": "Strava",
+     "title": "First continuous run: 4.0 km at 6:30/km, HR 140–150",
+     "summary": "4.01 km continuous in 26:05 (6:30/km). HR 140–150 for most of it, peak 156 near the end. Cadence steady 164–174 spm, no fade. The one dip in speed around 1.5 km kept cadence — a slowdown, not a walk.",
+     "flags": "Went 1 km over the 3 km prescription, so Saturday's 4 km is no longer a step up — it stays 4 km, not 5. Friday morning reading still decides Saturday."
+    }
+   ]
   }
  ]
 }
