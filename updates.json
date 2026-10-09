@@ -1795,6 +1795,50 @@
      "flags": "Went 1 km over the 3 km prescription, so Saturday's 4 km is no longer a step up — it stays 4 km, not 5. Friday morning reading still decides Saturday."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-10-09T15:40:00Z-fri-1of10",
+   "activities": [
+    {
+     "stravaId": "20510329635",
+     "date": "2026-10-08",
+     "kind": "bike",
+     "title": "Zwift — FTP Builder Foundation",
+     "km": 15.16,
+     "movingTime": 2216,
+     "avgHr": 131,
+     "maxHr": 143,
+     "status": "done",
+     "coach": "Foundation at ~80% intensity on cooked legs: work blocks ~124 W (59% FTP) at HR 128–138, max 143, cadence ~89. 37 min. Exactly the easy spin it was meant to be."
+    }
+   ],
+   "prescriptions": [
+    {
+     "match": {
+      "pid": "6-3-5"
+     },
+     "details": "moved from Thursday · foot read 1/10 Friday morning — foot-loaded single-leg work out today\npull-ups 3 × 6–10\npush-ups 3 × 12–15\nreverse nordic or sissy squat 2 × 8–10\nsingle-leg ball curl 2 × 8–10/leg\nback extension or bird dog 2 × 10–12\nab wheel rollout 3 × 8–12 — add range before anything else\ncable woodchop or DB side bend 3 × 10–12/side\nside plank 2 × 30–45s/side\nout today: sandbag lunges, step-downs, burpee broad jumps, wall balls, tib raises — anything standing on one foot under load"
+    },
+    {
+     "match": {
+      "pid": "6-5-6"
+     },
+     "title": "Run/walk — 3 × (9 min / 1 min)",
+     "plannedKm": 4.3,
+     "details": "Friday read 1/10, so this is the fallback: 5 min walk, then 3 × (9 min run / 1 min walk)\n6:30–7:00, HR under 155, flat and paved\nstop on anything above 1/10\nSunday morning decides next week: 0 = week 7 starts at 5 km; above 0 = next week opens with run/walk"
+    }
+   ],
+   "decisions": [
+    {
+     "id": "dec-2026-10-09-sat-runwalk",
+     "date": "2026-10-09",
+     "change": "Sat 10 Oct reverts from 4 km continuous to 3 × (9 min run / 1 min walk). Fri gym drops lunges and step-downs.",
+     "evidence": "Friday morning foot 1/10, the morning after the first continuous run (4.01 km, 1 km over the 3 km prescribed). Previous flares read 2/10 and 4/10; this is below both, but the pre-agreed rule was 0 to progress.",
+     "rule": "Sunday morning reading decides week 7: 0 = 5 km runs as planned; above 0 = week 7 opens with run/walk. If it climbs to 2+ or he limps at any point, stop running and tell Claude."
+    }
+   ]
   }
  ]
 }
