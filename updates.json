@@ -1839,6 +1839,33 @@
      "rule": "Sunday morning reading decides week 7: 0 = 5 km runs as planned; above 0 = week 7 opens with run/walk. If it climbs to 2+ or he limps at any point, stop running and tell Claude."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-10-16T03:50:00Z-gym-9-14",
+   "activities": [
+    {
+     "stravaId": "20588038967",
+     "date": "2026-10-09",
+     "kind": "gym",
+     "title": "Upper (instead of HYROX)",
+     "movingTime": 3601,
+     "status": "modified",
+     "hevy": "Pull Up (Weighted)\nSet 1: 5 lbs x 8 \nSet 2: 5 lbs x 8 \nSet 3: 5 lbs x 8 \n\nIncline Bench Press (Barbell)\nSet 1: 135 lbs x 8 \nSet 2: 155 lbs x 8 \nSet 3: 185 lbs x 3 \n\nT Bar Row\nSet 1: 95 lbs x 10 \nSet 2: 145 lbs x 8 \nSet 3: 145 lbs x 8 \nSet 4: 145 lbs x 8 \n\nSeated Shoulder Press (Machine)\nSet 1: 90 lbs x 10 \nSet 2: 140 lbs x 6 \nSet 3: 140 lbs x 8 \nSet 4: 140 lbs x 8 \n\nStraight Arm Lat Pulldown (Cable)\nSet 1: 90 lbs x 8 \nSet 2: 90 lbs x 8 \nSet 3: 90 lbs x 8 \n\nLat Pulldown (Cable)\nSet 1: 100 lbs x 10 \nSet 2: 100 lbs x 10 \nSet 3: 100 lbs x 12 \n\nTriceps Rope Pushdown\nSet 1: 80 lbs x 8 \nSet 2: 80 lbs x 6 \nSet 3: 80 lbs x 6 \n\nPreacher Curl (Dumbbell)\nSet 1: 55 lbs x 6 \n",
+     "coach": "Planned HYROX + stability (trimmed for the 1/10 foot); done as an upper session instead. No foot-loaded work, so it fit the day."
+    },
+    {
+     "stravaId": "20588518202",
+     "date": "2026-10-14",
+     "kind": "gym",
+     "title": "Lower",
+     "movingTime": 3003,
+     "status": "done",
+     "hevy": "Single Leg Standing Calf Raise\nSet 1: 30 reps \nSet 2: 30 reps \n\nTib Raises (body weight)\nSet 1: 20 reps \nSet 2: 20 reps \n\nBelt Squat (Machine)\nSet 1: 90 lbs x 8 \nSet 2: 180 lbs x 8 \nSet 3: 270 lbs x 8 \nSet 4: 270 lbs x 8 \n\nSingle Leg Romanian Deadlift (Dumbbell)\nSet 1: 61 lbs x 16 \nSet 2: 61 lbs x 16 \n\nBulgarian Split Squat (Dumbbell)\nSet 1: 122 lbs x 16 \nSet 2: 122 lbs x 16 \n\nAb Wheel\nSet 1: 10 reps \nSet 2: 10 reps \n\nCable Crunch\nSet 1: 100 lbs x 10 \nSet 2: 100 lbs x 10 \n",
+     "coach": "Belt squat 270 × 8 × 2 (up from 270 × 6 on 29 Sep), SL RDL 61 lb (from 52), BSS 122 lb total (from 104). Load up across all three single-leg/squat lifts."
+    }
+   ]
   }
  ]
 }
