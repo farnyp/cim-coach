@@ -1920,6 +1920,66 @@
      "rule": "Return when first-step pain has read 0 for 3 straight mornings and there's no pinpoint bony tenderness or pain hopping. Bike, swim and upper/machine gym continue if they don't provoke it. See physio/doctor promptly for pinpoint bone tenderness, swelling, night/rest pain, a limp, or pain that builds with activity instead of easing."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-10-21T13:35:00Z-foot-offload",
+   "prescriptions": [
+    {
+     "match": {
+      "pid": "8-3-8"
+     },
+     "title": "Gym — HYROX (foot off-load)",
+     "details": "FOOT OFF-LOAD (2 weeks, from 21 Oct) — HYROX work that doesn't load the feet\npull-ups 3 × 6–10\npush-ups 3 × 12–15\nSkiErg 4 × 500 m (feet flat, no push-off)\nRowErg 3 × 1 km easy-moderate — stop if the strap or foot bar presses the sore spot\nseated cable woodchop 3 × 10–12/side\nside plank 2 × 30–45 s/side\nhollow hold 2 × 30 s\nout: wall balls, sandbag lunges, burpee broad jumps, step-downs, sled, farmer carry"
+    },
+    {
+     "match": {
+      "pid": "9-1-3"
+     },
+     "title": "Gym — Lower (foot off-load)",
+     "details": "FOOT OFF-LOAD (2 weeks, from 21 Oct) — no squats of any kind, nothing standing on one foot\nleg extension 3 × 10–12\nseated or lying leg curl 3 × 10–12\nhip thrust or glute bridge 3 × 10\nadductor + abductor machine 2 × 12–15 each\nweighted back extension 2 × 10\nseated calf raise 2 × 15 (stop if the foot talks)\nab wheel 3 × 8–12 · cable crunch 3 × 10–15\nstop anything that touches the outside of the left foot"
+    },
+    {
+     "match": {
+      "pid": "9-3-6"
+     },
+     "title": "Gym — HYROX (foot off-load)",
+     "details": "FOOT OFF-LOAD (2 weeks, from 21 Oct) — HYROX work that doesn't load the feet\npull-ups 3 × 6–10\npush-ups 3 × 12–15\nSkiErg 4 × 500 m (feet flat, no push-off)\nRowErg 3 × 1 km easy-moderate — stop if the strap or foot bar presses the sore spot\nseated cable woodchop 3 × 10–12/side\nside plank 2 × 30–45 s/side\nhollow hold 2 × 30 s\nout: wall balls, sandbag lunges, burpee broad jumps, step-downs, sled, farmer carry"
+    },
+    {
+     "match": {
+      "pid": "8-1-2"
+     },
+     "status": "skipped",
+     "details": "Paused: left foot, first-step pain 2–3/10 (21 Oct). No running until first steps read 0 for 3 straight mornings and the physio has checked it."
+    },
+    {
+     "match": {
+      "pid": "8-3-4"
+     },
+     "title": "Run — paused (foot)",
+     "plannedKm": 0,
+     "details": "Paused: left foot, first-step pain 2–3/10 (21 Oct). No running until first steps read 0 for 3 straight mornings and the physio has checked it."
+    },
+    {
+     "match": {
+      "pid": "8-5-7"
+     },
+     "title": "Run — paused (foot)",
+     "plannedKm": 0,
+     "details": "Paused: left foot, first-step pain 2–3/10 (21 Oct). No running until first steps read 0 for 3 straight mornings and the physio has checked it."
+    }
+   ],
+   "decisions": [
+    {
+     "id": "dec-2026-10-21-no-squats",
+     "date": "2026-10-21",
+     "change": "No squats of any kind and no standing single-leg work for 2 weeks (to ~4 Nov). Lower and HYROX gym days switch to seated/machine and upper-body-led work. Bike continues, spun at 85+ rpm, no big-gear bursts, shoe strap loose. Swim continues.",
+     "evidence": "Francis's call: first steps 21 Oct were worse after a light machine leg day (pendulum squat 45 lb). Pain is lateral (pinky side), maybe top, first steps only, ~2 weeks, not resolving with no running since 8 Oct.",
+     "rule": "Re-add leg work one move at a time once first-step mornings read 0 for 3 straight days and the physio has seen it: belt squat first, then SL RDL, BSS last. Check the base of the 5th metatarsal for pinpoint tenderness; if present, physio and imaging before any loading."
+    }
+   ]
   }
  ]
 }
