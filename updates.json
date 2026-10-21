@@ -1866,6 +1866,60 @@
      "coach": "Belt squat 270 × 8 × 2 (up from 270 × 6 on 29 Sep), SL RDL 61 lb (from 52), BSS 122 lb total (from 104). Load up across all three single-leg/squat lifts."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-10-21T13:30:00Z-left-foot",
+   "activities": [
+    {
+     "stravaId": "20642427071",
+     "date": "2026-10-18",
+     "kind": "gym",
+     "title": "Upper",
+     "movingTime": 4209,
+     "status": "done",
+     "coach": "Bench 205 × 3 × 2 (top set up from 195 × 5), pull-ups 15 / 6 / 11."
+    },
+    {
+     "stravaId": "20654683024",
+     "date": "2026-10-19",
+     "kind": "swim",
+     "title": "Swim",
+     "km": 1.55,
+     "movingTime": 1837,
+     "status": "done",
+     "coach": "First swim logged since 21 Sep."
+    },
+    {
+     "stravaId": "20655852949",
+     "date": "2026-10-19",
+     "kind": "bike",
+     "title": "Zwift — Aerobic Triple Rhythm",
+     "km": 14.67,
+     "movingTime": 1842,
+     "status": "done",
+     "coach": "First ride since 8 Oct. 31 min, easy (relative effort 15)."
+    },
+    {
+     "stravaId": "20666313467",
+     "date": "2026-10-20",
+     "kind": "gym",
+     "title": "Lower (machine-based)",
+     "movingTime": 3854,
+     "status": "done",
+     "coach": "Machine lower day: pendulum squat, leg curl, leg extension, weighted back extension, ab wheel, dragon flag. No foot-loaded single-leg work."
+    }
+   ],
+   "decisions": [
+    {
+     "id": "dec-2026-10-21-left-foot-pause",
+     "date": "2026-10-21",
+     "change": "Running paused. Great Trek 10K (Sat 24 Oct) off. Physio check before the next run.",
+     "evidence": "Wed 21 Oct: first steps of the day on the left foot 2–3/10, felt further up the foot than the cuboid, hard to pinpoint, gone for the rest of the day. No runs since 8 Oct (last: 4.01 km continuous, next morning 1/10). Gate rule: ≥2 = stop running and assess.",
+     "rule": "Return when first-step pain has read 0 for 3 straight mornings and there's no pinpoint bony tenderness or pain hopping. Bike, swim and upper/machine gym continue if they don't provoke it. See physio/doctor promptly for pinpoint bone tenderness, swelling, night/rest pain, a limp, or pain that builds with activity instead of easing."
+    }
+   ]
   }
  ]
 }
