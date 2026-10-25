@@ -1980,6 +1980,49 @@
      "rule": "Re-add leg work one move at a time once first-step mornings read 0 for 3 straight days and the physio has seen it: belt squat first, then SL RDL, BSS last. Check the base of the 5th metatarsal for pinpoint tenderness; if present, physio and imaging before any loading."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-10-25T23:55:00Z-press-negative",
+   "activities": [
+    {
+     "stravaId": "20693985980",
+     "date": "2026-10-22",
+     "kind": "swim",
+     "title": "Swim",
+     "km": 1.5,
+     "movingTime": 1665,
+     "status": "done"
+    },
+    {
+     "stravaId": "20696404826",
+     "date": "2026-10-22",
+     "kind": "gym",
+     "title": "Upper + erg (foot off-load)",
+     "movingTime": 4677,
+     "status": "modified",
+     "coach": "Upper session plus row and SkiErg intervals; no foot-loaded work. Weighted pull-ups +10 lb × 8 × 3, DB incline 130 × 8."
+    },
+    {
+     "stravaId": "20719698781",
+     "date": "2026-10-24",
+     "kind": "swim",
+     "title": "Swim",
+     "km": 1.1,
+     "movingTime": 1553,
+     "status": "done"
+    }
+   ],
+   "decisions": [
+    {
+     "id": "dec-2026-10-25-hold-for-physio",
+     "date": "2026-10-25",
+     "change": "Hold the off-load plan until the physio on Thu 29 Oct. No GP or imaging needed beforehand.",
+     "evidence": "Left lateral foot (along the 5th metatarsal, just in front of the cuboid): first-step pain 2–3/10, unchanged for 10+ days, gone within minutes. Press test along the 5th metatarsal: no pain at all. No running since 8 Oct; no squats or single-leg work since 21 Oct.",
+     "rule": "Escalate before Thursday only if pain appears during the day, swelling, night pain, a limp, or first steps climb above 3. Expect a diagnosis and graded loading plan from the physio rather than more rest."
+    }
+   ]
   }
  ]
 }
