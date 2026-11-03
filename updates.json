@@ -2023,6 +2023,88 @@
      "rule": "Escalate before Thursday only if pain appears during the day, swelling, night pain, a limp, or first steps climb above 3. Expect a diagnosis and graded loading plan from the physio rather than more rest."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-03T19:10:00Z-physio-return",
+   "prescriptions": [
+    {
+     "match": {
+      "pid": "9-0-0"
+     },
+     "status": "skipped",
+     "details": "Not run: left foot, waiting on physio and pain-free mornings."
+    },
+    {
+     "match": {
+      "pid": "9-1-2"
+     },
+     "status": "skipped",
+     "details": "Not run: left foot, waiting on physio and pain-free mornings."
+    },
+    {
+     "match": {
+      "pid": "9-3-4"
+     },
+     "status": "skipped",
+     "details": "Not run: left foot, waiting on physio and pain-free mornings."
+    },
+    {
+     "match": {
+      "pid": "9-5-7"
+     },
+     "status": "skipped",
+     "details": "Not run: left foot, waiting on physio and pain-free mornings."
+    },
+    {
+     "match": {
+      "pid": "10-0-0"
+     },
+     "status": "skipped",
+     "details": "Not run: left foot, waiting on physio and pain-free mornings."
+    },
+    {
+     "match": {
+      "pid": "10-1-2"
+     },
+     "status": "skipped",
+     "details": "Not run: left foot, waiting on physio and pain-free mornings."
+    },
+    {
+     "match": {
+      "pid": "10-3-4"
+     },
+     "title": "Run/walk — 5 × (4 min / 1 min)",
+     "plannedKm": 3.5,
+     "zones": [
+      1,
+      2
+     ],
+     "details": "only if the last 2 mornings read 0 (physio, 29 Oct: run/walk once mornings are pain-free)\n5 min walk first\n5 × (4 min run / 1 min walk), ~3.5 km\n6:30–7:00, HR under 155, flat and paved\nstop on anything above 1/10\nnext morning must stay 0 — otherwise wait, don't progress"
+    },
+    {
+     "match": {
+      "pid": "10-5-7"
+     },
+     "title": "Run/walk — 6 × (4 min / 1 min)",
+     "plannedKm": 4.5,
+     "zones": [
+      1,
+      2
+     ],
+     "details": "only if Thursday's run/walk went clean and Friday morning read 0\n5 min walk first\n6 × (4 min run / 1 min walk), ~4.5 km\n6:30–7:00, HR under 155, flat and paved\nnext step after 2 clean sessions: 3 × (9/1), then 4 km continuous"
+    }
+   ],
+   "decisions": [
+    {
+     "id": "dec-2026-11-03-physio-return-plan",
+     "date": "2026-11-03",
+     "change": "Return to run per physio: run/walk once mornings are pain-free. First session Thu 5 Nov 5 × (4/1) if the last 2 mornings read 0; Sat 7 Nov 6 × (4/1) if Thursday went clean. Weeks 9–10 continuous runs marked not run.",
+     "evidence": "Physio 29 Oct: most likely not bone; a few more days' rest, then run/walk when mornings are pain-free. Morning first steps down from 2–3/10 to ~1/10 by 3 Nov. No running since 8 Oct.",
+     "rule": "Progress one step per clean session (next morning 0): 5×(4/1) → 6×(4/1) → 3×(9/1) → 4 km continuous → rebuild in km. Any morning above 0 holds the current step."
+    }
+   ]
   }
  ]
 }
