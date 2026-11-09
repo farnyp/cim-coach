@@ -2105,6 +2105,34 @@
      "rule": "Progress one step per clean session (next morning 0): 5×(4/1) → 6×(4/1) → 3×(9/1) → 4 km continuous → rebuild in km. Any morning above 0 holds the current step."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-09T07:10:00Z-tue-runwalk",
+   "prescriptions": [
+    {
+     "match": {
+      "pid": "11-1-2"
+     },
+     "title": "Run/walk — 5 × (4 min / 1 min)",
+     "plannedKm": 3.5,
+     "zones": [
+      1,
+      2
+     ],
+     "details": "first run since 8 Oct\n5 min walk first\n5 × (4 min run / 1 min walk), ~3.5 km\n6:30–7:00, HR under 155, flat and paved\nduring: up to 2/10 OK, stop above that\nnext morning: no worse than 1 → next step every other day: 6×(4/1) → 3×(9/1) → 4 km continuous\nmorning 2+ → step back"
+    }
+   ],
+   "decisions": [
+    {
+     "id": "dec-2026-11-08-start-at-1",
+     "date": "2026-11-08",
+     "change": "Return-to-run gate changed from 'morning 0' to 'morning no worse than 1'. First run/walk Tue 10 Nov, 5 × (4/1).",
+     "evidence": "Morning first steps a flat 1/10 for ~a week, unchanged by heavy circuits (8 Nov: 120 m lunges, 60 m burpees, 100 wall balls, 1 km row + ski). Physio 29 Oct: not bone, run/walk when mornings pain-free. Francis's call to start at 1; the coach suggested a quick physio check first.",
+     "rule": "During ≤2/10; next morning ≤1 to progress; 2+ steps back."
+    }
+   ]
   }
  ]
 }
