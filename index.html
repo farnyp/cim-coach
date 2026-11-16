@@ -456,7 +456,7 @@ window.storage = {
 
 <div class="sheet" id="sheet-s" role="dialog" aria-modal="true" aria-label="Sync">
   <div class="sheet-h"><h3>Sync</h3><button class="btn ghost" data-close>Close</button></div>
-  <div class="hint">build 2026-11-16 ux2 · Refresh pulls Claude's updates from updates.json in the app's own repo — nothing to set up. The gist ID below is only for the cloud backup and as a fallback route.</div>
+  <div class="hint">build 2026-11-16 ux3 · Refresh pulls Claude's updates from updates.json in the app's own repo — nothing to set up. The gist ID below is only for the cloud backup and as a fallback route.</div>
   <div class="fld"><label>Gist ID</label>
     <input id="s-url" placeholder="paste gist ID" autocomplete="off" spellcheck="false"></div>
   <div class="fld"><label>Cloud backup token (gist scope only)</label>
@@ -871,7 +871,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-11-16 ux2';
+const BUILD='2026-11-16 ux3';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -1958,7 +1958,7 @@ function applyPayload(p,srcLabel){
 
   (p.activities||[]).forEach(function(a){
     var ex=a.stravaId&&S.workouts.filter(function(w){return w.stravaId===a.stravaId;})[0];
-    if(ex){var ch=false;if(a.bike){ex.bike=a.bike;ch=true;}if(a.hevy&&ex.hevy!==a.hevy){ex.hevy=a.hevy;ch=true;}
+    if(ex){var ch=false;if(a.title&&ex.kind!=='run'&&ex.kind!=='race'&&ex.title!==a.title){ex.title=a.title;ch=true;}if(a.bike){ex.bike=a.bike;ch=true;}if(a.hevy&&ex.hevy!==a.hevy){ex.hevy=a.hevy;ch=true;}
       if(a.coach!=null&&ex.coach!==a.coach){ex.coach=a.coach;ch=true;}
       [['km','actualKm'],['movingTime','movingTime'],['avgHr','avgHr'],['maxHr','maxHr'],['timeInZone','timeInZone']].forEach(function(f){
         if(a[f[0]]!=null&&(ex[f[1]]==null||ex[f[1]]==='')){ex[f[1]]=a[f[0]];ch=true;}});

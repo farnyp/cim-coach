@@ -2319,6 +2319,97 @@
      "hevy": "Logged with hevyapp.com\n\nBench Press (Barbell)\nSet 1: 95 lbs x 10 \nSet 2: 135 lbs x 8 \nSet 3: 185 lbs x 3 \nSet 4: 205 lbs x 1 \nSet 5: 215 lbs x 5 \nSet 6: 215 lbs x 5 \n\nPull Up (Weighted)\nSet 1: 0 lbs x 6 \nSet 2: 45 lbs x 4 \nSet 3: 45 lbs x 6 \nSet 4: 45 lbs x 6 \n\nBanded Muscle Up\nSet 1: 5 reps \nSet 2: 5 reps \n\nRowing Machine\nSet 1: 1km - 5min\n\nBurpee Broad Jumps\n\"80m\"\nSet 1: 0.1km - 2min\n\nSki Erg\nSet 1: 1km - 5min\n\nWall Ball\nSet 1: 16 lbs x 30 \nSet 2: 16 lbs x 25 \nSet 3: 16 lbs x 20 \nSet 4: 16 lbs x 15 \nSet 5: 16 lbs x 10 \n"
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-16T09:10:00Z-backfill-titles",
+   "activities": [
+    {
+     "stravaId": "20732691038",
+     "date": "2026-10-25",
+     "kind": "gym",
+     "title": "Upper"
+    },
+    {
+     "stravaId": "20742374023",
+     "date": "2026-10-26",
+     "kind": "gym",
+     "title": "Rehab"
+    },
+    {
+     "stravaId": "20786543686",
+     "date": "2026-10-29",
+     "kind": "gym",
+     "title": "Upper"
+    },
+    {
+     "stravaId": "20786542358",
+     "date": "2026-10-29",
+     "kind": "gym",
+     "title": "HYROX circuit"
+    },
+    {
+     "stravaId": "20807875551",
+     "date": "2026-10-31",
+     "kind": "other",
+     "title": "Rock climbing"
+    },
+    {
+     "stravaId": "20824323773",
+     "date": "2026-11-01",
+     "kind": "gym",
+     "title": "Upper"
+    },
+    {
+     "stravaId": "20834155149",
+     "date": "2026-11-02",
+     "kind": "swim",
+     "title": "Swim"
+    },
+    {
+     "stravaId": "20848076539",
+     "date": "2026-11-03",
+     "kind": "gym",
+     "title": "Rehab"
+    },
+    {
+     "stravaId": "20878258345",
+     "date": "2026-11-05",
+     "kind": "gym",
+     "title": "HYROX circuit"
+    },
+    {
+     "stravaId": "20901994473",
+     "date": "2026-11-07",
+     "kind": "swim",
+     "title": "Swim"
+    },
+    {
+     "stravaId": "20915152845",
+     "date": "2026-11-08",
+     "kind": "gym",
+     "title": "HYROX circuit"
+    },
+    {
+     "stravaId": "20941835111",
+     "date": "2026-11-10",
+     "kind": "gym",
+     "title": "Upper"
+    },
+    {
+     "stravaId": "20967143755",
+     "date": "2026-11-12",
+     "kind": "swim",
+     "title": "Swim"
+    },
+    {
+     "stravaId": "21003985043",
+     "date": "2026-11-15",
+     "kind": "gym",
+     "title": "Upper and Hyrox"
+    }
+   ]
   }
  ]
 }
