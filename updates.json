@@ -2410,6 +2410,26 @@
      "title": "Upper and Hyrox"
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-16T09:20:00Z-mon-accessories",
+   "prescriptions": [
+    {
+     "match": {
+      "pid": "12-0-12"
+     },
+     "title": "Gym — Accessories + rehab",
+     "details": "no bench — you benched Sunday\nACCESSORIES\nchest-supported row 3 × 10 · lat pulldown 3 × 10\nlateral raise 3 × 15 · rear-delt fly or face pull 3 × 15\nbiceps curl 3 × 10 · triceps rope pushdown 3 × 10\nREHAB\neversion iso (press outside of foot into hand) 5 × 30 s · seated calf raise 3 × 15 · seated tib raise 2 × 15\nleg extension 3 × 10 slow + 2 × 30 s iso · Jefferson curl 2 × 10 @ 20–30 lb\nCopenhagen plank 2 × 20 s/side · dead bug 3 × 8 · side plank 2 × 30 s"
+    },
+    {
+     "match": {
+      "pid": "13-0-13"
+     },
+     "details": "BENCH: 225 × 3, then 2 × 5 @ 205\nweighted pull-ups 3 × 6 (+45)\nchest-supported or cable row 3 × 10\nmachine shoulder press 3 × 8\nhanging leg raise 3 × 8–12 · ab wheel 2 × 10\ncalf + tib work seated"
+    }
+   ]
   }
  ]
 }
