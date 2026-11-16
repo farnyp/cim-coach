@@ -2173,6 +2173,20 @@
      "rule": "Every block from here (HYROX, First Half, BMO) is judged by whether it builds toward a healthy, durable IM start line."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-16T08:45:00Z-hyrox-block-plan",
+   "decisions": [
+    {
+     "id": "dec-2026-11-16-hyrox-block",
+     "date": "2026-11-16",
+     "change": "Weeks 12–16 rewritten as the HYROX block: run/walk → continuous return (Tue/Thu/Sat steps), 2 HYROX sessions a week (A: bike legs, real 1 km runs from wk 14; B: stations + controlled lower), 3 bike exposures with an FTP retest Mon 23 Nov, upper heavy Mondays, 2 easy swims, half-race sim Sat 12 Dec, race week taper to HYROX Sun 20 Dec.",
+     "evidence": "No running since 8 Oct; no bike since 19 Oct; HYROX circuits 8 and 15 Nov at near-race station distances with no foot reaction; foot steady at 1/10; FTP 211 felt too high in Oct and is stale after 4 weeks off.",
+     "rule": "Run steps advance by session, not date: next morning ≤1 → next step; 2+ → repeat. FTP from the 23 Nov test replaces 211 for all bike targets."
+    }
+   ]
   }
  ]
 }

@@ -274,7 +274,7 @@ window.storage = {
 
 <div class="wrap">
   <div class="hdr">
-    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-10-07 textgrow</div></div>
+    <div><h1>Season 2026–27</h1><div class="sub" id="sub">HYROX Dec · BMO May · IM Cali Oct · build 2026-11-16 hyrox-block</div></div>
     <div class="hdr-actions">
       <button class="btn" id="btn-prog">Progress</button>
       <button class="btn" id="btn-zones">Zones</button>
@@ -640,70 +640,116 @@ const PLAN=[
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
  {d:3,kind:'bike',title:'Bike — FTP retest',km:0,z:[],details:'ramp test on the Kickr — spindown calibration first\nnew FTP applies from next week\n10–15 min warm-up, 10 min cool-down'},
  {d:6,kind:'bike',title:'Bike — threshold 2 × 20',km:0,z:[],details:'2 × 20 min @ 95–100% of the NEW FTP from Thursday, 5 min easy between\n75–90 min total, rest of it Z2\nday after the long run — if the legs are gone, ride the intervals at 90%\n10–15 min warm-up, 10 min cool-down'}]},
-{week:12,start:'2026-11-16',targetKm:23,phase:'Recovery week',focus:'Recovery week, strides return.',items:[
- {d:0,kind:'run',title:'Easy run — 4 km',km:4,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week'},
- gA(LIGHT),
- {d:1,kind:'run',title:'Easy run — 6 km',km:6,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week\n6 × 20 s relaxed strides at the end'},
- gB(LIGHT),
- {d:3,kind:'run',title:'Easy run — 5 km',km:5,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week'},
- gC(LIGHT),
- {d:5,kind:'run',title:'Easy run — 8 km',km:8,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week\nrecovery week'},
- {d:4,kind:'run',title:'removed',km:0,z:[],details:'',drop:1},
- {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
- {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
- {d:3,kind:'bike',title:'Bike — sweet spot 2 × 15',km:0,z:[],details:'recovery week: 2 × 15 min @ 88% FTP\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'bike',title:'Endurance ride — 90 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'}]},
-{week:13,start:'2026-11-23',targetKm:32,phase:'Track returns (gated)',focus:'First track session, only if the gate is met. Threshold, not intervals.',items:[
- {d:0,kind:'run',title:'Easy run — 6 km',km:6,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week'},
- gA(),
- {d:1,kind:'run',title:'Track — 3 × 1 km threshold (gated)',km:8.5,z:[4],details:'TRACK GATE — only if: four straight weeks of continuous running, every morning 0–1/10, no gait change. Miss any → 6 km easy instead\n2 km warm-up\n3 × 1 km @ 4:40–4:45, 60–75 s jog\ncool-down to 8.5 km\nthreshold, not intervals — a first rep faster than the band is the wrong session',reps:'3x1000'},
- gB(),
- {d:3,kind:'run',title:'Easy run — 6 km',km:6,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week'},
- gC(),
- {d:5,kind:'run',title:'Easy run — 11 km',km:11,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week'},
- {d:4,kind:'run',title:'removed',km:0,z:[],details:'',drop:1},
- {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
- {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
- {d:3,kind:'bike',title:'Bike — threshold 2 × 20',km:0,z:[],details:'2 × 20 min @ 95% FTP, 5 min easy between\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'bike',title:'Endurance ride — 120 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'}]},
-{week:14,start:'2026-11-30',targetKm:35,phase:'Build',focus:'35 km, long run 13.',items:[
- {d:0,kind:'run',title:'Easy run — 6 km',km:6,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week'},
- {d:0,kind:'gym',title:'removed',km:0,z:[],details:'',drop:1},
- {d:1,kind:'run',title:'Track — 4 × 1 km threshold',km:9,z:[4],details:'2 km warm-up\n4 × 1 km @ 4:40–4:45, 60–75 s jog\ncool-down to 9 km\nthreshold, not intervals — a first rep faster than the band is the wrong session',reps:'4x1000'},
- {d:3,kind:'run',title:'Easy run — 7 km',km:7,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week'},
- {d:5,kind:'run',title:'Easy run — 13 km',km:13,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week'},
- {d:6,kind:'race',title:'removed',km:0,z:[],details:'',drop:1},
- {d:4,kind:'run',title:'removed',km:0,z:[],details:'',drop:1},
- gA(),
- gB(),
- gC(),
- {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
- {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
- {d:3,kind:'bike',title:'Bike — VO2 6 × 4',km:0,z:[],details:'6 × 4 min @ 110–115% FTP, 4 min easy between\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'bike',title:'Endurance ride — 130 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'}]},
-{week:15,start:'2026-12-07',targetKm:40,phase:'Build',focus:'40 km. Thursday run moves to Friday. Long run 15.',items:[
- {d:0,kind:'run',title:'Easy run — 7 km',km:7,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week'},
- {d:1,kind:'run',title:'Track — 3 × 1600 m threshold',km:10,z:[4],details:'2 km warm-up\n3 × 1600 m @ 4:40–4:45, 75–90 s jog\ncool-down to 10 km\nthreshold, not intervals — a first rep faster than the band is the wrong session',reps:'3x1600'},
- {d:4,kind:'run',title:'Easy run — 8 km',km:8,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week\nThursday run moves to Friday from here'},
- {d:5,kind:'run',title:'Easy run — 15 km',km:15,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nfuel practice from 60 min\nnext morning must read 0 — otherwise next week repeats this week'},
- gA(),
- gB(),
- gC(),
- {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
- {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
- {d:3,kind:'bike',title:'Bike — threshold 2 × 20',km:0,z:[],details:'2 × 20 min @ 95–100% FTP, 5 min easy between\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'bike',title:'Endurance ride — 135 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'}]},
-{week:16,start:'2026-12-14',targetKm:33,phase:'HYROX week',focus:'HYROX Sunday 20 Dec.',items:[
- {d:0,kind:'run',title:'Easy run — 7 km',km:7,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week'},
- {d:1,kind:'run',title:'Track — 3 × 1 km (race week)',km:9,z:[4],details:'2 km warm-up\n3 × 1 km @ 4:40–4:45 — keep it light\ncool-down to 9 km\nthreshold, not intervals — a first rep faster than the band is the wrong session',reps:'3x1000'},
- {d:4,kind:'run',title:'Easy run — 6 km',km:6,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week'},
- {d:5,kind:'run',title:'Shakeout — 3 km',km:3,z:[2],details:'easy + 4 × 20 s strides\nHYROX tomorrow'},
- gB(),
- gC(LIGHT),
- {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
- {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
- {d:3,kind:'bike',title:'Bike — race-week openers',km:0,z:[],details:'3 × 3 min @ 105% FTP, 3 min easy between\nshort and sharp — HYROX is Sunday\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'race',title:'HYROX',km:8,z:[],details:'race day\n8 × 1 km running between stations\nit is the running that matters for the spring — pace the first two kilometres like an easy run'}]},
+{week:12,start:'2026-11-16',targetKm:12.5,phase:"Return + HYROX build",focus:"Running is back: run/walk Tue, Thu, Sat — each step only if the next morning is no worse than 1. Bike back with three easy rides. Bench 225 × 3 on Monday.",items:[
+ {"d": 0, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 6, "kind": "gym", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 1, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 1, "kind": "gym", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 3, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 3, "kind": "gym", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 5, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 4, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 0, "kind": "swim", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 4, "kind": "swim", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 3, "kind": "bike", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 6, "kind": "bike", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 0, "kind": "gym", "title": "Gym — Upper", "km": 0, "details": "BENCH: 225 × 3, then 2 × 5 @ 205\nbench: bar × 10, 135 × 5, 185 × 3, 205 × 1, then the work sets\nweighted pull-ups 3 × 6 (+45)\nchest-supported or cable row 3 × 10\nmachine shoulder press 3 × 8\nhanging leg raise 3 × 8–12 · ab wheel 2 × 10\ncalf + tib work seated"},
+ {"d": 0, "kind": "bike", "title": "Easy ride — 45 min", "km": 0, "details": "Z2, conversational, spin 85–95 rpm\n45 min\nno ERG workouts until the retest"},
+ {"d": 1, "kind": "run", "title": "Run/walk — 5 × (4 min / 1 min)", "km": 3.5, "z": [1, 2], "details": "5 min walk first\n5 × (4 min run / 1 min walk), ~3.5 km\n6:30–7:00/km, HR under 155, flat and paved\nduring: up to 2/10 OK — stop above that\nfirst run since 8 Oct — keep it clean: no burpees added\nprogression is by session, not date: next morning no worse than 1 → next step; 2+ → repeat the previous step and the dates slide"},
+ {"d": 2, "kind": "gym", "title": "HYROX B — stations + lower", "km": 0, "details": "Ski 1000 m race pace → 2 min easy, × 3\nRow 1000 m race pace → 2 min easy, × 2\nWall balls 100 for time (heels down, 6 kg)\nLunges 100 m (bodyweight → sandbag 10 kg from wk 14)\n10 min steady bike\n\nLOWER (controlled — after the circuit or later the same day)\nleg press 3 × 10 · leg extension 3 × 10 + 2 × 30 s iso\nleg curl 3 × 10 · hip thrust 3 × 10\nback extension 2 × 10 · seated calf raise 3 × 12\nCopenhagen plank 2 × 20 s/side\nno squats, no single-leg standing work yet"},
+ {"d": 3, "kind": "run", "title": "Run/walk — 6 × (4 min / 5 burpees)", "km": 4.5, "z": [1, 2], "details": "5 min walk first\n6 × (4 min run, then 5 burpees in place of the walk minute), ~4.5 km\n6:30–7:00/km, HR under 155, flat and paved\nduring: up to 2/10 OK — stop above that\nburpees in only if Tuesday's step passed; otherwise walk the minute\nprogression is by session, not date: next morning no worse than 1 → next step; 2+ → repeat the previous step and the dates slide"},
+ {"d": 3, "kind": "swim", "title": "Swim — easy", "km": 0, "details": "1.5–2 km easy, technique focus\ndrills: catch-up, fingertip drag, 6-kick switch"},
+ {"d": 4, "kind": "bike", "title": "Easy ride — 60 min", "km": 0, "details": "Z2, conversational, spin 85–95 rpm\n60 min\nno ERG workouts until the retest"},
+ {"d": 5, "kind": "run", "title": "Run/walk — 3 × (9 min / 1 min)", "km": 4.5, "z": [1, 2], "details": "5 min walk first\n3 × (9 min run / 1 min walk), ~4.5 km\n6:30–7:00/km, HR under 155, flat and paved\nduring: up to 2/10 OK — stop above that\nprogression is by session, not date: next morning no worse than 1 → next step; 2+ → repeat the previous step and the dates slide"},
+ {"d": 5, "kind": "swim", "title": "Swim — easy", "km": 0, "details": "1.5–2 km easy, technique focus\ndrills: catch-up, fingertip drag, 6-kick switch"},
+ {"d": 6, "kind": "gym", "title": "HYROX A — bike legs × 6", "km": 0, "details": "each round: 3–4 min hard bike (~10K-run effort) → one station\n1 Ski 1000 · 2 Sled pull 50 m · 3 Row 1000 · 4 Wall balls 50 · 5 Lunges 100 m · 6 BBJ 40 m (step-back, 1.8–2 m jumps)\nlog total time — this is the benchmark"}]},
+{week:13,start:'2026-11-23',targetKm:14,phase:"FTP retest · continuous running",focus:"Monday: FTP retest — new number for everything after. Continuous running returns Tuesday. Farmers carry and sled push come back if mornings hold at 1 or better.",items:[
+ {"d": 0, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 6, "kind": "gym", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 1, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 1, "kind": "gym", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 3, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 3, "kind": "gym", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 5, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 4, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 0, "kind": "swim", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 4, "kind": "swim", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 3, "kind": "bike", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 6, "kind": "bike", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 0, "kind": "bike", "title": "Bike — FTP test (20 min)", "km": 0, "details": "Zwift 20-min FTP test (or ramp test and take 5% off)\nFTP = 95% of the 20-min average\n15 min warm-up incl. 3 × 1 min building; 10 min cool-down\nafter 1 week of easy riding — this number replaces 211"},
+ {"d": 0, "kind": "gym", "title": "Gym — Upper", "km": 0, "details": "BENCH: 225 × 3 × 2 if Monday's went clean\nbench: bar × 10, 135 × 5, 185 × 3, 205 × 1, then the work sets\nweighted pull-ups 3 × 6 (+45)\nchest-supported or cable row 3 × 10\nmachine shoulder press 3 × 8\nhanging leg raise 3 × 8–12 · ab wheel 2 × 10\ncalf + tib work seated"},
+ {"d": 1, "kind": "run", "title": "Easy run — 4 km", "km": 4, "z": [1, 2], "details": "continuous, easy\n6:30–7:00/km, HR under 155, flat and paved\nduring: up to 2/10 OK — stop above that\nfirst continuous run since 8 Oct\nprogression is by session, not date: next morning no worse than 1 → next step; 2+ → repeat the previous step and the dates slide"},
+ {"d": 2, "kind": "gym", "title": "HYROX B — stations + lower", "km": 0, "details": "Ski 1000 m race pace → 2 min easy, × 3\nRow 1000 m race pace → 2 min easy, × 2\nWall balls 100 for time (heels down, 6 kg)\nLunges 100 m (bodyweight → sandbag 10 kg from wk 14)\n10 min steady bike\nadd: farmers carry 100 m (2 × 24 kg) if mornings ≤1\n\nLOWER (controlled — after the circuit or later the same day)\nleg press 3 × 10 · leg extension 3 × 10 + 2 × 30 s iso\nleg curl 3 × 10 · hip thrust 3 × 10\nback extension 2 × 10 · seated calf raise 3 × 12\nCopenhagen plank 2 × 20 s/side\nno squats, no single-leg standing work yet"},
+ {"d": 3, "kind": "run", "title": "Easy run — 5 km", "km": 5, "z": [1, 2], "details": "continuous, easy\n6:30–7:00/km, HR under 155, flat and paved\nduring: up to 2/10 OK — stop above that\nprogression is by session, not date: next morning no worse than 1 → next step; 2+ → repeat the previous step and the dates slide"},
+ {"d": 3, "kind": "swim", "title": "Swim — easy", "km": 0, "details": "1.5–2 km easy, technique focus\ndrills: catch-up, fingertip drag, 6-kick switch"},
+ {"d": 4, "kind": "bike", "title": "Bike — sub-threshold 3 × 10", "km": 0, "details": "3 × 10 min @ 88–92% of the NEW FTP, 3 min easy\nHR should settle in the 150s — if it climbs past 165, back off\n15 min warm-up, 10 min cool-down"},
+ {"d": 5, "kind": "run", "title": "Easy run — 5 km", "km": 5, "z": [1, 2], "details": "continuous, easy\n6:30–7:00/km, HR under 155, flat and paved\nduring: up to 2/10 OK — stop above that\nprogression is by session, not date: next morning no worse than 1 → next step; 2+ → repeat the previous step and the dates slide"},
+ {"d": 5, "kind": "swim", "title": "Swim — easy", "km": 0, "details": "1.5–2 km easy, technique focus\ndrills: catch-up, fingertip drag, 6-kick switch"},
+ {"d": 6, "kind": "gym", "title": "HYROX A — bike legs × 8", "km": 0, "details": "8 rounds: 3–4 min hard bike → station\nSki 1000 · Sled push 25 m (new) · Sled pull 50 m · BBJ 80 m · Row 1000 · Farmers 100 m · Lunges 100 m · Wall balls 75\nbeat last week's time"}]},
+{week:14,start:'2026-11-30',targetKm:17,phase:"Real runs enter the circuits",focus:"Two of the bike legs in Sunday's circuit become 1 km runs. Stations at race distance.",items:[
+ {"d": 0, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 0, "kind": "gym", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 1, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 3, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 5, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 6, "kind": "race", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 4, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 6, "kind": "gym", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 1, "kind": "gym", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 3, "kind": "gym", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 0, "kind": "swim", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 4, "kind": "swim", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 3, "kind": "bike", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 6, "kind": "bike", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 0, "kind": "gym", "title": "Gym — Upper", "km": 0, "details": "BENCH: work up to 225 × 4–5, or 230 × 3\nbench: bar × 10, 135 × 5, 185 × 3, 205 × 1, then the work sets\nweighted pull-ups 3 × 6 (+45)\nchest-supported or cable row 3 × 10\nmachine shoulder press 3 × 8\nhanging leg raise 3 × 8–12 · ab wheel 2 × 10\ncalf + tib work seated"},
+ {"d": 0, "kind": "bike", "title": "Easy ride — 60 min", "km": 0, "details": "Z2, conversational, spin 85–95 rpm\n60 min"},
+ {"d": 1, "kind": "run", "title": "Easy run — 5 km", "km": 5, "z": [1, 2], "details": "continuous, easy\n6:30–7:00/km, HR under 155, flat and paved\nduring: up to 2/10 OK — stop above that\nprogression is by session, not date: next morning no worse than 1 → next step; 2+ → repeat the previous step and the dates slide"},
+ {"d": 2, "kind": "gym", "title": "HYROX B — stations + lower", "km": 0, "details": "Ski 1000 m race pace → 2 min easy, × 3\nRow 1000 m race pace → 2 min easy, × 2\nWall balls 100 for time (heels down, 6 kg)\nLunges 100 m (bodyweight → sandbag 10 kg from wk 14)\n10 min steady bike\n\nLOWER (controlled — after the circuit or later the same day)\nleg press 3 × 10 · leg extension 3 × 10 + 2 × 30 s iso\nleg curl 3 × 10 · hip thrust 3 × 10\nback extension 2 × 10 · seated calf raise 3 × 12\nCopenhagen plank 2 × 20 s/side\nno squats, no single-leg standing work yet"},
+ {"d": 3, "kind": "run", "title": "Easy run — 5 km", "km": 5, "z": [1, 2], "details": "continuous, easy\n6:30–7:00/km, HR under 155, flat and paved\nduring: up to 2/10 OK — stop above that\nprogression is by session, not date: next morning no worse than 1 → next step; 2+ → repeat the previous step and the dates slide"},
+ {"d": 3, "kind": "swim", "title": "Swim — easy", "km": 0, "details": "1.5–2 km easy, technique focus\ndrills: catch-up, fingertip drag, 6-kick switch"},
+ {"d": 4, "kind": "bike", "title": "Bike — sub-threshold 2 × 15", "km": 0, "details": "2 × 15 min @ 90% FTP, 5 min easy\n15 min warm-up, 10 min cool-down"},
+ {"d": 5, "kind": "run", "title": "Easy run — 5 km", "km": 5, "z": [1, 2], "details": "continuous, easy\n6:30–7:00/km, HR under 155, flat and paved\nduring: up to 2/10 OK — stop above that\nprogression is by session, not date: next morning no worse than 1 → next step; 2+ → repeat the previous step and the dates slide"},
+ {"d": 5, "kind": "swim", "title": "Swim — easy", "km": 0, "details": "1.5–2 km easy, technique focus\ndrills: catch-up, fingertip drag, 6-kick switch"},
+ {"d": 6, "kind": "gym", "title": "HYROX A — 6 bike legs + 2 × 1 km run", "km": 0, "details": "8 rounds; rounds 1 and 5 start with a 1 km run (race effort, not a sprint) instead of the bike\nfull race distances: Ski 1000 · Sled push 50 · Sled pull 50 · BBJ 80 · Row 1000 · Farmers 200 · Sandbag lunges 100 · Wall balls 100\nnext morning ≤1 or next week's runs hold"}]},
+{week:15,start:'2026-12-07',targetKm:16,phase:"Half-race simulation",focus:"Saturday: half-race simulation with real 1 km runs. Last hard week before HYROX.",items:[
+ {"d": 0, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 1, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 4, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 5, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 6, "kind": "gym", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 1, "kind": "gym", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 3, "kind": "gym", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 0, "kind": "swim", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 4, "kind": "swim", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 3, "kind": "bike", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 6, "kind": "bike", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 0, "kind": "gym", "title": "Gym — Upper", "km": 0, "details": "BENCH: 2 × 3 @ 215 — maintain, no max\nbench: bar × 10, 135 × 5, 185 × 3, 205 × 1, then the work sets\nweighted pull-ups 3 × 6 (+45)\nchest-supported or cable row 3 × 10\nmachine shoulder press 3 × 8\nhanging leg raise 3 × 8–12 · ab wheel 2 × 10\ncalf + tib work seated"},
+ {"d": 0, "kind": "bike", "title": "Easy ride — 60 min", "km": 0, "details": "Z2, conversational, spin 85–95 rpm\n60 min"},
+ {"d": 1, "kind": "run", "title": "Easy run — 6 km", "km": 6, "z": [1, 2], "details": "continuous, easy\n6:30–7:00/km, HR under 155, flat and paved\nduring: up to 2/10 OK — stop above that\nprogression is by session, not date: next morning no worse than 1 → next step; 2+ → repeat the previous step and the dates slide"},
+ {"d": 2, "kind": "gym", "title": "HYROX B — back half stations + lower (light)", "km": 0, "details": "Row 1000 race pace · Farmers 200 m · Sandbag lunges 100 m · Wall balls 100 — one continuous block, log time\n10 min steady bike\n\nLOWER (controlled — after the circuit or later the same day)\nleg press 3 × 10 · leg extension 3 × 10 + 2 × 30 s iso\nleg curl 3 × 10 · hip thrust 3 × 10\nback extension 2 × 10 · seated calf raise 3 × 12\nCopenhagen plank 2 × 20 s/side\nno squats, no single-leg standing work yet"},
+ {"d": 3, "kind": "run", "title": "Easy run — 5 km", "km": 5, "z": [1, 2], "details": "continuous, easy\n6:30–7:00/km, HR under 155, flat and paved\nduring: up to 2/10 OK — stop above that\nprogression is by session, not date: next morning no worse than 1 → next step; 2+ → repeat the previous step and the dates slide"},
+ {"d": 3, "kind": "swim", "title": "Swim — easy", "km": 0, "details": "1.5–2 km easy, technique focus\ndrills: catch-up, fingertip drag, 6-kick switch"},
+ {"d": 4, "kind": "bike", "title": "Bike — sub-threshold 3 × 10", "km": 0, "details": "3 × 10 min @ 90% FTP, 3 min easy\n15 min warm-up, 10 min cool-down"},
+ {"d": 5, "kind": "run", "title": "HYROX half sim — 4 × (1 km + station)", "km": 5, "z": [2, 3], "details": "warm-up 1 km easy\n1 km run → Ski 1000\n1 km run → Sled push 50 m\n1 km run → Sled pull 50 m\n1 km run → BBJ 80 m\nrace effort: first km like an easy run, build from there\nlog splits for every run and station\nprogression is by session, not date: next morning no worse than 1 → next step; 2+ → repeat the previous step and the dates slide"},
+ {"d": 6, "kind": "swim", "title": "Swim — easy", "km": 0, "details": "1.5 km easy — recovery"}]},
+{week:16,start:'2026-12-14',targetKm:16,phase:"HYROX week",focus:"HYROX Sunday 20 Dec. Sharp, short, fresh. Nothing new this week.",items:[
+ {"d": 0, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 1, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 4, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 5, "kind": "run", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 1, "kind": "gym", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 3, "kind": "gym", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 0, "kind": "swim", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 4, "kind": "swim", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 3, "kind": "bike", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 6, "kind": "race", "title": "removed", "km": 0, "z": [], "details": "", "drop": 1},
+ {"d": 0, "kind": "gym", "title": "Gym — Upper (light)", "km": 0, "details": "light: 2 sets per lift, nothing heavy\nbench: bar × 10, 135 × 5, 185 × 3, 205 × 1, then the work sets\nweighted pull-ups 3 × 6 (+45)\nchest-supported or cable row 3 × 10\nmachine shoulder press 3 × 8\nhanging leg raise 3 × 8–12 · ab wheel 2 × 10\ncalf + tib work seated"},
+ {"d": 0, "kind": "swim", "title": "Swim — easy", "km": 0, "details": "1.5 km easy"},
+ {"d": 1, "kind": "run", "title": "Easy run — 5 km + strides", "km": 5, "z": [1, 2], "details": "easy, 6:30–7:00/km\n4 × 20 s relaxed strides at the end\nprogression is by session, not date: next morning no worse than 1 → next step; 2+ → repeat the previous step and the dates slide"},
+ {"d": 2, "kind": "gym", "title": "HYROX sharpener — 2 × (1 km + station)", "km": 0, "details": "1 km @ race pace → Ski 500 m\n1 km @ race pace → Wall balls 25\nthen 20 min easy bike — done"},
+ {"d": 3, "kind": "bike", "title": "Easy ride + openers — 45 min", "km": 0, "details": "Z2 with 3 × 2 min @ 100% FTP, 3 min easy between"},
+ {"d": 5, "kind": "run", "title": "Shakeout — 3 km", "km": 3, "z": [1, 2], "details": "easy + 4 × 20 s strides\nlay out kit, plan fuelling: breakfast 3 h before, gel at ~halfway\nprogression is by session, not date: next morning no worse than 1 → next step; 2+ → repeat the previous step and the dates slide"},
+ {"d": 6, "kind": "race", "title": "HYROX", "km": 8, "z": [], "details": "race day — 8 × 1 km runs + 8 stations\nfirst two km like an easy run; the race is won on the back half\nstep-back burpees, heels-down wall balls, short broad jumps\nnext-morning foot reading as always"}]},
 {week:17,start:'2026-12-21',targetKm:44,phase:'Post-HYROX',focus:'44 km after HYROX. Long run 18.',items:[
  {d:1,kind:'run',title:'Easy run — 10 km',km:10,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week\npost-HYROX — no track this week'},
  {d:4,kind:'run',title:'Easy run — 11 km',km:11,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week'},
@@ -807,7 +853,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-10-07 textgrow';
+const BUILD='2026-11-16 hyrox-block';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -825,7 +871,7 @@ const BUILD='2026-10-07 textgrow';
       }).catch(function(){});
   }catch(e){}
 })();
-const PLANVER=19;   /* bump whenever prescriptions change */
+const PLANVER=20;   /* bump whenever prescriptions change */
 function buildDefaultWorkouts(){
   var out=[];
   PLAN.forEach(function(w){ w.items.forEach(function(it,ix){
@@ -2135,10 +2181,14 @@ function syncPrescriptions(st){
       var pid=wk.week+'-'+it.d+'-'+ix;
       var origDate=addDays(wk.start,it.d);
       var t=byPid[pid]||byKey[origDate+'|'+it.title+'|'+it.kind];
-      if(t&&used[t.id])return;                 // never map two plan items onto one session
+      if(t&&used[t.id]){                       // never map two plan items onto one session --
+        if(it.drop)return;                     // ...but a live item whose match is taken gets its own
+        t=null;                                // session (17 Nov: a re-added shakeout/race was skipped)
+      }
       if(it.drop){                             // tombstone: keeps later pids stable, removes the session
         if(t&&!t.custom&&t.status==='planned'&&!t.stravaId&&!(t.actualKm>0)){
           used[t.id]=1;
+          delete byPid[pid]; delete byKey[t.date+'|'+t.title+'|'+t.kind];
           st.workouts=st.workouts.filter(function(w){return w.id!==t.id;});
           updated++;
         }
