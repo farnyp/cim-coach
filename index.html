@@ -456,7 +456,7 @@ window.storage = {
 
 <div class="sheet" id="sheet-s" role="dialog" aria-modal="true" aria-label="Sync">
   <div class="sheet-h"><h3>Sync</h3><button class="btn ghost" data-close>Close</button></div>
-  <div class="hint">build 2026-11-16 ux3 · Refresh pulls Claude's updates from updates.json in the app's own repo — nothing to set up. The gist ID below is only for the cloud backup and as a fallback route.</div>
+  <div class="hint">build 2026-11-16 gym-ironman · Refresh pulls Claude's updates from updates.json in the app's own repo — nothing to set up. The gist ID below is only for the cloud backup and as a fallback route.</div>
   <div class="fld"><label>Gist ID</label>
     <input id="s-url" placeholder="paste gist ID" autocomplete="off" spellcheck="false"></div>
   <div class="fld"><label>Cloud backup token (gist scope only)</label>
@@ -524,6 +524,9 @@ const gC=function(x){return{d:3,kind:'gym',title:'Gym — HYROX + stability',km:
 const LIGHT='\\ndeload: two light sets per movement\\ndrop broad jumps and wall balls';
 const TWO='\\npeak block: two work sets, no progression\\nkeep calf work and isometrics regardless';
 
+const GYM_LA="A — LOWER + PULL (heavy, low volume: 1–2 reps in reserve, no grinding)\ntrap bar deadlift or belt squat 3 × 4–6\nBulgarian split squat 3 × 6–8/leg — only once the foot is cleared for single-leg work\nsingle-leg RDL 2 × 8/leg\nheavy seated calf raise 3 × 8–12 · single-leg standing calf raise 3 × 12\ntib raise 2 × 15 · foot eversion iso 3 × 30 s\nCopenhagen plank 2 × 20–30 s/side\nweighted pull-up 3 × 6 or chest-supported row 3 × 8\ngoes on a hard run/ride day — never the day before one";
+const GYM_UB="B — UPPER + DURABILITY (pull ≥ push)\nbench OR DB incline press 3 × 5–8 — alternate weeks, 1–2 reps in reserve\nweighted pull-up 3 × 5–6\nlandmine or half-kneeling 1-arm press 2 × 8/side\nchest-supported row 3 × 10\nface pull or Y-raise 3 × 15 · cable external rotation 2 × 12/side\nPallof press 2 × 10/side · dead bug 3 × 8 · back extension 2 × 10\npogo hops 3 × 20 → single-leg hops — only once running is back to continuous";
+const GYM_RH="REHAB (15 min, after an easy session)\nfoot: toe spreads/lifts 2 × 10, towel scrunch 2 × 30 s, eversion iso 3 × 30 s\nJefferson curl 2 × 10 @ 20–30 lb\nT-spine open books 8/side · half-kneeling hip flexor 45 s/side · seated calf stretch 2 × 30 s";
 const PLAN=[
 {week:-1,start:'2026-08-17',targetKm:0,phase:'Pre-block',
  focus:'Logging only. No prescribed sessions.',items:[]},
@@ -772,26 +775,32 @@ const PLAN=[
  {d:1,kind:'run',title:'Easy run — 10 km',km:10,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week\npost-HYROX — no track this week'},
  {d:4,kind:'run',title:'Easy run — 11 km',km:11,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week'},
  {d:5,kind:'run',title:'Easy run — 18 km',km:18,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nfuel practice from 60 min\nnext morning must read 0 — otherwise next week repeats this week'},
- gA(),
- gB(),
- gC('\\npost-HYROX: general strength — HYROX stations optional'),
+ {d:6,kind:"gym",title:"removed",km:0,z:[],details:"",drop:1},
+ {d:1,kind:"gym",title:"removed",km:0,z:[],details:"",drop:1},
+ {d:3,kind:"gym",title:"removed",km:0,z:[],details:"",drop:1},
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
  {d:3,kind:'bike',title:'Bike — sweet spot 3 × 10',km:0,z:[],details:'post-race: 3 × 10 min @ 88–90% FTP\n10–15 min warm-up, 10 min cool-down'},
  {d:6,kind:'bike',title:'Endurance ride — 105 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'},
- {d:0,kind:'run',title:'Easy run — 5 km',km:5,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week\neasy jog the day after HYROX — skip it if the legs say no'}]},
+ {d:0,kind:'run',title:'Easy run — 5 km',km:5,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week\neasy jog the day after HYROX — skip it if the legs say no'},
+ {"d": 0, "kind": "gym", "title": "Gym B — Upper + durability (light)", "km": 0, "details": "post-HYROX week: 2 sets per lift, no bench test yet\nB — UPPER + DURABILITY (pull ≥ push)\nbench OR DB incline press 3 × 5–8 — alternate weeks, 1–2 reps in reserve\nweighted pull-up 3 × 5–6\nlandmine or half-kneeling 1-arm press 2 × 8/side\nchest-supported row 3 × 10\nface pull or Y-raise 3 × 15 · cable external rotation 2 × 12/side\nPallof press 2 × 10/side · dead bug 3 × 8 · back extension 2 × 10\npogo hops 3 × 20 → single-leg hops — only once running is back to continuous"},
+ {"d": 2, "kind": "gym", "title": "Rehab — 15 min", "km": 0, "details": "REHAB (15 min, after an easy session)\nfoot: toe spreads/lifts 2 × 10, towel scrunch 2 × 30 s, eversion iso 3 × 30 s\nJefferson curl 2 × 10 @ 20–30 lb\nT-spine open books 8/side · half-kneeling hip flexor 45 s/side · seated calf stretch 2 × 30 s"},
+ {"d": 3, "kind": "gym", "title": "Gym A — Lower + pull (light)", "km": 0, "details": "post-HYROX week: 2 working sets, moderate loads\nA — LOWER + PULL (heavy, low volume: 1–2 reps in reserve, no grinding)\ntrap bar deadlift or belt squat 3 × 4–6\nBulgarian split squat 3 × 6–8/leg — only once the foot is cleared for single-leg work\nsingle-leg RDL 2 × 8/leg\nheavy seated calf raise 3 × 8–12 · single-leg standing calf raise 3 × 12\ntib raise 2 × 15 · foot eversion iso 3 × 30 s\nCopenhagen plank 2 × 20–30 s/side\nweighted pull-up 3 × 6 or chest-supported row 3 × 8\ngoes on a hard run/ride day — never the day before one"}]},
 {week:18,start:'2026-12-28',targetKm:50,phase:'50 km — end of year',focus:'50 km. Long run 20 km on 2 Jan.',items:[
  {d:0,kind:'run',title:'Easy run — 8 km',km:8,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week'},
  {d:1,kind:'run',title:'Track — 5 × 1 km threshold',km:11,z:[4],details:'2 km warm-up\n5 × 1 km @ 4:35–4:45, 60–75 s jog\ncool-down to 11 km\nthreshold, not intervals — a first rep faster than the band is the wrong session',reps:'5x1000'},
  {d:4,kind:'run',title:'Easy run — 11 km',km:11,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nnext morning must read 0 — otherwise next week repeats this week'},
  {d:5,kind:'run',title:'Easy run — 20 km',km:20,z:[2],details:'continuous easy run\n6:15–6:45, HR 150–165, flat and paved\nfuel practice from 60 min\nnext morning must read 0 — otherwise next week repeats this week\nlongest run of the year'},
- gA(),
- gB(),
- gC('\\npost-HYROX: general strength — HYROX stations optional'),
+ {d:6,kind:"gym",title:"removed",km:0,z:[],details:"",drop:1},
+ {d:1,kind:"gym",title:"removed",km:0,z:[],details:"",drop:1},
+ {d:3,kind:"gym",title:"removed",km:0,z:[],details:"",drop:1},
  {d:0,kind:'swim',title:'Swim — technique',km:0,z:[],details:'1.5–2 km\ndrills: catch-up, fingertip drag, 6-kick switch\nall easy — form over speed'},
  {d:4,kind:'swim',title:'Swim — aerobic',km:0,z:[],details:'2–2.5 km\nmain set e.g. 10 × 100 on 15–20 s rest\neven reps — the tenth looks like the first'},
  {d:3,kind:'bike',title:'Bike — VO2 5 × 4',km:0,z:[],details:'5 × 4 min @ 110–115% FTP, 4 min easy between\n10–15 min warm-up, 10 min cool-down'},
- {d:6,kind:'bike',title:'Endurance ride — 135 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'}]}
+ {d:6,kind:'bike',title:'Endurance ride — 135 min',km:0,z:[],details:'Z2 by feel, conversational\nflat route or trainer — no hard climbing\nfuel from the hour mark — rehearse race fuelling'},
+ {"d": 0, "kind": "gym", "title": "Gym B — Upper + bench test", "km": 0, "details": "BENCH TEST: bar × 10, 135 × 5, 185 × 3, 205 × 1, then 225 × 3\nB — UPPER + DURABILITY (pull ≥ push)\nbench OR DB incline press 3 × 5–8 — alternate weeks, 1–2 reps in reserve\nweighted pull-up 3 × 5–6\nlandmine or half-kneeling 1-arm press 2 × 8/side\nchest-supported row 3 × 10\nface pull or Y-raise 3 × 15 · cable external rotation 2 × 12/side\nPallof press 2 × 10/side · dead bug 3 × 8 · back extension 2 × 10\npogo hops 3 × 20 → single-leg hops — only once running is back to continuous"},
+ {"d": 2, "kind": "gym", "title": "Rehab — 15 min", "km": 0, "details": "REHAB (15 min, after an easy session)\nfoot: toe spreads/lifts 2 × 10, towel scrunch 2 × 30 s, eversion iso 3 × 30 s\nJefferson curl 2 × 10 @ 20–30 lb\nT-spine open books 8/side · half-kneeling hip flexor 45 s/side · seated calf stretch 2 × 30 s"},
+ {"d": 3, "kind": "gym", "title": "Gym A — Lower + pull", "km": 0, "details": "A — LOWER + PULL (heavy, low volume: 1–2 reps in reserve, no grinding)\ntrap bar deadlift or belt squat 3 × 4–6\nBulgarian split squat 3 × 6–8/leg — only once the foot is cleared for single-leg work\nsingle-leg RDL 2 × 8/leg\nheavy seated calf raise 3 × 8–12 · single-leg standing calf raise 3 × 12\ntib raise 2 × 15 · foot eversion iso 3 × 30 s\nCopenhagen plank 2 × 20–30 s/side\nweighted pull-up 3 × 6 or chest-supported row 3 × 8\ngoes on a hard run/ride day — never the day before one"}]}
 ];
 
 const DEFAULT_ZONES={
@@ -871,7 +880,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-11-16 ux3';
+const BUILD='2026-11-16 gym-ironman';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -889,7 +898,7 @@ const BUILD='2026-11-16 ux3';
       }).catch(function(){});
   }catch(e){}
 })();
-const PLANVER=21;   /* bump whenever prescriptions change */
+const PLANVER=22;   /* bump whenever prescriptions change */
 function buildDefaultWorkouts(){
   var out=[];
   PLAN.forEach(function(w){ w.items.forEach(function(it,ix){

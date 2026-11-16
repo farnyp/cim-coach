@@ -2430,6 +2430,20 @@
      "details": "BENCH: 225 × 3, then 2 × 5 @ 205\nweighted pull-ups 3 × 6 (+45)\nchest-supported or cable row 3 × 10\nmachine shoulder press 3 × 8\nhanging leg raise 3 × 8–12 · ab wheel 2 × 10\ncalf + tib work seated"
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-16T09:40:00Z-gym-ironman",
+   "decisions": [
+    {
+     "id": "dec-2026-11-16-gym-for-ironman",
+     "date": "2026-11-16",
+     "change": "Gym redesigned for IRONMAN durability from 21 Dec: A (lower heavy/low-volume + pull, on hard days), B (upper with pull ≥ push, bench alternating with DB press, cuff/lower-trap work, later pogo hops), 15-min rehab block. Bench test 225 × 3 on Mon 28 Dec; no other max tests outside phase ends.",
+     "evidence": "Injury history (foot, Achilles, shin, calf) argues for heavy calf/soleus, tib, foot and single-leg work; a big swim year argues against bench-led pushing volume; Francis asked to save his shoulders.",
+     "rule": "1–2 reps in reserve on every set. Lower gym on a hard day, never the day before one. Base Dec–Feb full; Mar–Jun drop a set, no gym 10 days before BMO; Jul–Sep 2 × 30–40 min; last 3 weeks before IM 1 light session."
+    }
+   ]
   }
  ]
 }
