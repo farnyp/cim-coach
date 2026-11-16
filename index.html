@@ -456,7 +456,7 @@ window.storage = {
 
 <div class="sheet" id="sheet-s" role="dialog" aria-modal="true" aria-label="Sync">
   <div class="sheet-h"><h3>Sync</h3><button class="btn ghost" data-close>Close</button></div>
-  <div class="hint">build 2026-11-16 ux · Refresh pulls Claude's updates from updates.json in the app's own repo — nothing to set up. The gist ID below is only for the cloud backup and as a fallback route.</div>
+  <div class="hint">build 2026-11-16 ux2 · Refresh pulls Claude's updates from updates.json in the app's own repo — nothing to set up. The gist ID below is only for the cloud backup and as a fallback route.</div>
   <div class="fld"><label>Gist ID</label>
     <input id="s-url" placeholder="paste gist ID" autocomplete="off" spellcheck="false"></div>
   <div class="fld"><label>Cloud backup token (gist scope only)</label>
@@ -871,7 +871,7 @@ function repTarget(reps,z){
   return n+' × '+(dist>=1000?(dist/1000)+' km':dist+' m')+' in '+s2hms(lo)+'–'+s2hms(hi);
 }
 
-const BUILD='2026-11-16 ux';
+const BUILD='2026-11-16 ux2';
 /* Self-update: the page itself can be cached by iOS standalone webapps with no
    address bar to force a reload. version.json is fetched no-store on every boot;
    if the deployed build differs from this file, reload once with a cache-busting
@@ -1978,6 +1978,8 @@ function applyPayload(p,srcLabel){
     if(!t&&a.date&&(a.kind==='bike'||a.kind==='gym'||a.kind==='swim'))
       t=S.workouts.filter(function(w){return w.date===a.date&&w.kind===a.kind&&!w.stravaId&&w.status==='planned';})[0];
     if(t){
+      /* a gym/bike/swim session shows what was actually done, not the plan it filled (16 Nov) */
+      if(a.title&&t.kind!=='run'&&t.kind!=='race')t.title=a.title;
       if(a.bike)t.bike=a.bike;
       if(a.hevy)t.hevy=a.hevy;
       if(a.coach)t.coach=a.coach;

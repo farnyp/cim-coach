@@ -2187,6 +2187,138 @@
      "rule": "Run steps advance by session, not date: next morning ≤1 → next step; 2+ → repeat. FTP from the 23 Nov test replaces 211 for all bike targets."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-16T09:00:00Z-backfill-oct25-nov15",
+   "activities": [
+    {
+     "stravaId": "20732691038",
+     "date": "2026-10-25",
+     "movingTime": 3797,
+     "status": "done",
+     "kind": "gym",
+     "title": "Upper",
+     "hevy": "Logged with hevyapp.com\n\nBench Press (Barbell)\nSet 1: 95 lbs x 10 \nSet 2: 135 lbs x 8 \n\nPull Up\nSet 1: 6 reps \nSet 2: 6 reps \nSet 3: 19 reps \n\nShoulder External Rotation (dumbbell)\nSet 1: 5 lbs x 12 \nSet 2: 5 lbs x 12 \n\nPower Raise\nSet 1: 5 lbs x 10 \nSet 2: 5 lbs x 10 \n\nChest Supported Y Raise (Dumbbell)\nSet 1: 5 lbs x 8 \nSet 2: 5 lbs x 8 \n\nDead Bug\nSet 1: 12 reps \nSet 2: 12 reps \n\nHandstand Hold\nSet 1: 5s\nSet 2: 5s\n"
+    },
+    {
+     "stravaId": "20742374023",
+     "date": "2026-10-26",
+     "movingTime": 2506,
+     "status": "done",
+     "kind": "gym",
+     "title": "Rehab",
+     "hevy": "Logged with hevyapp.com\n\nsingle leg balance (bosu ball)\nSet 1: 1min 0s\nSet 2: 1min 0s\n\nJefferson Curls\nSet 1: 20 lbs x 10 \nSet 2: 20 lbs x 10 \n\nLeg Extension (Machine)\n\"3-5s on the way down, 30s isometric 45o\"\nSet 1: 60 lbs x 10 \nSet 2: 60 lbs x 10 \n\nSide Bend (Dumbbell)\nSet 1: 45 lbs x 20 \nSet 2: 45 lbs x 20 \n\nBack Extension (Weighted Hyperextension)\nSet 1: 45 lbs x 10 \nSet 2: 45 lbs x 10 \n"
+    },
+    {
+     "stravaId": "20786543686",
+     "date": "2026-10-29",
+     "movingTime": 4063,
+     "status": "done",
+     "kind": "gym",
+     "title": "Upper",
+     "hevy": "Logged with hevyapp.com\n\nPull Up (Weighted)\nSet 1: 25 lbs x 5 \nSet 2: 25 lbs x 5 \nSet 3: 25 lbs x 8 \nSet 4: 45 lbs x 4 \n\nChest Press (Machine)\nSet 1: 90 lbs x 8 \nSet 2: 90 lbs x 10 \nSet 3: 90 lbs x 10 \n"
+    },
+    {
+     "stravaId": "20786542358",
+     "date": "2026-10-29",
+     "movingTime": 689,
+     "status": "done",
+     "kind": "gym",
+     "title": "HYROX circuit",
+     "coach": "500m row\n50m lunges\n20m burpees\n500m skierg\n50 thruster squats"
+    },
+    {
+     "stravaId": "20807875551",
+     "date": "2026-10-31",
+     "movingTime": 3508,
+     "status": "done",
+     "kind": "other",
+     "title": "Rock climbing"
+    },
+    {
+     "stravaId": "20824323773",
+     "date": "2026-11-01",
+     "movingTime": 3398,
+     "status": "done",
+     "kind": "gym",
+     "title": "Upper",
+     "hevy": "Logged with hevyapp.com\n\nBench Press (Barbell)\nSet 1: 95 lbs x 10 \nSet 2: 135 lbs x 8 \nSet 3: 185 lbs x 5 \nSet 4: 205 lbs x 5 \nSet 5: 205 lbs x 5 \n\nPull Up\nSet 1: 6 reps \nSet 2: 6 reps \nSet 3: 6 reps \n\nJefferson Curls\nSet 1: 20 lbs x 10 \nSet 2: 20 lbs x 10 \n\nSeated Cable Row - V Grip (Cable)\nSet 1: 120 lbs x 10 \nSet 2: 120 lbs x 10 \nSet 3: 140 lbs x 10 \n"
+    },
+    {
+     "stravaId": "20834155149",
+     "date": "2026-11-02",
+     "movingTime": 1263,
+     "status": "done",
+     "kind": "swim",
+     "title": "Swim",
+     "km": 1.07
+    },
+    {
+     "stravaId": "20848076539",
+     "date": "2026-11-03",
+     "movingTime": 4250,
+     "status": "done",
+     "kind": "gym",
+     "title": "Rehab",
+     "hevy": "Logged with hevyapp.com\n\nsingle leg balance (bosu ball)\nSet 1: 1min 0s\nSet 2: 1min 0s\n\nJefferson Curls\nSet 1: 20 lbs x 10 \nSet 2: 20 lbs x 10 \n\nLeg Extension (Machine)\n\"3-5s on the way down, 30s isometric 45o\"\nSet 1: 60 lbs x 10 \nSet 2: 70 lbs x 10 \nSet 3: 80 lbs x 10 \n\nSide Bend (Dumbbell)\nSet 1: 45 lbs x 20 \nSet 2: 45 lbs x 20 \n\nBack Extension (Weighted Hyperextension)\nSet 1: 45 lbs x 10 \nSet 2: 45 lbs x 10 \n\nLeg Press (Machine)\nSet 1: 90 lbs x 10 \nSet 2: 90 lbs x 10 \nSet 3: 90 lbs x 10 \n\nSeated Calf Raise\nSet 1: 45 lbs x 12 \nSet 2: 45 lbs x 12 \nSet 3: 45 lbs x 12 \n"
+    },
+    {
+     "stravaId": "20878258345",
+     "date": "2026-11-05",
+     "movingTime": 3864,
+     "status": "done",
+     "kind": "gym",
+     "title": "HYROX circuit",
+     "hevy": "Logged with hevyapp.com\n\nPull Up\nSet 1: 6 reps \nSet 2: 6 reps \nSet 3: 6 reps \nSet 4: 1 reps \nSet 5: 1 reps \n\nCycling\nSet 1: 0km - 3min\n\nAir Bike\nSet 1: 4min 0s\n\nSki Erg\nSet 1: 0.5km - 3min\n\nCycling\nSet 1: 0km - 4min\n\nSled Pull\nSet 1: 225 lbs - 25m\n\nRowing Machine\nSet 1: 0.5km - 2min\n\nCycling\nSet 1: 0km - 4min\n\nWalking Lunge\nSet 1: 60 reps \n\nCycling\nSet 1: 0km - 4min\n\nWall Ball\nSet 1: 16 lbs x 20 \n"
+    },
+    {
+     "stravaId": "20901994473",
+     "date": "2026-11-07",
+     "movingTime": 1874,
+     "status": "done",
+     "kind": "swim",
+     "title": "Swim",
+     "km": 1.6
+    },
+    {
+     "stravaId": "20915152845",
+     "date": "2026-11-08",
+     "movingTime": 3208,
+     "status": "done",
+     "kind": "gym",
+     "title": "HYROX circuit",
+     "coach": "Bike warm up\nContinuous round of:\n120m walking lunges\n60m walking burpees\n1000m row\n1000m skierg\n40m sled pull \n100 wall balls\n\nBike cooldown"
+    },
+    {
+     "stravaId": "20941835111",
+     "date": "2026-11-10",
+     "movingTime": 4114,
+     "status": "done",
+     "kind": "gym",
+     "title": "Upper",
+     "hevy": "Logged with hevyapp.com\n\nBench Press (Barbell)\nSet 1: 95 lbs x 10 \nSet 2: 135 lbs x 6 \nSet 3: 185 lbs x 3 \nSet 4: 205 lbs x 6 \nSet 5: 205 lbs x 6 \n\nPull Up\nSet 1: 6 reps \nSet 2: 6 reps \nSet 3: 6 reps \n\nJefferson Curls\nSet 1: 20 lbs x 10 \nSet 2: 30 lbs x 10 \n\nHandstand Push Up\nSet 1: 3 reps \nSet 2: 3 reps \n\nDragon Flag\nSet 1: 2 reps \nSet 2: 2 reps \n"
+    },
+    {
+     "stravaId": "20967143755",
+     "date": "2026-11-12",
+     "movingTime": 1283,
+     "status": "done",
+     "kind": "swim",
+     "title": "Swim",
+     "km": 1.1
+    },
+    {
+     "stravaId": "21003985043",
+     "date": "2026-11-15",
+     "movingTime": 5292,
+     "status": "done",
+     "kind": "gym",
+     "title": "Upper and Hyrox",
+     "hevy": "Logged with hevyapp.com\n\nBench Press (Barbell)\nSet 1: 95 lbs x 10 \nSet 2: 135 lbs x 8 \nSet 3: 185 lbs x 3 \nSet 4: 205 lbs x 1 \nSet 5: 215 lbs x 5 \nSet 6: 215 lbs x 5 \n\nPull Up (Weighted)\nSet 1: 0 lbs x 6 \nSet 2: 45 lbs x 4 \nSet 3: 45 lbs x 6 \nSet 4: 45 lbs x 6 \n\nBanded Muscle Up\nSet 1: 5 reps \nSet 2: 5 reps \n\nRowing Machine\nSet 1: 1km - 5min\n\nBurpee Broad Jumps\n\"80m\"\nSet 1: 0.1km - 2min\n\nSki Erg\nSet 1: 1km - 5min\n\nWall Ball\nSet 1: 16 lbs x 30 \nSet 2: 16 lbs x 25 \nSet 3: 16 lbs x 20 \nSet 4: 16 lbs x 15 \nSet 5: 16 lbs x 10 \n"
+    }
+   ]
   }
  ]
 }
