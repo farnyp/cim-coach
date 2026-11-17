@@ -2444,6 +2444,35 @@
      "rule": "1–2 reps in reserve on every set. Lower gym on a hard day, never the day before one. Base Dec–Feb full; Mar–Jun drop a set, no gym 10 days before BMO; Jul–Sep 2 × 30–40 min; last 3 weeks before IM 1 light session."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-17T05:45:00Z-mon16",
+   "activities": [
+    {
+     "stravaId": "21015658382",
+     "date": "2026-11-16",
+     "kind": "gym",
+     "title": "Accessories + rehab",
+     "movingTime": 3061,
+     "status": "done",
+     "hevy": "Logged with hevyapp.com\n\nIso-Lateral Low Row\nSet 1: 90 lbs x 10 \nSet 2: 90 lbs x 10 \nSet 3: 90 lbs x 10 \n\nLateral Raise (Dumbbell)\nSet 1: 10 lbs x 15 \nSet 2: 10 lbs x 15 \n\nJefferson Curls\nSet 1: 20 lbs x 10 \nSet 2: 20 lbs x 10 \nSet 3: 20 lbs x 10 \n\nPoliquin step down\nSet 1: 10 reps \nSet 2: 10 reps \n\nCopenhagen side Plank\nSet 1: 20s\n\nPlanche Lean\nSet 1: 23s\nSet 2: 22s\n\nSeated Calf Raise\nSet 1: 90 lbs x 8 \nSet 2: 45 lbs x 12 \nSet 3: 45 lbs x 12 \n\nAb Wheel\nSet 1: 10 reps \nSet 2: 10 reps \n"
+    },
+    {
+     "stravaId": "21017033810",
+     "date": "2026-11-16",
+     "kind": "bike",
+     "title": "Zwift — Easy Hour",
+     "movingTime": 2226,
+     "status": "done",
+     "coach": "37 min at 110 W avg, 86 rpm — exactly the easy spin intended. No HR recorded (strap not paired).",
+     "bike": {
+      "label": "Easy",
+      "avgW": 110
+     }
+    }
+   ]
   }
  ]
 }
