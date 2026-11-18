@@ -2510,6 +2510,28 @@
      "flags": "Wed morning reading decides Thu: ≤1 → 6 × (4/1); 2+ → repeat 6 × (3/2)."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-18T03:40:00Z-first-run-correction",
+   "prescriptions": [
+    {
+     "match": {
+      "date": "2026-11-17",
+      "kind": "run"
+     },
+     "title": "Run/walk — 5 × (3 min / 2 min)"
+    }
+   ],
+   "activities": [
+    {
+     "stravaId": "21029195350",
+     "date": "2026-11-17",
+     "kind": "run",
+     "coach": "First run since 8 Oct. 5 × (3 min run / 2 min walk), 3.09 km in 26 min. Run segments ~6:50–7:00/km, HR peaking 139–147 each rep (cap 155), cadence 168–176 spm and steady to the last rep. (Corrected: an earlier note said 6 reps.)"
+    }
+   ]
   }
  ]
 }
