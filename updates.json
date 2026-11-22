@@ -2595,6 +2595,155 @@
      "note": "8 bike/air-bike legs instead of runs; avg HR 164, max 188"
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-22T04:30:00Z-run-walk-to-race",
+   "prescriptions": [
+    {
+     "match": {
+      "pid": "12-5-19"
+     },
+     "title": "Run/walk — 7 × (3 min / 2 min)",
+     "plannedKm": 4.2,
+     "zones": [
+      1,
+      2
+     ],
+     "details": "5 min walk first\n7 × (3 min run / 2 min walk)\n6:30–7:00/km, HR under 155, flat and paved",
+     "date": "2026-11-22"
+    },
+    {
+     "match": {
+      "pid": "13-1-14"
+     },
+     "title": "Run/walk — 6 × (4 min / 1 min)",
+     "plannedKm": 4.5,
+     "zones": [
+      1,
+      2
+     ],
+     "details": "5 min walk first\n6 × (4 min run / 1 min walk)\n6:30–7:00/km, HR under 155, flat and paved"
+    },
+    {
+     "match": {
+      "pid": "13-3-16"
+     },
+     "title": "Run/walk — 5 × (5 min / 1 min)",
+     "plannedKm": 4.5,
+     "zones": [
+      1,
+      2
+     ],
+     "details": "5 min walk first\n5 × (5 min run / 1 min walk)\n6:30–7:00/km, HR under 155, flat and paved"
+    },
+    {
+     "match": {
+      "pid": "13-5-19"
+     },
+     "title": "Run/walk — 4 × (7 min / 1 min)",
+     "plannedKm": 4.8,
+     "zones": [
+      1,
+      2
+     ],
+     "details": "5 min walk first\n4 × (7 min run / 1 min walk)\n6:30–7:00/km, HR under 155, flat and paved"
+    },
+    {
+     "match": {
+      "pid": "14-1-16"
+     },
+     "title": "Run/walk — 4 × (8 min / 1 min)",
+     "plannedKm": 5.2,
+     "zones": [
+      1,
+      2
+     ],
+     "details": "5 min walk first\n4 × (8 min run / 1 min walk)\n6:30–7:00/km, HR under 155, flat and paved"
+    },
+    {
+     "match": {
+      "pid": "14-3-18"
+     },
+     "title": "Run/walk — 3 × (10 min / 1 min)",
+     "plannedKm": 5.0,
+     "zones": [
+      1,
+      2
+     ],
+     "details": "5 min walk first\n3 × (10 min run / 1 min walk)\n6:30–7:00/km, HR under 155, flat and paved"
+    },
+    {
+     "match": {
+      "pid": "14-5-21"
+     },
+     "title": "HYROX run pattern — 6 × (6 min / 2 min)",
+     "plannedKm": 5.8,
+     "zones": [
+      1,
+      2
+     ],
+     "details": "5 min walk first\n6 × (6 min run / 2 min walk) — each 6 min ≈ one race 1 km\n6:30–7:00/km, HR under 155, flat and paved"
+    },
+    {
+     "match": {
+      "pid": "15-1-13"
+     },
+     "title": "HYROX run pattern — 8 × (6 min / 2 min)",
+     "plannedKm": 7.5,
+     "zones": [
+      1,
+      2
+     ],
+     "details": "5 min walk first\n8 × (6 min run / 2 min walk) — the full race running load, broken up like the race\n6:30–7:00/km, HR under 155, flat and paved"
+    },
+    {
+     "match": {
+      "pid": "15-3-15"
+     },
+     "title": "Run/walk — 3 × (12 min / 1 min)",
+     "plannedKm": 5.8,
+     "zones": [
+      1,
+      2
+     ],
+     "details": "5 min walk first\n3 × (12 min run / 1 min walk) — or 5 km continuous if it feels easy\n6:30–7:00/km, HR under 155, flat and paved"
+    },
+    {
+     "match": {
+      "pid": "16-1-12"
+     },
+     "title": "Easy run/walk — 5 × (6 min / 1 min) + strides",
+     "plannedKm": 5.0,
+     "zones": [
+      1,
+      2
+     ],
+     "details": "5 min walk first\n5 × (6 min run / 1 min walk), then 4 × 20 s relaxed strides\n6:30–7:00/km, HR under 155, flat and paved"
+    },
+    {
+     "match": {
+      "pid": "16-5-15"
+     },
+     "title": "Shakeout — 3 × (5 min / 1 min)",
+     "plannedKm": 2.5,
+     "zones": [
+      1,
+      2
+     ],
+     "details": "5 min walk first\n3 × (5 min run / 1 min walk) + 3 × 20 s strides\n6:30–7:00/km, HR under 155, flat and paved\nlay out kit; breakfast 3 h before the race; gel at about halfway"
+    }
+   ],
+   "decisions": [
+    {
+     "id": "dec-2026-11-21-runwalk-to-hyrox",
+     "date": "2026-11-21",
+     "change": "No continuous running before HYROX. Run progression stays run/walk and builds to the race's own pattern: 8 × (6 min run / 2 min break) on 8 Dec. Steps: 7×(3/2) → 6×(4/1) → 5×(5/1) → 4×(7/1) → 4×(8/1) → 3×(10/1) → 6×(6/2) → 8×(6/2) → 3×(12/1).",
+     "evidence": "Francis: continuous running probably not next week. HYROX running is 8 × ~1 km separated by stations — about 6–7 min of running at a time — so continuous running isn't required to race it. Foot steady ≤1; two run/walks clean (17 and 19 Nov).",
+     "rule": "Each step only after a next-morning reading ≤1; otherwise repeat the step and the dates slide."
+    }
+   ]
   }
  ]
 }
