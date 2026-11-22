@@ -2568,6 +2568,33 @@
      "coach": "6 × (3 min run / 2 min walk), 3.70 km in 30 min. HR peaks 136–145 per rep (under the 155 cap), cadence 170–178 spm on every rep. Wed morning foot 0.8/10. Step 2 done."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-22T04:10:00Z-hyrox-sim-1",
+   "activities": [
+    {
+     "stravaId": "21076702322",
+     "date": "2026-11-21",
+     "kind": "gym",
+     "title": "HYROX sim — full, bike legs",
+     "movingTime": 5075,
+     "avgHr": 164,
+     "maxHr": 188,
+     "status": "done",
+     "coach": "Full HYROX simulation with a partner, bike/air bike in place of the 8 runs. 84:35 total, avg HR 164, max 188. Bike legs ~5:30–7:30 each at avg HR 167–171; stations 2–7 min. Last station (215 s) had the day's peak HR. First full-length benchmark: 4 weeks out."
+    }
+   ],
+   "benchmarks": [
+    {
+     "id": "bm-2026-11-21-hyrox-sim",
+     "date": "2026-11-21",
+     "name": "HYROX sim (bike legs, partner)",
+     "result": "84:35",
+     "note": "8 bike/air-bike legs instead of runs; avg HR 164, max 188"
+    }
+   ]
   }
  ]
 }
