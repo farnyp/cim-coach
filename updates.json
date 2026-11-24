@@ -2898,6 +2898,37 @@
      "rule": "Test in the post-HYROX week; train off that number from January."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-24T02:30:00Z-mon23-upper",
+   "activities": [
+    {
+     "stravaId": "21100371002",
+     "date": "2026-11-23",
+     "kind": "gym",
+     "title": "Upper",
+     "movingTime": 4149,
+     "status": "done",
+     "hevy": "Logged with hevyapp.com\n\nPull Up\nSet 1: 6 reps \nSet 2: 6 reps \nSet 3: 6 reps \n\nBanded Muscle Up\n\"Orange band\"\nSet 1: 2 reps \nSet 2: 2 reps \n\nBench Press (Barbell)\nSet 1: 95 lbs x 10 \nSet 2: 135 lbs x 8 \nSet 3: 185 lbs x 3 \nSet 4: 205 lbs x 1 \nSet 5: 215 lbs x 5 \nSet 6: 215 lbs x 1 \n\nSeated Calf Raise\nSet 1: 45 lbs x 10 \nSet 2: 45 lbs x 10 \nSet 3: 45 lbs x 12 \n\nSeated Dip Machine\nSet 1: 180 lbs x 12 \nSet 2: 180 lbs x 12 \n\nAb Wheel\nSet 1: 10 reps \nSet 2: 10 reps \n",
+     "coach": "Felt cooked two days after the 85-min HYROX sim. Bench 215 × 5 — same as 15 Nov — then a single. 225 not attempted; it moves to the 28 Dec bench test."
+    }
+   ],
+   "prescriptions": [
+    {
+     "match": {
+      "pid": "14-0-14"
+     },
+     "details": "BENCH: 3 × 5 @ 205 — no top sets until after HYROX\nweighted pull-ups 3 × 6 (+45)\nchest-supported or cable row 3 × 10\nmachine shoulder press 3 × 8\nhanging leg raise 3 × 8–12 · ab wheel 2 × 10\ncalf + tib work seated"
+    },
+    {
+     "match": {
+      "pid": "15-0-11"
+     },
+     "details": "BENCH: 3 × 5 @ 205 — maintain\nweighted pull-ups 3 × 6\nrow 3 × 10 · shoulder press 3 × 8\ncore + seated calf/tib"
+    }
+   ]
   }
  ]
 }
