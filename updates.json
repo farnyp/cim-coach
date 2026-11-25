@@ -2963,6 +2963,36 @@
      "coach": "6 × (3 min run / 2 min walk), 3.68 km in 30 min. HR peaks 138–146, cadence 168–176 spm on every rep. Third clean run back."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-25T17:30:00Z-mon23-ride",
+   "activities": [
+    {
+     "stravaId": "21103014537",
+     "date": "2026-11-23",
+     "kind": "bike",
+     "title": "Zwift — Easy Hour",
+     "km": 17.67,
+     "movingTime": 2902,
+     "status": "done",
+     "coach": "48 min ERG at a flat 104 W, 84 rpm. HR strap dropped out (avg reads 9) — wear it damp or check the pairing.",
+     "bike": {
+      "label": "Easy",
+      "avgW": 104
+     }
+    },
+    {
+     "stravaId": "21078587069",
+     "date": "2026-11-21",
+     "kind": "swim",
+     "title": "Swim — recovery",
+     "km": 1.25,
+     "movingTime": 1583,
+     "status": "done"
+    }
+   ]
   }
  ]
 }
