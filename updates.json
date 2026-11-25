@@ -2929,6 +2929,40 @@
      "details": "BENCH: 3 × 5 @ 205 — maintain\nweighted pull-ups 3 × 6\nrow 3 × 10 · shoulder press 3 × 8\ncore + seated calf/tib"
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-25T17:20:00Z-tue24-run",
+   "prescriptions": [
+    {
+     "match": {
+      "pid": "13-1-14"
+     },
+     "title": "Run/walk — 6 × (3 min / 2 min)"
+    },
+    {
+     "match": {
+      "pid": "13-3-16"
+     },
+     "title": "Run/walk — 7 × (3 min / 2 min)",
+     "plannedKm": 4.2,
+     "details": "5 min walk first\n7 × (3 min run / 2 min walk)\n6:30–7:00/km, HR under 155, flat and paved"
+    }
+   ],
+   "activities": [
+    {
+     "stravaId": "21112606783",
+     "date": "2026-11-24",
+     "kind": "run",
+     "title": "Run/walk — 6 × (3 min / 2 min)",
+     "km": 3.68,
+     "movingTime": 1821,
+     "maxHr": 146,
+     "status": "done",
+     "coach": "6 × (3 min run / 2 min walk), 3.68 km in 30 min. HR peaks 138–146, cadence 168–176 spm on every rep. Third clean run back."
+    }
+   ]
   }
  ]
 }
