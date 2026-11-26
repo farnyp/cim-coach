@@ -3028,6 +3028,29 @@
      "coach": "7 × (3 min run / 2 min walk), 4.44 km in 36 min — longest run since 8 Oct. HR peaks 139–149 for reps 1–4, then 157, 155, 160 on reps 5–7: drift, not pace. Cadence 168–176 spm throughout."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-27T00:20:00Z-sat-4-2",
+   "prescriptions": [
+    {
+     "match": {
+      "pid": "13-5-19"
+     },
+     "title": "Run/walk — 6 × (4 min / 2 min)",
+     "plannedKm": 4.6,
+     "details": "5 min walk first\n6 × (4 min run / 2 min walk)\n6:30–7:00/km, HR under 155 — ease off on the late reps if it creeps up\nflat and paved"
+    },
+    {
+     "match": {
+      "pid": "14-1-16"
+     },
+     "title": "Run/walk — 6 × (4 min / 1 min)",
+     "plannedKm": 4.5,
+     "details": "5 min walk first\n6 × (4 min run / 1 min walk)\n6:30–7:00/km, HR under 155, flat and paved"
+    }
+   ]
   }
  ]
 }
