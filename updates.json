@@ -3068,6 +3068,31 @@
      "coach": "1.5 km in 29:39 — ~1:59/100 m, continuous."
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-28T06:30:00Z-fri27-bike",
+   "activities": [
+    {
+     "stravaId": "21149680909",
+     "date": "2026-11-27",
+     "kind": "bike",
+     "title": "Zwift — 3 × 10 @ 140 W",
+     "movingTime": 2938,
+     "maxHr": 154,
+     "status": "done",
+     "coach": "3 × 10 min @ 140 W (72% of 195), 3 min @ 95 W between, 86–90 rpm. Block HR ~145 / ~145 / ~147 — barely any drift. Warm-up 105 W at HR 123–134. Reference point: 140 W ≈ HR 145.",
+     "bike": {
+      "label": "3 × 10 steady",
+      "ftp": 195,
+      "work": {
+       "avgW": 140,
+       "avgHr": 146
+      }
+     }
+    }
+   ]
   }
  ]
 }
