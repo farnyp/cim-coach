@@ -3051,6 +3051,23 @@
      "details": "5 min walk first\n6 × (4 min run / 1 min walk)\n6:30–7:00/km, HR under 155, flat and paved"
     }
    ]
+  },
+  {
+   "type": "cim-coach-update",
+   "v": 5,
+   "updateId": "2026-11-28T05:50:00Z-thu26-swim",
+   "activities": [
+    {
+     "stravaId": "21139159345",
+     "date": "2026-11-26",
+     "kind": "swim",
+     "title": "Swim",
+     "km": 1.5,
+     "movingTime": 1779,
+     "status": "done",
+     "coach": "1.5 km in 29:39 — ~1:59/100 m, continuous."
+    }
+   ]
   }
  ]
 }
